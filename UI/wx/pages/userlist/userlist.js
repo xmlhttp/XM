@@ -133,7 +133,7 @@ Page({
           var maxid = res.data.maxid
           orderlist.push.apply(orderlist, res.data.data);
           var utel = res.data.tel
-          if (res.data.data.count >= 10) {
+          if (res.data.data.length >= 10) {
             $this.setData({ maxid: maxid, Loading: false, orderlist: orderlist })
           } else {
             $this.setData({ maxid: maxid, Loading: false, LoadingComplete: true, orderlist: orderlist })
@@ -152,7 +152,8 @@ Page({
    * 上拉事件
    */
   loadScrollLower: function () {
-    if (this.data.Loading && !this.data.LoadingComplete) {
+    if (!this.data.Loading && !this.data.LoadingComplete) {
+      this.setData({ Loading: true })
       this.getOrder();
     }
   },

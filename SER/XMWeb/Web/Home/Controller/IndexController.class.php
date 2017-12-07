@@ -573,7 +573,6 @@ class IndexController extends Controller {
 		$json['status']['msg']="请求成功！";
 		ob_clean();
 		$this->ajaxReturn($json, 'json');
-		//echo json_encode($json);
 		exit;	
 		
 	}
@@ -670,8 +669,8 @@ class IndexController extends Controller {
 		$uid= I('post.uid',0,'intval');
 		$sessionid= I('post.sessionid','','strip_tags');
 		$pid = I('post.pid',0,'intval');
-		$puint = I('post.puint',0,'float');
-		$pmoney=I('post.pmoney',0,'float');
+		$puint = I('post.puint',0,'intval');
+		$pmoney=I('post.pmoney',0,'intval');
 	
 		if($uid==0||$sessionid==""||$pid==0||$pmoney==0||$puint ==0){
 			$json['status']['err']=1;
@@ -730,7 +729,7 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
-		if($S[0]['uint']!=$puint*100){
+		if($S[0]['uint']!=$puint){
 			$json['status']['err']=1;
 			$json['status']['msg']="服务端单价被修改，请重新扫码！";
 			ob_clean();
@@ -746,27 +745,19 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
-		$tit="小程序测试充值";
-
-		//客户端数据生成
-		$pay_config = array();
-		$pay_config['appid'] = C('APPID');
-		$pay_config['mchid'] = C('MCHID');
-		$pay_config['key'] = C('RICHCOMM2016RICHCOMM2016RICHCOMM');
-		$pay_config['paytype'] = 'JSAPI';
-        $pay_config['openid'] = $U[0]['openid'];
+		$tit=$S[0]['sitename']."-".$P[0]['pilenum'].",预充金额.";
 		
 		$order_info = array();
         $order_info['order_info'] =$tit;
         $order_info['out_trade_no'] = 'RIC-'.GetRandStr(10);
-        $order_info['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
-        $order_info['total_fee'] = $pmoney;
-        $order_info['add_time'] = date('YmdHis');
-       	$order_info['notify_url'] = 'https://'.$_SERVER['HTTP_HOST'].'/API/wxpay/paynotice.php';
+		$order_info['total_fee'] = $pmoney;
+		$order_info['add_time'] =date('Y-m-d H:i:s');
+		$order_info['notify_url'] = 'https://'.$_SERVER['HTTP_HOST'].'/API/wxpay/paynotice.php';
+		$order_info['openid']= $U[0]['openid'];       
 		
 		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
 		
-		$pay = new \Pay($order_info,$pay_config);
+		$pay = new \Pay($order_info);
         $res = $pay->pay();
 
 		if(!$res){
@@ -800,11 +791,13 @@ class IndexController extends Controller {
 		$data['pid']=$pid;
 		$data['tit']=$tit;
 		$data['bid']=$B[0]['id'];
-		$data['money']=(int)($pmoney*100);
-		$data['cuint']=(int)($puint*100);
-		$data['addtime']=date('Y-m-d H:i:s');
+		$data['money']=$pmoney;
+		$data['cuint']=$puint;
+		$data['addtime']=$order_info['add_time'];
 		
 		if($lastInsId =M('tempmoney')->add($data)){
+			
+			
 			$data['id']=$lastInsId;
 			$json['status']['err'] = 0;
 			$json['status']['msg'] = '执行成功！';

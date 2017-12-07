@@ -1,11 +1,21 @@
 <?php
-require_once dirname(__FILE__)."/WxPay.Exception.php";
+/**
+* 2015-06-29 修复签名问题
+**/
+require_once "WxPay.Config.php";
+require_once "WxPay.Exception.php";
+
+/**
+ * 
+ * 数据对象基础类，该类中定义数据类最基本的行为，包括：
+ * 计算/设置/获取签名、输出xml格式的参数、从xml读取数据对象等
+ * @author widyhu
+ *
+ */
 class WxPayDataBase
 {
-//	protected $values = array();
-	public $values = array();
-	protected $return_values = array();
-	public $key = '';
+	protected $values = array();
+	
 	/**
 	* 设置签名，详见签名生成算法
 	* @param string $value 
@@ -50,11 +60,11 @@ class WxPayDataBase
     	$xml = "<xml>";
     	foreach ($this->values as $key=>$val)
     	{
-//    		if (is_numeric($val)){
+    		if (is_numeric($val)){
     			$xml.="<".$key.">".$val."</".$key.">";
-//    		}else{
-//    			$xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
-//    		}
+    		}else{
+    			$xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+    		}
         }
         $xml.="</xml>";
         return $xml; 
@@ -70,9 +80,11 @@ class WxPayDataBase
 		if(!$xml){
 			throw new WxPayException("xml数据异常！");
 		}
-        //将XML转为array 
-        $this->return_values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-		return $this->return_values;
+        //将XML转为array
+        //禁止引用外部xml实体
+        libxml_disable_entity_loader(true);
+        $this->values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);		
+		return $this->values;
 	}
 	
 	/**
@@ -91,20 +103,6 @@ class WxPayDataBase
 		$buff = trim($buff, "&");
 		return $buff;
 	}
-    
-    /**
-	 **设置key
-	 */
-    public function SetKey($key){
-        $this->key = $key;
-    }
-    
-    /**
-	 **返回key
-	 */
-    public function GetKey(){
-        return $this->key;
-    }
 	
 	/**
 	 * 生成签名
@@ -116,7 +114,7 @@ class WxPayDataBase
 		ksort($this->values);
 		$string = $this->ToUrlParams();
 		//签名步骤二：在string后加入KEY
-		$string = $string . "&key=".$this->GetKey();
+		$string = $string . "&key=".WxPayConfig::KEY;
 		//签名步骤三：MD5加密
 		$string = md5($string);
 		//签名步骤四：所有字符转为大写
@@ -129,7 +127,7 @@ class WxPayDataBase
 	 */
 	public function GetValues()
 	{
-		return $this->return_values;
+		return $this->values;
 	}
 }
 
@@ -147,8 +145,9 @@ class WxPayResults extends WxPayDataBase
 	 */
 	public function CheckSign()
 	{
+		//fix异常
 		if(!$this->IsSignSet()){
-			return true;
+			throw new WxPayException("签名错误！");
 		}
 		
 		$sign = $this->MakeSign();
@@ -184,6 +183,17 @@ class WxPayResults extends WxPayDataBase
         return $obj;
 	}
 	
+	/**
+	 * 
+	 * 设置参数
+	 * @param string $key
+	 * @param string $value
+	 */
+	public function SetData($key, $value)
+	{
+		$this->values[$key] = $value;
+	}
+	
     /**
      * 将xml转为array
      * @param string $xml
@@ -193,9 +203,27 @@ class WxPayResults extends WxPayDataBase
 	{	
 		$obj = new self();
 		$obj->FromXml($xml);
+		//fix bug 2015-06-29
+		if($obj->values['return_code'] != 'SUCCESS'){
+			 return $obj->GetValues();
+		}
 		$obj->CheckSign();
         return $obj->GetValues();
 	}
+	 /**
+     * 将xml转为array用户退款专用，没有签名
+     * @param string $xml
+     * @throws WxPayException
+     */
+	public static function InitBack($xml)
+	{	
+		$obj = new self();
+		$obj->FromXml($xml);
+		//fix bug 2015-06-29
+		return $obj->GetValues();
+	}
+	
+	
 }
 
 /**
@@ -259,8 +287,11 @@ class WxPayNotifyReply extends  WxPayDataBase
 }
 
 /**
-* 以 _u结尾的变量为flag位，用于表示与之对于的属性是否设置
-**/
+ * 
+ * 统一下单输入对象
+ * @author widyhu
+ *
+ */
 class WxPayUnifiedOrder extends WxPayDataBase
 {	
 	/**
@@ -730,6 +761,12 @@ class WxPayUnifiedOrder extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 订单查询输入对象
+ * @author widyhu
+ *
+ */
 class WxPayOrderQuery extends WxPayDataBase
 {
 	/**
@@ -862,6 +899,12 @@ class WxPayOrderQuery extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 关闭订单输入对象
+ * @author widyhu
+ *
+ */
 class WxPayCloseOrder extends WxPayDataBase
 {
 	/**
@@ -968,6 +1011,12 @@ class WxPayCloseOrder extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 提交退款输入对象
+ * @author widyhu
+ *
+ */
 class WxPayRefund extends WxPayDataBase
 {
 	/**
@@ -1255,6 +1304,12 @@ class WxPayRefund extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 退款查询输入对象
+ * @author widyhu
+ *
+ */
 class WxPayRefundQuery extends WxPayDataBase
 {
 	/**
@@ -1464,6 +1519,12 @@ class WxPayRefundQuery extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 下载对账单输入对象
+ * @author widyhu
+ *
+ */
 class WxPayDownloadBill extends WxPayDataBase
 {
 	/**
@@ -1621,6 +1682,12 @@ class WxPayDownloadBill extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 测速上报输入对象
+ * @author widyhu
+ *
+ */
 class WxPayReport extends WxPayDataBase
 {
 	/**
@@ -1987,6 +2054,12 @@ class WxPayReport extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 短链转换输入对象
+ * @author widyhu
+ *
+ */
 class WxPayShortUrl extends WxPayDataBase
 {
 	/**
@@ -2093,6 +2166,12 @@ class WxPayShortUrl extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 提交被扫输入对象
+ * @author widyhu
+ *
+ */
 class WxPayMicroPay extends WxPayDataBase
 {
 	/**
@@ -2484,6 +2563,12 @@ class WxPayMicroPay extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 撤销输入对象
+ * @author widyhu
+ *
+ */
 class WxPayReverse extends WxPayDataBase
 {
 	/**
@@ -2616,7 +2701,12 @@ class WxPayReverse extends WxPayDataBase
 	}
 }
 
-
+/**
+ * 
+ * 提交JSAPI输入对象
+ * @author widyhu
+ *
+ */
 class WxPayJsApiPay extends WxPayDataBase
 {
 	/**
@@ -2772,6 +2862,12 @@ class WxPayJsApiPay extends WxPayDataBase
 	}
 }
 
+/**
+ * 
+ * 扫码支付模式一生成二维码参数
+ * @author widyhu
+ *
+ */
 class WxPayBizPayUrl extends WxPayDataBase
 {
 		/**
@@ -2899,4 +2995,280 @@ class WxPayBizPayUrl extends WxPayDataBase
 	{
 		return array_key_exists('product_id', $this->values);
 	}
+}
+//转账零钱
+class WxBackCharge extends WxPayDataBase{
+	/**
+	* 设置微信分配的账号ID 企业号corpid即为此appId
+	* @param string $value 
+	**/
+	public function SetMch_Appid($value)
+	{
+		$this->values['mch_appid'] = $value;
+	}
+	/**
+	* 获取微信分配的账号ID的值
+	* @return 值
+	**/
+	public function GetMch_Appid()
+	{
+		return $this->values['mch_appid'];
+	}
+	/**
+	* 判断微信分配账号ID是否存在
+	* @return true 或 false
+	**/
+	public function IsMch_AppidSet()
+	{
+		return array_key_exists('mch_appid', $this->values);
+	}
+
+	/**
+	* 设置微信支付分配的商户号
+	* @param string $value 
+	**/
+	public function SetMchid($value)
+	{
+		$this->values['mchid'] = $value;
+	}
+	/**
+	* 获取微信支付分配的商户号的值
+	* @return 值
+	**/
+	public function GetMchid()
+	{
+		return $this->values['mchid'];
+	}
+	/**
+	* 判断微信支付分配的商户号是否存在
+	* @return true 或 false
+	**/
+	public function IsMchidSet()
+	{
+		return array_key_exists('mchid', $this->values);
+	}
+	/**
+	* 设置微信支付分配的终端设备号，商户自定义
+	* @param string $value 
+	**/
+	public function SetDevice_info($value)
+	{
+		$this->values['device_info'] = $value;
+	}
+	/**
+	* 获取微信支付分配的终端设备号，商户自定义的值
+	* @return 值
+	**/
+	public function GetDevice_info()
+	{
+		return $this->values['device_info'];
+	}
+	/**
+	* 判断微信支付分配的终端设备号，商户自定义是否存在
+	* @return true 或 false
+	**/
+	public function IsDevice_infoSet()
+	{
+		return array_key_exists('device_info', $this->values);
+	}
+
+	/**
+	* 设置随机字符串，不长于32位。推荐随机数生成算法
+	* @param string $value 
+	**/
+	public function SetNonce_Str($value)
+	{
+		$this->values['nonce_str'] = $value;
+	}
+	/**
+	* 获取随机字符串，不长于32位。推荐随机数生成算法的值
+	* @return 值
+	**/
+	public function GetNonce_Str()
+	{
+		return $this->values['nonce_str'];
+	}
+	/**
+	* 判断随机字符串，不长于32位。推荐随机数生成算法是否存在
+	* @return true 或 false
+	**/
+	public function IsNonce_StrSet()
+	{
+		return array_key_exists('nonce_str', $this->values);
+	}
+	
+	/**
+	* 设置商订单号,32个字符内、可包含字母, 其他说明见商户订单号
+	* @param string $value 
+	**/
+	public function SetPartner_Trade_No($value)
+	{
+		$this->values['partner_trade_no'] = $value;
+	}
+	/**
+	* 获取商户订单号,32个字符内、可包含字母, 其他说明见商户订单号的值
+	* @return 值
+	**/
+	public function GetPartner_Trade_No()
+	{
+		return $this->values['partner_trade_no'];
+	}
+	/**
+	* 判断商户订单号,32个字符内、可包含字母, 其他说明见商户订单号是否存在
+	* @return true 或 false
+	**/
+	public function IsPartner_Trade_NoSet()
+	{
+		return array_key_exists('partner_trade_no', $this->values);
+	}
+
+	/**
+	* 用户在商户appid下的唯一标识。下单前需要调用【网页授权获取用户信息】接口获取到用户的Openid。 
+	* @param string $value 
+	**/
+	public function SetOpenid($value)
+	{
+		$this->values['openid'] = $value;
+	}
+	/**
+	* 用户在商户appid下的唯一标识。下单前需要调用【网页授权获取用户信息】接口获取到用户的Openid。 的值
+	* @return 值
+	**/
+	public function GetOpenid()
+	{
+		return $this->values['openid'];
+	}
+	/**
+	* 用户在商户appid下的唯一标识。下单前需要调用【网页授权获取用户信息】接口获取到用户的Openid。 是否存在
+	* @return true 或 false
+	**/
+	public function IsOpenidSet()
+	{
+		return array_key_exists('openid', $this->values);
+	}
+	/**
+	* 设置校验用户姓名选项 
+	* @param string $value 
+	**/
+	public function SetCheck_Name($value)
+	{
+		$this->values['check_name'] = $value;
+	}
+	/**
+	* 获取校验用户姓名选项 
+	* @return 值
+	**/
+	public function GetCheck_Name()
+	{
+		return $this->values['check_name'];
+	}
+	/**
+	* 校验用户姓名选项 。 是否存在
+	* @return true 或 false
+	**/
+	public function IsCheck_NameSet()
+	{
+		return array_key_exists('check_name', $this->values);
+	}
+
+	/**
+	* 设置收款用户姓名
+	* @param string $value 
+	**/
+	public function SetRe_User_Name($value)
+	{
+		$this->values['re_user_name'] = $value;
+	}
+	/**
+	* 获取收款用户姓名
+	* @return 值
+	**/
+	public function GetRe_User_Name()
+	{
+		return $this->values['re_user_name'];
+	}
+	/**
+	* 校验收款用户姓名
+	* @return true 或 false
+	**/
+	public function IsRe_User_NameSet()
+	{
+		return array_key_exists('re_user_name', $this->values);
+	}
+	/**
+	* 设置金额
+	* @param string $value 
+	**/
+	public function SetAmount($value)
+	{
+		$this->values['amount'] = $value;
+	}
+	/**
+	* 获取金额
+	* @return 值
+	**/
+	public function GetAmount()
+	{
+		return $this->values['amount'];
+	}
+	/**
+	* 校验金额
+	* @return true 或 false
+	**/
+	public function IsAmountSet()
+	{
+		return array_key_exists('amount', $this->values);
+	}
+
+	/**
+	* 设置企业付款描述信息
+	* @param string $value 
+	**/
+	public function SetDesc($value)
+	{
+		$this->values['desc'] = $value;
+	}
+	/**
+	* 获取企业付款描述信息
+	* @return 值
+	**/
+	public function GetDesc()
+	{
+		return $this->values['desc'];
+	}
+	/**
+	* 校验企业付款描述信息
+	* @return true 或 false
+	**/
+	public function IsDescSet()
+	{
+		return array_key_exists('desc', $this->values);
+	}
+
+	/**
+	* 设置Ip地址
+	* @param string $value 
+	**/
+	public function SetSpbill_Create_Ip($value)
+	{
+		$this->values['spbill_create_ip'] = $value;
+	}
+	/**
+	* 获取Ip地址
+	* @return 值
+	**/
+	public function GetSpbill_Create_Ip()
+	{
+		return $this->values['spbill_create_ip'];
+	}
+	/**
+	* 校验Ip地址
+	* @return true 或 false
+	**/
+	public function IsSpbill_Create_IpSet()
+	{
+		return array_key_exists('spbill_create_ip', $this->values);
+	}
+
+
 }

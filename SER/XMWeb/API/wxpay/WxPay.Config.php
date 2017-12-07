@@ -22,8 +22,10 @@ class WxPayConfig
 	 * 获取地址：https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&token=2005451881&lang=zh_CN
 	 * @var string
 	 */
-	const APPID = 'wxa311ae6ba99eac9a';
+	const APPID = 'wx9fbd71683a0a9113';
 	const MCHID = '1309840501';
+	const KEY = 'RICHCOMM2016RICHCOMM2016RICHCOMM';
+	const APPSECRET = '25d60a52124246cf260fd24438e95421';
 	
 	//=======【证书路径设置】=====================================
 	/**
@@ -32,8 +34,9 @@ class WxPayConfig
 	 * API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书）
 	 * @var path
 	 */
-    const SSLCERT_PATH = '/key/apiclient_cert.pem';
-    const SSLKEY_PATH = '/key/apiclient_key.pem';
+	const SSLCERT_PATH = '/cert/apiclient_cert.pem';
+	const SSLKEY_PATH = '/cert/apiclient_key.pem';
+	
 	//=======【curl代理设置】===================================
 	/**
 	 * TODO：这里设置代理机器，只有需要代理的时候才设置，不需要代理，请设置为0.0.0.0和0
