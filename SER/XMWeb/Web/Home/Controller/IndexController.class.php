@@ -290,74 +290,53 @@ class IndexController extends Controller {
 		//判断站点
 		$T1=M('sitelist')->where('id = '.$sid)->find();
 		if (!file_exists($_SERVER["DOCUMENT_ROOT"].$T1['sitemap'])){
-			$json['status']['err']=1;
+			$json['status']['err']=2;
 			$json['status']['msg']="图片不存在！";
+			$json['sitename']=$T1['sitename'];
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
-		$json['status']['err']=0;
-		$json['status']['msg']="执行成功！";
-		ob_clean();
-		$this->ajaxReturn($json, 'json');
-		exit; 
-	}
-	
-	/*************************
-	*车位图片生成
-	*/	
-	public function Site_Img(){
-		ob_clean();
-		$sid = I('get.sid',0,'intval');
-		$uid = I('get.uid',0,'intval');
-		$sessionid=I('get.sessionid','','strip_tags');
-		if($sid==0||$uid==0||$sessionid==""){
-			header("Content-type: image/jpeg");
-			echo file_get_contents($_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Site/map/none.jpg');
-			exit;
-		}
-		//判断用户名session是否正确
-		$T=M('sys_userinfo')->where('id = '.$uid.' and ucheck=1')->select();
-		if(count($T)!=1){
-			header("Content-type: image/jpeg");
-			echo file_get_contents($_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Site/map/none.jpg');
-			exit;	
-		}
-		if($T[0]["sessionid"]!=$sessionid){
-			header("Content-type: image/jpeg");
-			echo file_get_contents($_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Site/map/none.jpg');
-			exit;	
-		}
-		//判断站点
-		$T1=M('sitelist')->where('id = '.$sid)->find();
-		if(!$T1){
-			header("Content-type: image/jpeg");
-			echo file_get_contents($_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Site/map/none.jpg');
-			exit;		
-		}
 		if (!file_exists($_SERVER["DOCUMENT_ROOT"].$T1['sitemap'])){
-			header("Content-type: image/jpeg");
-			echo file_get_contents($_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Site/map/none.jpg');
+			$json['status']['err']=2;
+			$json['status']['msg']="站点图片不存在！";
+			$json['sitename']=$T1['sitename'];
+			ob_clean();
+			$this->ajaxReturn($json, 'json');
 			exit;
 		}
-		//获取设备列表
+		//判断设备
 		$Tp=M('pile')->where('parentid = '.$sid)->select();
 		if(count($Tp)==0){
-			header("Content-type: image/jpeg");
-			echo file_get_contents($_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Site/map/none.jpg');
-			exit;		
+			$json['status']['err']=2;
+			$json['status']['msg']="没有设备！";
+			$json['sitename']=$T1['sitename'];
+			ob_clean();
+			$this->ajaxReturn($json, 'json');
+			exit;	
 		}
-
+		//合成图片
 		$bgimg = new \Imagick($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
+		$image_info = getimagesize($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
+		//车位状态图
 		$smallimg="/Web/System/Public/images/che.png";
-
+		
+		
+		$wh=getimagesize($_SERVER["DOCUMENT_ROOT"].$smallimg);
+		$w=$wh[0];
+		$h=$wh[1];
+		$l=sqrt($w*$w+$h*$h)/2;
+		
 		foreach($Tp as $t=>$v){
 			$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
 			$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
-			$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx'],$v['cy']);
+
+			$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
+			$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
+			$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
 			$img[]=$small;
 		}
-		header("Content-Type: image/{$bgimg->getImageFormat()}");
+		
 		$img = $bgimg->getImageBlob();
 		foreach($img as $t=>$v){
 			$v->clear();   
@@ -365,10 +344,15 @@ class IndexController extends Controller {
 		}
 		$bgimg->clear();   
 		$bgimg->destroy();
-
-		echo $img;
+		$json['mime']= $image_info['mime'];
+		$json['img'] = 'data:'.$image_info['mime'].';base64,'.str_replace("\\r\\n","",base64_encode($img));
+		$json['sitename']=$T1['sitename'];
+		$json['status']['err']=0;
+		$json['status']['msg']="执行成功！";
+		ob_clean();
+		$this->ajaxReturn($json, 'json');
+		exit; 
 	}
-	
 	
 	/*************************
 	*图片测试
@@ -479,7 +463,8 @@ class IndexController extends Controller {
 			$ustime=ItoTime($v['ustime']);
 			$data[$t]['ustime']=$ustime['h'].'时'.$ustime['m'].'分'.$ustime['s'].'秒';
 			$data[$t]['usnum']=$v['usnum'];
-			
+			$data[$t]['usele']=$v['usele']==null?'0.0':sprintf("%1.1f",(float)$v['usele']/10);
+			$data[$t]['cele']=$v['cele']==null?'0.0':sprintf("%1.1f",(float)$v['cele']/10);
 		}
 		$json['data']=$data;
 		$json['maxid']=count($T)==0?0:$T[count($T)-1]["id"];

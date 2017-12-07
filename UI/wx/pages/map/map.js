@@ -34,27 +34,25 @@ Page({
       success: function (res) {
         console.log(res.data)
         if (res.data.status.err == 0) {
-          if (!(res.data.width == 0 || res.data.height == 0)) {
+          $this.setData({ mapimg: res.data.img, ismap:true })
             wx.setNavigationBarTitle({
               title: res.data.sitename + "-车位图"
             })
-            $this.setData({ismap: true})
-            wx.downloadFile({
-              url: app.globalData.URL + "/index.php?s=/Home/Index/Site_Img&sid=" + sid + "&uid=" + userkey.uid + "&sessionid=" + userkey.sessionid, 
-              success: function (res1) {
-                console.log(res1)
-                if (res1.statusCode === 200) {
-                    $this.setData({ mapimg: res1.tempFilePath })
-                }
-              }
-            })
-          }else{
+        } else if (res.data.status.err == 1) {
+          wx.showModal({
+            title: '消息提示',
+            content: res.data.status.msg,
+            showCancel: false,
+            confirmText: '返回',
+            success: function () {
+              wx.navigateBack()
+            }
+          })
+        } else if (res.data.status.err == 2){
             wx.setNavigationBarTitle({
               title: res.data.sitename + "-车位图"
             })
             $this.setData({ ismap: false})
-
-          }
         }
       }
     })

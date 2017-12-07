@@ -12,20 +12,20 @@
 
 
 .result-item{display: flex; flex-direction: column;padding: 10rpx 0; overflow: hidden;} 
-.iteminfo{border-top: 1rpx solid #dcdcdc; border-bottom: 1rpx solid #dcdcdc;background: #fff; padding:30rpx} 
+.iteminfo{border-top: 1rpx solid #dcdcdc; border-bottom: 1rpx solid #dcdcdc;background: #fff; padding:20rpx} 
 
-.devdes{height: 50rpx;line-height: 50rpx; color: #666; font-size: 1rem}
+.devdes{height: 50rpx;line-height: 50rpx; color: #777; font-size: 1rem}
 .itemtime{ height: 40rpx;line-height: 40rpx; color: #999; font-size: 0.7rem; font-family: Verdana}
-.middes{flex-direction: row;display: flex; padding-top: 30rpx; padding-bottom: 30rpx; border-bottom: #eee 1rpx dashed; margin-bottom:30rpx}
+.middes{flex-direction: row;display: flex; padding-top: 20rpx; padding-bottom: 20rpx; border-bottom: #eee 1rpx dashed; margin-bottom:20rpx}
 .midmoney{ flex: 1;border-right:#eee 1rpx dashed}
 .midtitle{ color: #888; font-size: 0.8rem; text-align: center; letter-spacing: 1rpx}
-.midnumber{ color: #666; font-size: 1.4rem; text-align: center; letter-spacing: 0;}
+.midnumber{ color: #777; font-size: 1.4rem; text-align: center; letter-spacing: 0;}
 .midno{  font-size: 1.2rem;font-family: Verdana}
 .miduint{ font-size: 1rem}
 .itemno{ flex: 1; font-size: 0.9rem; color: #666}
-.sumdes,.orderdes,.itemtit{line-height: 40rpx; color: #666; font-size: 0.85rem; padding-top: 5rpx; padding-bottom:5px;word-break: break-all}
+.sumdes,.orderdes,.itemtit{line-height: 40rpx; color: #777; font-size: 0.8rem; padding-bottom:5px;word-break: break-all}
 .ctit{ color: #999}
-.ffont{ font-family: Verdana; font-size: 0.9rem}
+.ffont{ font-family: Verdana; font-size: 0.82rem}
 .cstat0{color: #666}
 .cstat1{color: #6c6}
 .cstat2{color: #c66}
