@@ -1,0 +1,25 @@
+<view class="seltop">
+  <image src='{{siteimg}}' class='siteimg'></image>
+  <view class='devname'>{{pname}}</view>
+  <view class='devuint'>单价：{{cuint}}元</view>
+</view>
+
+<view class='plisst'>
+<view class='pitem'>
+<view class='pitemtxt'>充电金额</view><text  class='pitemval' style='color:#c00'>{{cmoney}} 元</text>
+</view>
+<view class='pitem'>
+<view class='pitemtxt'>充电时间</view><text  class='pitemval' style='color:#0c0'>{{ctime}}</text>
+</view>
+<view class='pitem'>
+<view class='pitemtxt'>充电电度</view><text  class='pitemval'>{{cele}} Kw</text>
+</view>
+<view class='pitem'>
+<view class='pitemtxt'>充电状态</view><text  class='pitemval' style='color:{{color}}'>{{statu}}</text>
+</view>
+
+</view>
+
+<view class='csumbit'>
+  <button type='plain' class='cbtnsum' bindtap="stopcharge">停止充电</button>
+</view>

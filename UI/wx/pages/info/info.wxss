@@ -1,0 +1,25 @@
+.slide-image{ width: 100%} 
+.pop{padding: 15rpx; display: flex;flex-direction:column; border-bottom: #ddd solid 1rpx }
+.poptop{ display: flex;flex-direction:row;}
+
+.poptit{ font-size: 0.8rem; font-weight: bold; color: #888; height: 1.6rem; line-height: 1.6rem; flex: 1}
+.phpdis{ font-size: 0.8rem;color: #666;}
+.popnum{font-size: 0.8rem;color: #666; height: 1.6rem; line-height: 1.6rem; padding-top: 5rpx}
+.phpadd{font-size: 0.8rem;color: #666; height: 1.6rem; line-height: 1.6rem; padding-top: 5rpx}
+
+.inbtns{display: flex;flex-direction:row;border-bottom: #ddd solid 1rpx; padding: 15rpx 0}
+
+.inbtn{flex: 1;display: flex;flex-direction:column; text-align: center; margin: 0 15rpx; padding: 5rpx 0;}
+.inbtnhover{ background: #f8f8f8}
+.inline{ width: 1rpx; background: #ddd; height: 130rpx;}
+.inbimg{ width: 80rpx; height: 80rpx; margin-left: auto; margin-right: auto}
+.infobtntxt{ font-size: 0.85rem; color: #888; line-height: 40rpx}
+
+.sitetit{ padding-left: 20rpx; height: 2.2rem; line-height: 2.2rem; background: #f0f0f0;font-size: 0.9rem; border-bottom: #ddd solid 1rpx; color: #666}
+.devlist{ padding:15rpx 20rpx; border-bottom: #ddd solid 1rpx;display: flex;flex-direction:row; line-height: 1.5rem}
+.devname{ color: #888; font-size: 0.8rem; flex: 1; position: relative}
+.btnshare{ position: absolute; width: 100%; height: 100%; border: 0; opacity: 0}
+.devstatus{ color: #888; font-size: 0.8rem}
+.stagre{ color: #3f3}
+.stared{ color: #f33}
+.lbbg{ background: #ccc}

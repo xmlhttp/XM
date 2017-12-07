@@ -1,0 +1,10 @@
+.seltop{ padding-top: 30rpx; background: #12abf2; height: 390rpx}
+.siteimg{ width: 200rpx; height: 200rpx; border-radius: 100rpx; border: #fff solid 5rpx; background: #eee; margin-left: auto; margin-right: auto; display: block} 
+.devname{ text-align: center; color: #f8f8f8; font-size: 1rem; line-height: 1.5rem; padding-top: 0.5rem}
+.devuint{ text-align: center; color: #f8f8f8; line-height: 1.5rem; padding-bottom: 30rpx; padding-top: 0.5rem; letter-spacing: 1rpx; font-size: 1.2rem}
+.plisst{ padding: 30rpx;}
+.pitem{ border-bottom: #ccc solid 1rpx; flex-direction:row; display: flex; line-height: 80rpx; padding: 10rpx 5rpx 0}
+.pitemtxt{ flex: 1; color: #888; font-size: 0.85rem}
+.pitemval{ color: #12abf2;font-size: 0.85rem}
+.csumbit{height: 90rpx; padding:20rpx; color: #888;  font-size: 0.9rem}
+.cbtnsum{font-size: 0.9rem; color: #666; padding: 10rpx 0}

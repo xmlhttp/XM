@@ -1,0 +1,564 @@
+<?php if (!defined('THINK_PATH')) exit();?>﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+    <title>Present by Richcomm.com.cn 管理中心 - 添加管理员</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+    <script  src="/Public/jquery.js"></script>
+<style>
+.fixed:after{content:"";display:block;height:0;clear:both;visibility:hidden}.fixed{display:block}.fixed{min-height:1%}* html .fixed{height:1%}body{font-size:14px; color:#696f77}body,font,form,ul,li,p,h1,h2,h3,h4,h5,h6,input,select,span,table,tr,th,td,a,b{font-family:"宋体";margin:0;padding:0}body,font{line-height:22px; text-align:center}body a{outline:none;blr:expression(this.onFocus=this.blur());text-decoration:none;cursor:pointer}input,select{line-height:16px;outline:none}ul,li,span{list-style-type:none}table{ width: 100%;border-collapse:collapse}img{border:0}a:hover{ color:#F7760E; text-decoration:underline}
+.mask{position:absolute; left:0; top:0; width:100%; height:100%; background:#fff; z-index:1}
+.top{ min-width:1000px; position:relative; overflow:hidden; min-height:500px; z-index:0}
+.top li{width:50%; position:absolute; height:50%}
+.top li.li1,.top li.li3{ border-right:#ccc solid 2px; left:0; top:0; margin-left:-1px}
+.top li.li2,.top li.li4{left:50%; margin-left:1px;}
+.top li.li3,.top li.li4{ top:50%}
+#vm{position:absolute}
+.ctrl{height:35px; background:#eee; border-top:#ccc solid 2px; border-bottom:#ccc solid 1px;  line-height:33px; text-align:left;letter-spacing:2px}
+.rztit{ margin-left:10px; font-size:14px; color:#888; font-weight:bold;}
+.rzbtn{ float:right; font-size:14px; color:#666; margin-right:10px; background:#fff; border:#66F dashed 1px; height:22px; width:50px; text-align:center; line-height:22px; margin-top:5px; border-radius:2px;}
+.rzbtn:hover{ text-decoration:none; color:#fd325f; border:#fd325f dashed 1px}
+.showping{ float:right; margin-right:30px;font-size:14px; margin-top:1px;}
+#showping{ float:left; margin-top:10px; margin-right:6px;*margin-top:7px;}
+.ctrlpan{ height:200px; background:#f8f8f8; overflow-y:auto; width:100%}
+.ctrlline{ height:33px;line-height:33px; font-size:13px;letter-spacing:1px; color:#555; text-align:left; border-bottom:#ccc dashed 1px; padding:2px 10px 0; overflow:hidden}
+.ctrlline span{ letter-spacing:0px;}
+.ctrlred{ color:#900}
+.ctrlgre{ color:#090}
+.sethit{float:right;margin-right:10px;font-size:13px}
+.sethit span{ font-family:Verdana, Geneva, sans-serif; color:#c33; letter-spacing:0; margin-left:2px; margin-right:3px}
+
+.compan{ position:absolute; left:0; top:0; width:100%; height:100%; background:#000; overflow-y:auto; z-index:0}
+.cominfo{ padding:0px 20px 10px; text-align:left; line-height:16px; font-size:13px; color:#0c0; letter-spacing:1px}
+.cominfo a{ text-decoration:underline; color:#c60}
+.cominfo a:hover{ color:#fff}
+.comclear{ position:absolute; z-index:1; background:#fff; color:#666;top:5px; right:22px; width:70px; height:28px; border-radius:3px; font-size:14px; line-height:28px; letter-spacing:2px;border:#090 dashed 1px}
+.comclear:hover{text-decoration:none; color:#fd325f; border:#fd325f dashed 1px}
+.comsel{ position:absolute;z-index:1; background:#fff; bottom:15px; right:22px; width:160px; height:32px; border:#090 dashed 1px}
+.comseltxt{ text-align:left; padding:2px 0 0 8px; height:30px;line-height:30px;font-size:13px;color:#666; width:120px; overflow:hidden; cursor:default}
+.comselico{ float:right; width:0; height:0; font-size:0;line-height:0;border-bottom:#ccc solid 13px;border-right:#fff dashed 8px;
+border-right-color:transparent;border-left:#fff dashed 8px;border-left-color:transparent; margin-top:9px; margin-right:7px;}
+.comsel:hover .comselico{ border-bottom-color:#999}
+.comsellist{ position:absolute;bottom:32px; background:#fff; left:-1px; width:100%;border:#090 dashed 1px; border-bottom:0; display:none}
+.comsellist a{ line-height:32px; text-align:left; padding-left:10px; display:block; color:#666; font-size:13px; border-bottom:#ccc dashed 1px;cursor:default}
+.comsellist a:hover{text-decoration:none; color:#fd325f;}
+
+/*li3*/
+.tableft{ background:#fafafa; float:left; border:#f0f0f0 solid 2px; margin-top:10px; margin-left:10px; width:33%; padding-top:5px; padding-bottom:5px}
+.tableft table tr td{ text-align:left; font-size:13px; color:#666;height:29px; letter-spacing:1px}
+.tableft table tr td.tabtit{ text-align:center; height:32px; letter-spacing:2px; color:#999; font-weight:bold; border-bottom:#eee dashed 2px;}
+.tableft table tr td.rights{ text-align:right; padding-right:5px; width:55%}
+.tableft table tr td span{ margin-right:3px}
+.tabright{ float:right}
+.settxt{ width:40px; height:16px; line-height:15px; font-family:Verdana, Geneva, sans-serif; color:#888; font-size:13px; border:#ddd solid 2px; padding:2px 5px}
+.tabright{ float:right; width:60%; margin-left:0; margin-right:10px;}
+.tabright table tr td.rights{ width:auto}
+.setpinlv{ height:24px; width:90%}
+.setpost{ padding:5px 12px;  line-height:15px; border-radius:3px;border:#c33 dashed 1px;color:#c33}
+a.setpost:hover{ text-decoration:none;border:#fd325f dashed 1px;color:#fd325f}
+/*li1样式*/
+.pileinfo{ float:left;  margin-top:10px; margin-left:10px; width:55%}
+.pileinfo table{border:#f0f0f0 solid 2px;}
+.pileinfo td{ text-align:left; padding-left:15px; font-size:13px; color:#999; border-bottom:#eee solid 1px}
+.pileinfo td span{ margin-left:3px;margin-right:3px}
+.pileinfo td.piletit{ height:40px; text-align:center; padding:0;background:#f8f8f8;color:#aaa; font-size:13px; font-weight:bold; border-bottom:#eee dashed 2px}
+.pileinfo td.pileewm{width:160px; height:160px; background:#f8f8f8;text-align:center; border-right:#eee solid 1px; padding-left:0}
+.pileinfo td.piletxt{ height:33px;border-bottom:0;text-align:center;color:#900;border-right:#eee solid 1px; padding-left:0}
+.errmode{ float:right; margin-left:0; margin-right:10px; width:37%;}
+.errmode table{background:#f8f8f8}
+.errmode td{ padding:0; height:33px}
+.errmode td.rights{ text-align:right; padding-right:3px}
+.errmode tr.last td{ border:0}
+.setpinlw{ width:80px}
+.infodesc{ margin-top:10px; background:#fefee9; border:#eee solid 2px; font-size:12px; padding:5px 15px; color:#888; text-align:left; line-height:35px; height:35px}
+</style>
+</head>
+<body scroll="no">
+<div class="mask" id="mask"></div>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="1" height="1"  id="vm" name="vm">
+  <param name="movie" value="/Web/System/Public/images/vm/vm.swf" />
+  <param name="quality" value="high" />
+  <param name="FlashVars" value="pid=<?php echo ($pid); ?>&uid=<?php echo ($uid); ?>&sessionid=<?php echo ($sessionid); ?>" />
+  <embed src="/Web/System/Public/images/vm/vm.swf" FlashVars="pid=<?php echo ($pid); ?>&uid=<?php echo ($uid); ?>&sessionid=<?php echo ($sessionid); ?>" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="1" height="1" ></embed>
+</object>
+<ul class="top" id="top"><li class="li1">
+<div class="pileinfo">
+<table>
+  <tr>
+    <td colspan="2" class="piletit"><span style="color:#c22" id="pname1"></span>实时信息</td>
+  </tr>
+  <tr>
+    <td rowspan="5" class="pileewm">
+    <img src="/Web/System/Public/images/vm/loading.gif" id="ewm" />
+   
+    </td>
+    <td>状态:<span id="plie2">空闲</span></td>
+  </tr>
+  <tr>
+    <td>电压:<span id="vol2">220</span>V</td>
+  </tr>
+  <tr>
+    <td>电流:<span id="ele2">0.000</span>A</td>
+  </tr>
+  <tr>
+    <td>电度:<span id="wt2">0.0</span>KW*H</td>
+  </tr>
+  <tr>
+	<td>车位:<span id="car2">空闲</span></td>
+  </tr>
+  <tr>
+    <td class="piletxt">扫码充电</td>
+	<td style="border:0">版本:<span id="ver">V003</span></td>
+  </tr>
+</table>
+</div>
+<div class="pileinfo errmode">
+<table>
+  <tr>
+    <td colspan="2" class="piletit">故障模拟</td>
+  </tr>
+   <tr>
+    <td class="rights">充电电位:</td>
+    <td><select class="setpinlv setpinlw" id="powerele"><option>√高电平</option><option>×低电平</option></select></td>
+  </tr>
+  <tr>
+    <td class="rights">急停按钮:</td>
+    <td><select class="setpinlv setpinlw" id="estop"><option>√弹起</option><option>×按下</option></select></td>
+  </tr>
+  <tr>
+    <td class="rights">CC连线:</td>
+    <td><select class="setpinlv setpinlw" id="cc"><option>√连接</option><option>×断开</option></select></td>
+  </tr>
+  <tr class="last">
+    <td class="rights">AD采样:</td>
+    <td><select class="setpinlv setpinlw" id="ad"><option>√6V</option><option>×9V</option><option>×12V</option></select></td>
+  </tr>
+</table>
+<div class="infodesc"><b style="color:#c00">说明：</b>结果以实体桩为准</div>
+
+</div>
+
+</li><li class="li2">
+<!--串口面板开始-->
+<div class="compan" id="compan">
+<div class="cominfo" id="cominfo"></div>
+</div>
+<!--串口面板结束-->
+<a class="comclear" id="comclear" href="javascript:void(0)">清空</a>
+<!--命令选择-->
+<div class="comsel" id="comsel">
+<div class="comselico"></div>
+<div class="comseltxt" id="comseltxt">请选择串口命令</div>
+<div class="comsellist" id="comsellist">
+<a href="javascript:void(0)">停止:stoppower()</a>
+<a href="javascript:void(0)">获取IP:getip()</a>
+<a href="javascript:void(0)">信息:getinfo()</a>
+<a href="javascript:void(0)">请选择串口命令</a>
+</div>
+</div>
+<!--命令选择结束-->
+</li><li class="li3">
+<div class="ctrl"><div class="sethit">电压上限:<span id="voluped"></span>V,电压下限:<span id="voldowned"></span>V,电流上限:<span id="eleed"></span>A</div><span class="rztit">本地参数设置</span></div>
+<div class="fixed">
+<div class="tableft">
+<table>
+  <tr>
+    <td colspan="2" class="tabtit">初始信息</td>
+  </tr>
+  <tr>
+    <td class="rights">设定电压:</td>
+    <td><span id="vol1">220</span>V</td>
+  </tr>
+  <tr>
+    <td class="rights">设定电流:</td>
+    <td><span id="ele1">0.000</span>A</td>
+  </tr>
+  <tr>
+    <td class="rights">电表读数:</td>
+    <td><span id="wt1">0.0</span>KW*H</td>
+  </tr>
+  <tr>
+    <td class="rights">车位状态:</td>
+    <td><span ic="car1">空闲</span></td>
+  </tr>
+  <tr>
+    <td class="rights">充电桩状态:</td>
+    <td><span id="pile1">空闲</span></td>
+  </tr>
+</table>
+</div>
+
+<div class="tabright tableft">
+<table>
+  <tr>
+    <td colspan="4" class="tabtit">设置信息</td>
+  </tr>
+  <tr>
+    <td class="rights">电压上限加:</td>
+    <td><input type="text" class="settxt" value="40" id="volup" /></td>
+    <td class="rights">下限减:</td>
+    <td><input type="text"  class="settxt" value="40" id="voldown"/></td>
+  </tr>
+  <tr>
+    <td class="rights">电流最小加:</td>
+    <td><input type="text" class="settxt" value="0.1" id="elemin" /></td>
+    <td class="rights">最大加:</td>
+    <td><input type="text" class="settxt" value="1" id="elemax"/></td>
+  </tr>
+  <tr>
+    <td class="rights">电度最小加:</td>
+    <td><input type="text"  class="settxt" value="0.1" id="wtmin" /></td>
+    <td class="rights">最大加:</td>
+    <td><input type="text"  class="settxt" value="1" id="wtmax"/></td>
+  </tr>
+  <tr>
+    <td class="rights">车位占用:</td>
+    <td ><input type="checkbox" id="carchk" /></td><td colspan="2"  rowspan="2" style="text-align:center">
+    	
+    </td>
+  </tr>
+  <tr>
+    <td class="rights">执行频率:</td>
+    <td><select class="setpinlv" id="setpinlv"><option selected="selected">10秒</option><option>15秒</option><option>20秒</option></select></td>
+  </tr>
+</table>
+</div>
+
+
+
+</div>
+</li>
+<li class="li4">
+<div class="ctrl"><a class="rzbtn" id="rzbtn">清空</a><span class="showping"><input type="checkbox" id="showping" />隐藏心跳</span><span class="rztit">日志面板</span></div>
+<div class="ctrlpan" id="ctrlpan">
+<div class="ctrlinfo" id="ctrlinfo">
+<div class="ctrlline"><span>=====</span> 与服务器连接中 <span>=====</span></div>
+</div>
+</div>
+</li>
+</ul>
+
+<script>
+
+Date.prototype.pattern=function(fmt) {         
+    var o = {         
+    "M+" : this.getMonth()+1, //月份         
+    "d+" : this.getDate(), //日         
+    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+    "H+" : this.getHours(), //小时         
+    "m+" : this.getMinutes(), //分         
+    "s+" : this.getSeconds(), //秒         
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度         
+    "S" : this.getMilliseconds() //毫秒         
+    };         
+    var week = {         
+    "0" : "/u65e5",         
+    "1" : "/u4e00",         
+    "2" : "/u4e8c",         
+    "3" : "/u4e09",         
+    "4" : "/u56db",         
+    "5" : "/u4e94",         
+    "6" : "/u516d"        
+    };         
+    if(/(y+)/.test(fmt)){         
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));         
+    }         
+    if(/(E+)/.test(fmt)){         
+        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);         
+    }         
+    for(var k in o){         
+        if(new RegExp("("+ k +")").test(fmt)){         
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));         
+        }         
+    }         
+    return fmt;         
+}
+
+var isPowL=false,//是否过压
+	DataTask=null,
+	jsvol=0,
+	jsele=0,
+	jswt=0,
+	VM={
+	init:function(){
+		this.event()
+	},
+	event:function(){
+		var _this=this;
+		_this.adjust();
+		$("#carchk").removeAttr("checked");
+		$("#powerele").get(0).selectedIndex=0;
+		$("#estop").get(0).selectedIndex=0;
+		$("#cc").get(0).selectedIndex=0;
+		$("#ad").get(0).selectedIndex=0;
+		$(window).resize(function() {_this.adjust()});
+		//隐藏下拉
+		$(window).click(function(){$("#comsellist").fadeOut(100)})
+		//清空控制台
+		$("#rzbtn").click(function(){$("#ctrlinfo").children().remove()})
+		//清空串口输出
+		$("#comclear").click(function(){$("#cominfo").text("")})
+		//串口下拉框
+		$("#comsel").click(function(e){
+			e.stopPropagation();
+			$("#comsellist").fadeIn(100)
+		})
+		//获取串口信息
+		$("#comsellist>a").click(function(e){
+			e.stopPropagation();
+			$("#comseltxt").text($(this).text());
+			$("#comsellist").fadeOut(100);
+			_this.thisMovie("vm").getInfo($(this).index())
+		})
+		//车位选框
+		$("#carchk").click(function(){
+			_this.thisMovie("vm").setCar($("#carchk:checked").length)
+			if(!_this.thisMovie("vm").getPower()){
+				if($("#carchk:checked").length==0){
+					$("#car2").text("空闲");
+				}else{
+					$("#car2").text("占用");
+				}
+			}
+			_this.setCtrl("车位状态被修改为-"+($("#carchk:checked").length==0?"空闲":"占用"),"")
+		})
+	},
+	adjust:function(){
+		var h=$(window).outerHeight(true);
+		h=h>500?h:500;
+		$("#top").height(h);
+		$("#ctrlpan").height(h/2-38)
+		$("#compan").height(h/2)
+		
+	},
+	thisMovie:function(movieName){
+		var e=document.getElementById(movieName);
+		return (navigator.appName.indexOf("Microsoft") != -1)?e:e.getElementsByTagName("embed")[0];		
+	},
+	setCtrl:function(str,cls){
+		if($("#ctrlinfo>.ctrlline").length>1000){ //移除最前面200条
+			$("#ctrlinfo>.ctrlline:lt(200)").remove();
+		}
+		var date = new Date();
+		if(str=="ping"){
+			if($("#showping:checked").length==0){
+				$("<div>",{"class":"ctrlline ctrlgre"}).html("<span>"+date.pattern("yyyy-MM-dd hh:mm:ss")+" =====</span> 接收到服务端心跳数据，响应成功").appendTo("#ctrlinfo")
+			}
+		}else{
+			$("<div>",{"class":"ctrlline "+cls}).html("<span>"+date.pattern("yyyy-MM-dd hh:mm:ss")+" =====</span> "+str).appendTo("#ctrlinfo")
+		}
+		$('#ctrlpan').scrollTop($('#ctrlpan')[0].scrollHeight);
+	},
+	setCom:function(str){
+		$('#cominfo').append(str)
+		$('#compan').scrollTop($('#compan')[0].scrollHeight);
+	},
+	isReady:function(){
+		return true;	
+	},
+	RemoveMask:function(){
+		var _this=this;
+		$("#mask").fadeOut();
+		setInterval(function(){_this.PowTask()},500)
+	},
+	PowerL:function(){ //充电电平
+		return $('#powerele').prop('selectedIndex')
+	},
+	Estop:function(){
+		return $('#estop').prop('selectedIndex')
+	},
+	Cc:function(){
+		return $('#cc').prop('selectedIndex')
+	},
+	Ad:function(){
+		return $('#ad').prop('selectedIndex')
+	},
+	InitData:function(a,b,c,f,g,h,h1,h2,h3,h4){ //初始电压、电流、电量、状态、版本、桩ID、h1.桩名、上限、下限、过流
+		$("#vol1,#vol2").text(parseFloat(a/100).toFixed(2));
+		$("#ele1,#ele2").text(parseFloat(b/1000).toFixed(3));
+		$("#wt1,#wt2").text(parseFloat(c/10).toFixed(1));
+		jsvol=a;
+		jsele=b;
+		jswt=c;
+		$("#pname1").text(h1);
+		$("#voluped").text(parseFloat(h2/100).toFixed(2));
+		$("#voldowned").text(parseFloat(h3/100).toFixed(2));
+		$("#eleed").text(parseFloat(h4/1000).toFixed(3));
+		if(f==0){
+			$("#pile1,#pile2").text("空闲")
+		}else{
+			$("#pile1,#pile2").text("充电中")
+		}
+		$("#ver").text("V"+g);
+		var ling="";
+		for(var t=0;t<20-h.toString().length;t++){
+			ling+="0";
+		}
+		var url="http://temp.vmuui.com/index.php?s=/Home/Down/index/"+ling+h;
+		$("#ewm").attr({"src":"http://www.xcsoft.cn/api/qrcode?text="+url+"&size=4&level=L&padding=2"})
+		
+		
+	},
+	PowTask:function(){ //检测任务
+		if(this.thisMovie("vm").getPower()){
+			if(this.Cc()){
+				this.thisMovie("vm").stopPower();
+				if(!this.thisMovie("vm").getPower()&&this.PowerL()==0){
+					this.thisMovie("vm").stopMsg("2");
+					this.setCtrl("CC线连接断开，停止充电","ctrlred")
+				}else{
+					this.setCtrl("CC线连接断开，停止充电失败","ctrlred")
+				}
+			}else if(this.Ad()){
+				this.thisMovie("vm").stopPower();
+				if(!this.thisMovie("vm").getPower()&&this.PowerL()==0){
+					this.thisMovie("vm").stopMsg("3");
+					this.setCtrl("AD采集异常，停止充电","ctrlred")
+				}else{
+					this.setCtrl("AD采集异常，停止充电失败","ctrlred")
+				}	
+			}else if(this.Estop()){
+				this.thisMovie("vm").stopPower();
+				if(!this.thisMovie("vm").getPower()&&this.PowerL()==0){
+					this.thisMovie("vm").stopMsg("4");
+					this.setCtrl("急停按钮按下，停止充电","ctrlred")
+				}else{
+					this.setCtrl("急停按钮按下，停止充电失败","ctrlred")
+				}
+			}else if(this.PowerL()==0&&!isPowL){
+				this.thisMovie("vm").stopPower();
+				if(!this.thisMovie("vm").getPower()&&this.PowerL()==0){
+					this.thisMovie("vm").stopMsg("8");
+					this.setCtrl("异常错误，充电电平被强制拉高，停止充电","ctrlred")
+				}else{
+					this.setCtrl("异常错误，充电电平被强制拉高，停止充电失败","ctrlred")
+				}	
+			}else if(this.thisMovie("vm").getEle()){
+				this.thisMovie("vm").stopPower();
+				if(!this.thisMovie("vm").getPower()&&this.PowerL()==0){
+					this.thisMovie("vm").stopMsg("6");
+					this.setCtrl("过流保护，停止充电","ctrlred")
+				}else{
+					this.setCtrl("过流保护，停止充电失败","ctrlred")
+				}		
+			}
+			if(this.thisMovie("vm").getVol()){
+				if(!isPowL){
+					this.setCtrl("处于过压保护状态，充电电平置高","ctrlred")	
+					isPowL=true;
+					$("#powerele>option:eq(1)").attr("selected",true);
+					this.thisMovie("vm").SendVol("1")
+				}
+			}else{
+				if(isPowL){
+					$("#powerele>option:eq(0)").attr("selected",true);	
+					isPowL=false;
+					this.setCtrl("取消过压保护状态，充电电平置低，正常充电","ctrlred");
+					this.thisMovie("vm").SendVol("0")
+				}
+			}
+			
+		}
+	},
+	stopData:function(){ //停止充电数据执行任务
+		$("#powerele").get(0).selectedIndex=0;
+		$("#plie2").text("空闲")
+		$("#vol2").text(parseFloat(jsvol/100).toFixed(2));
+		$("#ele2").text(parseFloat(jsele/1000).toFixed(3));
+		if($("#carchk:checked").length==0){
+			$("#car2").text("空闲");
+		}else{
+			$("#car2").text("占用");
+		}
+		this.thisMovie("vm").setNumber(jsvol,jsele,jswt);
+		clearTimeout(DataTask);
+	},
+	Retime:function(){ //以下都为工具函数，获取延迟时间
+		var t=10000;
+		if($('#setpinlv').prop('selectedIndex')==0){
+			t=10000	
+		}else if($('#setpinlv').prop('selectedIndex')==1){
+			t=15000
+		}else if($('#setpinlv').prop('selectedIndex')==2){
+			t=20000
+		}else{
+			t=10000
+		}
+		return t
+	},
+	ChageVol:function(){ //修改电压
+		if(isNaN($("#volup").val())||isNaN($("#voldown").val())){
+			return jsvol;
+		}
+		if(parseInt($("#volup").val())<=0||parseInt($("#voldown").val())<=0){
+			return jsvol;	
+		}
+		var Min=jsvol-parseInt($("#voldown").val())*100,
+			Max=jsvol+parseInt($("#volup").val())*100,
+			Range = Max - Min,
+			Rand = Math.random(),
+			num = parseInt(Min + Math.round(Rand * Range));
+		return num;
+	},
+	ChageEle:function(){
+		if(isNaN($("#elemin").val())||isNaN($("#elemax").val())){
+			return jsele;
+		}
+		if(parseFloat($("#elemin").val())<0||parseFloat($("#elemax").val())<0||parseFloat($("#elemax").val())<parseFloat($("#elemin").val())){
+			return jsele;
+		}
+		var Min=parseFloat($("#elemin").val())*1000,
+			Max=parseFloat($("#elemax").val())*1000,
+			Range = parseInt(Max) - parseInt(Min),
+			Rand = Math.random(),
+			num = parseInt(Min + Math.round(Rand * Range));
+			
+		return jsele+num;
+	},
+	ChageWt:function(){
+		if(isNaN($("#wtmin").val())||isNaN($("#wtmax").val())){
+			return 0;
+		}
+		if(parseFloat($("#wtmin").val())<0||parseFloat($("#wtmax").val())<0||parseFloat($("#wtmax").val())<parseFloat($("#wtmin").val())){
+			return 0;
+		}
+		var Min=parseFloat($("#wtmin").val())*10,
+			Max=parseFloat($("#wtmax").val())*10,
+			Range = parseInt(Max) - parseInt(Min),
+			Rand = Math.random(),
+			num = parseInt(Min + Math.round(Rand * Range));
+		return num;
+	},	
+	RunPower:function(){
+		var _this=this;
+		if((this.PowerL()==0&&!isPowL)&&this.Estop()==0&&this.Cc()==0&&this.Ad()==0){
+			this.thisMovie("vm").setNumber(jsvol,jsele,jswt);
+			$("#powerele").get(0).selectedIndex=1;
+			$("#plie2").text("充电中");
+			$("#car2").text("占用");
+			DataTask=setTimeout(function(){_this.ChageVal()},_this.Retime())
+		}
+	},
+	ChageVal:function(){ //修改值
+		var _this=this;
+		if(this.thisMovie("vm").getPower()==1){
+			var tempvol =_this.ChageVol(),
+				tempele=_this.ChageEle();
+				jswt+=_this.ChageWt();
+			$("#vol2").text(parseFloat(tempvol/100));
+			$("#ele2").text(parseFloat(tempele/1000));
+			$("#wt2").text(parseFloat(jswt/10));
+			this.thisMovie("vm").postNumber(tempvol,tempele,jswt);
+			this.setCtrl("电压："+parseFloat(tempvol/100)+"V，电流："+parseFloat(tempele/1000)+"，电度："+parseFloat(jswt/10)+",提交信息成功","ctrlgre")
+			//AJAX修改提交电度
+			if(this.thisMovie("vm").getPower()){
+				DataTask=setTimeout(function(){_this.ChageVal()},_this.Retime())
+			}	
+		}
+	}
+}
+$(function(){VM.init()})
+</script>
+
+
+</body>
+</html>

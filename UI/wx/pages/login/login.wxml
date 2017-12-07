@@ -1,0 +1,13 @@
+<view class="homepage">
+
+  <input class='phoneTf' bindinput='phoneTfInput' maxlength="11" type="number" placeholder="填写手机号" auto-focus value="{{utel}}"  bindinput="telInput"/>
+ <button class='getTelBtn' type="default" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >获取手机号</button>
+
+  <input class='codeTf' bindinput='codeInput' maxlength="4" type="number" placeholder="输入验证码" value='{{ucode}}' />
+ <button class='getCodeBtn' style='color:{{getCodeBtnProperty.titileColor}}' type="default" bindtap='getCodeAct' disabled='{{getCodeBtnProperty.disabled}}' loading='{{getCodeBtnProperty.loading}}'>{{getCodeBtnProperty.title}}</button>
+
+  <button class='loginBtn' type="primary" bindtap='loginAct' disabled='{{loginBtnProperty.disabled}}' loading='{{loginBtnProperty.loading}}'>登录</button>
+  <text class='attentionLb'>点击登录,即代表已阅读并同意</text>
+  <view class='explainBtn' bindtap='explainAct'>《补补电服务条款》</view>
+
+</view>

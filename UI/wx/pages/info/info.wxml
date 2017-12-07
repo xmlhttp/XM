@@ -1,0 +1,52 @@
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="lbbg">
+  <block wx:for="{{imgUrls}}" wx:key="key">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="350" height="150" mode="widthFix" />
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class='pop'>
+  <view class='poptop'>
+    <text class="poptit">{{csite.sitename}}</text>
+    <text class='phpdis'>{{distan}}Km</text>
+  </view>
+
+  <text decode class='popnum'>总数：{{csite.Cpower}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可用：{{csite.Kpower}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;空闲车位：{{csite.Kcar}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费用：{{csite.uint}}元/度</text>
+  <text class='phpadd'>地址：{{csite.siteadd}}</text>
+</view>
+
+<view class='inbtns'>
+
+  <view class='inbtn' hover-class='inbtnhover' bindtap='clknav'>
+    <image src='/resources/btnnav.png' class='inbimg'></image>
+    <text class='infobtntxt'>导 航</text>
+  </view>
+  <view class='inline'></view>
+
+  <view class='inbtn' hover-class='inbtnhover' bindtap='gocar'>
+    <image src='/resources/btncar.png' class='inbimg'></image>
+    <text class='infobtntxt'>车 位</text>
+  </view>
+  <view class='inline'></view>
+
+  <view class='inbtn' hover-class='inbtnhover' bindtap='connser'>
+    <image src='/resources/btntel.png' class='inbimg'></image>
+    <text class='infobtntxt'>电 话</text>
+  </view>
+
+  <view class='inline'></view>
+  <view class='inbtn' hover-class='inbtnhover' style='position: relative' >
+  <button open-type="share" class='btnshare'></button>
+    <image src='/resources/btnshare.png' class='inbimg'></image>
+    <text class='infobtntxt'>分 享</text>
+  </view>
+</view>
+
+<view class='sitetit'>车位详情</view>
+<view class='sitecont' wx:for="{{devlist}}" wx:key="key">
+  <view class='devlist'>
+    <text class='devname'>{{item.pilenum}}</text>
+    <text class='devstatus {{item.sta.col}}'>{{item.sta.txt}}</text>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+.sitelist{ display: flex; flex-direction: row;border-bottom: #ddd solid 1rpx; width: 100%;padding: 10rpx 0 0rpx; height: 210rpx; overflow: hidden}
+.siteview{width:200rpx; margin-left:10rpx}
+.siteimg{ width:200rpx; height:200rpx; background: #f0f0f0}
+.sitedesc{flex:1;flex-direction:column;display: flex;  padding-left: 15rpx }
+.poptit{ font-size: 0.85rem;  color: #777; height: 1.3rem; line-height: 1.3rem; padding-top: 4rpx}
+.popnum{font-size: 0.8rem;color: #888;  line-height: 1.3rem; padding-top: 10rpx}
+.phpadd{font-size: 0.8rem;color: #888; line-height: 1.3rem; padding-top: 10rpx}

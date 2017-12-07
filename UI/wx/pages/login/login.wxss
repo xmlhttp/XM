@@ -1,0 +1,58 @@
+.phoneTf,.codeTf{
+    position: absolute;
+    left: 5vw;
+    top: 60rpx;
+    width: 55vw;
+    height: 80rpx;
+    padding-left: 20rpx;
+    color: #666;
+    border: #ccc solid 1rpx;
+    font-family:Verdana;
+}
+.getTelBtn,.getCodeBtn{
+    position: absolute;
+    right: 5vw;
+    top: 60rpx;
+    width: 30vw;
+    height: 82rpx;
+    font-size:0.85rem; 
+    line-height: 80rpx;
+    color: #4b4b4b
+}
+
+.getCodeBtn{
+  top: 162rpx;
+}
+
+.codeTf {
+    top: 162rpx;
+}
+
+.loginBtn {
+    position: absolute;
+    left: 40rpx;
+    top: 330rpx;
+    width: 670rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+}
+
+.attentionLb {
+    position: absolute;
+    right: 312rpx;
+    top: 420rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 0.85rem;
+    color: #6D6D6D
+}
+
+.explainBtn {
+    position: absolute;
+    left: 438rpx;
+    top: 420rpx;
+    height: 80rpx;
+    color: #34B5E3;
+    line-height: 80rpx;
+    font-size: 0.85rem;
+}

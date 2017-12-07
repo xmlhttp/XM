@@ -1,0 +1,12 @@
+<view class="seltop">
+  <image src='{{siteimg}}' class='siteimg'></image>
+  <view class='devname'>{{pname}}</view>
+  <view class='devuint'>单价：{{cuint}}元</view>
+</view>
+
+<view class='devtit'>请输入充值金额</view>
+<view class='devinput'><input class='money' bindinput='moneyInput' type="digit" placeholder="请输入金额"  value="{{money}}"  bindinput="moneyInput"/></view>
+
+<view class='csumbit'>
+  <button type='primary' class='cbtnsum' bindtap="charge">立即支付</button>
+</view>

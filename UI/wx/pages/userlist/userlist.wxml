@@ -1,0 +1,54 @@
+<view class="texttop">
+  <image src="{{user.headimg}}" class='headimg'></image>
+  <view class='nickname'>{{user.nickname}}<text> 【 ID:{{uid}} 】</text>，你好！</view>
+  <view class='listdesc'>累计充电
+    <text class='cnum'>{{user.cele}}</text>度，累计花费
+    <text class='ctime'>{{user.cmoney}}</text>元</view>
+</view>
+<view class="list-result">
+  <scroll-view scroll-y="true" bindscrolltolower="loadScrollLower">
+
+    <view class="result-item" wx:for="{{orderlist}}" wx:key="unique" data-data="{{item}}">
+
+      <view class='iteminfo'>
+        <view class='devdes'>{{item.sname}}</view>
+        <view class='itemtime'>{{item.addtime}}</view>
+        <view class='middes'>
+          <view class='midmoney'>
+            <view class='midtitle'>充电金额</view>
+            <view class='midnumber'>
+              <text class='miduint'>￥</text>
+              <text class='midno'>{{item.cmoney}}</text>
+            </view>
+          </view>
+          <view class='midmoney'>
+            <view class='midtitle'>充电时间</view>
+            <view class='midnumber'>
+              <text class='midno'>{{item.ctime}}</text></view>
+          </view>
+          <view class='midmoney' style='border-right:0'>
+            <view class='midtitle'>充电单价</view>
+            <view class='midnumber'>
+              <text class='miduint'>￥</text>
+              <text class='midno'>{{item.cuint}}</text>
+            </view>
+          </view>
+
+        </view>
+        <view class='orderdes'>
+          <text class='ctit'>设备名称：</text>
+          <text class='ffont'>{{item.pname}}</text>
+        </view>
+        <view class='sumdes'>
+          <text class='ctit'>交易编号：</text>{{item.No}}</view>
+        <view class='itemtit'>
+          <text class='ctit'>累计信息：</text>
+          <text class='ffont'>第<text class='ffont'>{{item.usnum}}</text>次累计耗时<text class='ffont'>{{item.ustime}}</text>花费<text class='ffont'>{{item.usmoney}}</text>元</text>
+        </view>
+      </view>
+      
+    </view>
+    <view class="loading" hidden="{{!Loading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!LoadingComplete}}">全部加载完成</view>
+  </scroll-view>
+</view>

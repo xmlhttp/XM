@@ -1,0 +1,22 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\geren\XM\stm32\ACGUND\USER\AC.uvproj
+Project File Date:  11/18/2017
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling usart2.c...
+linking...
+Program Size: Code=141600 RO-data=26320 RW-data=1360 ZI-data=270096  
+FromELF: creating hex file...
+User command #1: E:\work\soft\stm32\ARM\BIN40\fromelf.exe  --bin -o  ..\OBJ\AC.bin ..\OBJ\AC.axf
+"..\OBJ\AC.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=141600 RO-data=26320 RW-data=1360 ZI-data=270096  
+FromELF: creating hex file...
+User command #1: E:\work\soft\stm32\ARM\BIN40\fromelf.exe  --bin -o  ..\OBJ\AC.bin ..\OBJ\AC.axf
+"..\OBJ\AC.axf" - 0 Error(s), 0 Warning(s).
