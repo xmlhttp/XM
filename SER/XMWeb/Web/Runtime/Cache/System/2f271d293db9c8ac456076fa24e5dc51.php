@@ -43,7 +43,7 @@
             联系方式 Email : &nbsp; 469100943@qq.com &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; TEL :&nbsp;138 2971 9806&nbsp;</td>
     </tr>
 </table>
-<hr style="border-top:1px dashed #ccc; height:1px" width=96% />
+<div style="border-top:1px dashed #ccc; height:1px; width:96%; margin-left:auto; margin-right:auto"></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="2" class="FW_TAB">
   <tr>
     <td width="49%"><table width="100%" border="0" cellpadding="2" cellspacing="1" class="STYLE2">
