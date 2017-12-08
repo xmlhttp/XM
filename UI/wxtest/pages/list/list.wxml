@@ -1,0 +1,15 @@
+<view wx:for="{{siteArr}}" wx:key="key">
+<navigator url="/pages/info/info?sid={{item.sid}}">
+  <view class='sitelist'>
+    <view class='siteview'>
+      <image src="{{url}}{{item.siteimg}}" class='siteimg'></image>
+    </view>
+    <view class='sitedesc'>
+      <text class="poptit">{{item.sitename}}</text>
+      <text decode class='popnum'>费用：{{item.uint}}元/度&nbsp;&nbsp;&nbsp;距离：{{item.distan}}Km</text>
+      <text decode class='popnum'>总数：{{item.Cpower}}&nbsp;&nbsp;&nbsp;可用：{{item.Kpower}}&nbsp;&nbsp;&nbsp;空闲车位：{{item.Kcar}}</text>
+      <text class='phpadd'>地址：{{item.siteadd}}</text>
+    </view>
+  </view>
+  </navigator>
+</view>

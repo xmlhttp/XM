@@ -69,6 +69,36 @@ class OrderListController extends Controller {
 		$this->ajaxReturn($json, 'json');
 	}
 	
+	//搜索
+	public function orderinfo(){
+		loadcheck(27); 
+		if(I("get.id",0)==0){
+			header("Content-Type:text/html;charset=utf-8");
+			echo "你无权访问本页!";
+			exit;
+		}
+		if(session("adminclass")!=1&&session("adminclass")!=99){
+			header("Content-Type:text/html;charset=utf-8");
+			echo "你无权访问本页!";
+			exit;
+		}
+		$order=M('temp')->where('id='.I("get.id",0))->find();
+		$order['uint']=sprintf("%1.2f",(float)$order['uint']/100);
+		$order['smoney']=sprintf("%1.2f",(float)$order['smoney']/100);
+		$order['tmoney']=sprintf("%1.2f",(float)$order['tmoney']/100);
+		$order['money']=sprintf("%1.2f",(float)$order['money']/100);
+		$order['elecount']=sprintf("%1.1f",(float)$order['elecount']/10);
+		$order['eleend']=sprintf("%1.1f",(float)$order['eleend']/10);
+		$order['cpower']=sprintf("%1.1f",(float)$order['cpower']/10);
+		$order['isstatus']=$order['isstatus']==0?'正常':'过压保护';
+		$order['isenable']=$order['isenable']==0?'未修改':'已修改';
+		$order['isclose']=$order['isclose']==0?'充电中':'已结束';
+		
+		
+		$this->assign('order',$order);
+    	$this->display('Index:orderinfo');
+	}
+	
 }
 
 //输出列表
@@ -83,7 +113,7 @@ function showitem($T){
 		$data[$t]["data"][]=($v['isclose']==0?"充电中":"已结束");
 		$data[$t]["data"][]=$v['addtime'];
 		$data[$t]["data"][]=$v['lasttime']==null?"-":$v['lasttime'];
-		$data[$t]["data"][]="详情^javascript:alert(\"该功能暂未开放\")^_self";
+		$data[$t]["data"][]="详情^/System.php?s=/System/OrderList/orderinfo&id=".$v['id']."^_self";
 		}
 	return $data;
 }

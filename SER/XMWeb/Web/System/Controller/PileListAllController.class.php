@@ -440,7 +440,7 @@ class PileListAllController extends Controller {
 			echo "你无权访问本页!";
 			exit;
 		}
-		$Te=M('pile')->where('id='.I("get.id"),0)->select();
+		$Te=M('pile')->where('id='.I("get.id",0))->select();
 		if(count($Te)!=1){
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";

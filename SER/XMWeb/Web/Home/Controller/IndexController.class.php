@@ -4,6 +4,16 @@ use Think\Controller;
 
 class IndexController extends Controller {    
 
+public function getCode(){
+	$time=time()-date('Z');
+	$time1=time();
+		$result1=file_get_contents("https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=".$time);
+		var_dump($result1."----".$time1."-----".$time);
+		//$result=json_decode($result1, true);
+}
+
+
+
     /*
      * 主页
      * 
@@ -297,16 +307,9 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
-		if (!file_exists($_SERVER["DOCUMENT_ROOT"].$T1['sitemap'])){
-			$json['status']['err']=2;
-			$json['status']['msg']="站点图片不存在！";
-			$json['sitename']=$T1['sitename'];
-			ob_clean();
-			$this->ajaxReturn($json, 'json');
-			exit;
-		}
+		
 		//判断设备
-		$Tp=M('pile')->where('parentid = '.$sid)->select();
+		$Tp=M('pile')->where('parentid = '.$sid.' and isenable=1 and isdelete=0')->select();
 		if(count($Tp)==0){
 			$json['status']['err']=2;
 			$json['status']['msg']="没有设备！";
@@ -319,22 +322,56 @@ class IndexController extends Controller {
 		$bgimg = new \Imagick($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
 		$image_info = getimagesize($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
 		//车位状态图
-		$smallimg="/Web/System/Public/images/che.png";
+		$small1="/Web/System/Public/images/park/pche1.png";
 		
 		
-		$wh=getimagesize($_SERVER["DOCUMENT_ROOT"].$smallimg);
+		$wh=getimagesize($_SERVER["DOCUMENT_ROOT"].$small1);
 		$w=$wh[0];
 		$h=$wh[1];
 		$l=sqrt($w*$w+$h*$h)/2;
 		
 		foreach($Tp as $t=>$v){
-			$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
-			$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
-
-			$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
-			$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
-			$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
-			$img[]=$small;
+			if($v['islink']==0){
+				$smallimg="/Web/System/Public/images/park/pche5.png";
+				$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
+				$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
+				$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
+				$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
+				$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
+				$img[]=$small;
+			}else if($v['ptype']==1){
+				$smallimg="/Web/System/Public/images/park/pche2.png";
+				$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
+				$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
+				$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
+				$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
+				$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
+				$img[]=$small;
+			}else if($v['isnone']==1){
+				$smallimg="/Web/System/Public/images/park/pche1.png";
+				$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
+				$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
+				$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
+				$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
+				$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
+				$img[]=$small;
+			}else if($v['isnone']==2){
+				$smallimg="/Web/System/Public/images/park/pche3.png";
+				$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
+				$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
+				$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
+				$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
+				$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
+				$img[]=$small;
+			}else if($v['isnone']==3){
+				$smallimg="/Web/System/Public/images/park/pche4.png";
+				$small = new \Imagick($_SERVER["DOCUMENT_ROOT"].$smallimg);
+				$small->rotateImage(new \ImagickPixel('none'), $v['cr']);
+				$top=$l*sin(deg2rad(45+fmod(abs((float)$v['cr']),90)))-$h/2;
+				$left=$l*cos(deg2rad(45-fmod(abs((float)$v['cr']),90)))-$w/2;
+				$bgimg->compositeImage($small, \Imagick::COMPOSITE_OVER, $v['cx']-$left,$v['cy']-$top);
+				$img[]=$small;
+			}
 		}
 		
 		$img = $bgimg->getImageBlob();
@@ -354,60 +391,6 @@ class IndexController extends Controller {
 		exit; 
 	}
 	
-	/*************************
-	*图片测试
-	*/
-	public function ImgTest(){
-
-		$T1=M('sitelist')->where('id = 1')->find();
-	//$thumb = new \Think\Image('Imagick'); 
-		
-		$image_size=getimagesize($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']); 
-		$max_width=$image_size[0];
-		$max_height=$image_size[1];
-		$imgbg = imageCreatetruecolor($max_width,$max_height);
-		 switch ($image_size[2]) {
-            case 1:
-                $bigimg = imagecreatefromgif($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
-                break;
-            case 2:
-                $bigimg = imagecreatefromjpeg($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
-                break;
-            case 3:
-                $bigimg = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"].$T1['sitemap']);
-                break;
-        }
-		//加入背景
-        imagecopy($imgbg,$bigimg,0,0,0,0,$max_width,$max_height);
-        imagedestroy($bigimg);
-		
-		//建立小图旋转背景
-		//$smallbg = imageCreatetruecolor(106,106);
-		//$color = imagecolorallocate($smallbg, 0, 0, 0);
- 		//imagefill($smallbg, 0, 0, $color);
-  		
-		$smallimg= imagecreatefrompng($_SERVER["DOCUMENT_ROOT"]."/Web/Home/View/image/chemap.png");
-		$rotate = imagerotate($smallimg,45,0);
-		
-	
- 		//imagefill($rotate, 0, 0, $color);
-		
-		//imagecopyresampled($smallbg,$rotate,0,0,0,0,106,106);
-		//imageColorTransparent($rotate, $color);
-		
-		//imagecopyresampled($imgbg,$rotate,0,0,29,6,106,106,48,94);
-		
-		//imagecopy($imgbg,$rotate,0,0,0,0,106,106);
-		//imagedestroy($rotate);
-		//imagedestroy($smallimg);
-		/**$json['width']= $image->width() ;
-		$json['status']['err']=0;
-		$json['status']['msg']="执行成功！";
-		$this->ajaxReturn($json, 'json');
-		exit;*/ 
-		header("Content-type: image/png");
-        imagepng($rotate);
-	}
 	/*************************
 	*订单列表
 	*/
@@ -505,7 +488,7 @@ class IndexController extends Controller {
 			exit;	
 		}
 		//获取充电记录
-		$Temp=M('temp')->where('uid = '.$uid.' and isclose=0')->order("id desc")->select();
+		$Temp=M('temp')->where('uid = '.$uid.' and isclose=0 and isenable=1')->order("id desc")->select();
 		if(count($Temp)==0){
 			$json['status']['err']=0;
 			$json['count']=0;
@@ -695,8 +678,6 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
-		
-		
 		//验证设备是否正常
 		$P=M('pile')->where('id = '.$pid.' and isenable=1 and isdelete=0')->select();
 		if(count($P)!=1){
@@ -745,21 +726,41 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
-		$tit=$S[0]['sitename']."-".$P[0]['pilenum'].",预充金额.";
-		
+		//订单数据
+		$tit=$S[0]['sitename']."-".$P[0]['pilenum'];
+		$No='RIC-'.GetRandStr(10);
+		$addtime=date('Y-m-d H:i:s');
+		//入库数据
+		$data = array();
+		$data['orderid']=$No;
+		$data['uid']=$U[0]['id'];
+		$data['pid']=$pid;
+		$data['bid']=$B[0]['id'];
+		$data['tit']=$tit;
+		$data['money']=$pmoney;
+		$data['cuint']=$puint;
+		$data['addtime']=$addtime;
+		$data['status']=0;
+		$lastMoneyId =M('tempmoney')->add($data);
+		if(!$lastMoneyId){
+			$json['status']['err']=1;
+			$json['status']['msg']="临时订单入库错误！";
+			ob_clean();
+			$this->ajaxReturn($json, 'json');
+			exit;
+		}		
+		//进入充值
 		$order_info = array();
         $order_info['order_info'] =$tit;
-        $order_info['out_trade_no'] = 'RIC-'.GetRandStr(10);
+        $order_info['out_trade_no'] = $No;
 		$order_info['total_fee'] = $pmoney;
-		$order_info['add_time'] =date('Y-m-d H:i:s');
-		$order_info['notify_url'] = 'https://'.$_SERVER['HTTP_HOST'].'/API/wxpay/paynotice.php';
-		$order_info['openid']= $U[0]['openid'];       
-		
+		$order_info['add_time'] =$addtime;
+		$order_info['mid'] =$lastMoneyId;
+		$order_info['openid']= $U[0]['openid'];  
+		$order_info['notify_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/API/wxpay/paynotice.php';
 		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
-		
 		$pay = new \Pay($order_info);
         $res = $pay->pay();
-
 		if(!$res){
 			$json['status']['err'] = 1;
         	$json['status']['msg'] = '获取参数错误';
@@ -767,59 +768,42 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json);
 			exit; 
 		}
-/*
+		//微信返回字符串入库
+		$wx['tit']=$No."（预充）";
+		$wx['code']=json_encode($res);
+		$wx['type']=1;
+		$wx['outid']=$lastMoneyId;
+		$wx['uid']=$U[0]['id'];
+		$wx['addtime']=date('Y-m-d H:i:s');
+		M('wxcode')->add($wx);
+		//返回结果检测
 		if($res['return_code']!='SUCCESS'){
-			//$json['mchid'] = $B[0]['mchid'];
-			//$json['key'] = $B[0]['mchkey'];
-			//$json['paytype'] = 'JSAPI';
-        	//$json['openid'] = $U[0]['openid'];
-			//$json['BID'] = $B[0]['id'];
 			$json['status']['err'] = 1;
         	$json['status']['msg'] = $res['return_msg'];
 			ob_clean();
 			$this->ajaxReturn($json);
 			exit;
 		}	
-*/		
-		$data = array();
-		$data['timestamp'] = (string)$res['timestamp'];
-		$data['noncestr'] = $res['nonce_str'];	
-		$data['package'] = "prepay_id=".$res['prepay_id'];
-		$data['paySign'] = $res['sign'];
-		$data['orderid']=$order_info['out_trade_no'];
-		$data['uid']=$U[0]['id'];
-		$data['pid']=$pid;
-		$data['tit']=$tit;
-		$data['bid']=$B[0]['id'];
-		$data['money']=$pmoney;
-		$data['cuint']=$puint;
-		$data['addtime']=$order_info['add_time'];
-		
-		if($lastInsId =M('tempmoney')->add($data)){
-			
-			
-			$data['id']=$lastInsId;
-			$json['status']['err'] = 0;
-			$json['status']['msg'] = '执行成功！';
-			$json['data'] = $data;
-			ob_clean();
-			$this->ajaxReturn($json);
-			exit;
-		}
-
-		$json['status']['err'] = 1;
-        $json['status']['msg'] = '数据写入失败';
+		//返回数据
+		$pdata = array();
+		$pdata['timestamp'] = (string)$res['timestamp'];
+		$pdata['noncestr'] = $res['nonce_str'];	
+		$pdata['package'] = "prepay_id=".$res['prepay_id'];
+		$pdata['paySign'] = $res['sign'];
+		$pdata['id']=$lastMoneyId;
+		$json['status']['err'] = 0;
+		$json['status']['msg'] = '执行成功！';
+		$json['data'] = $pdata;
 		ob_clean();
 		$this->ajaxReturn($json);
 		exit;
+		
 	}
 	/*************************
 	*充值成功启动充电
 	*/
 	public function startCharge(){
-		ignore_user_abort(true);
-		set_time_limit(0);
-		
+			
 		$_id= I('post.id',0,'intval');
 		$uid= I('post.uid',0,'intval');		
 		$sessionid= I('post.sessionid','','strip_tags');
@@ -848,7 +832,7 @@ class IndexController extends Controller {
 			exit;	
 		}
 		//核对订单
-		$Temp=M('tempmoney')->where('id = '.$_id.' and status=0')->select();
+		$Temp=M('tempmoney')->where('id = '.$_id.' and status=1')->select();
 		if(count($Temp)!=1){
 			$json['status']['err']=1;
 			$json['status']['msg']="订单状态有误！";
@@ -868,7 +852,7 @@ class IndexController extends Controller {
 		//验证商家
 		$B=M('sys_admin')->where('id = '.$Temp[0]['bid'].' and adminClass=0 and working=1')->select();
 		if(count($B)!=1){
-			Tmoney($Temp[0],$U[0]['openid']);
+			Tmoney($Temp[0]);
 			$json['status']['err']=1;
 			$json['status']['msg']="商家信息有误！";
 			ob_clean();
@@ -879,7 +863,7 @@ class IndexController extends Controller {
 		//验证设备是否正常
 		$P=M('pile')->where('id = '.$Temp[0]['pid'].' and isenable=1 and isdelete=0')->select();
 		if(count($P)!=1){
-			Tmoney($Temp[0],$U[0]['openid']);
+			Tmoney($Temp[0]);
 			$json['status']['err']=1;
 			$json['status']['msg']="设备不存在！";
 			ob_clean();
@@ -887,7 +871,7 @@ class IndexController extends Controller {
 			exit;	
 		}
 		if($P[0]['ptype']==1){
-			Tmoney($Temp[0],$U[0]['openid']);
+			Tmoney($Temp[0]);
 			$json['status']['err']=1;
 			$json['status']['msg']="设备处于充电中！";
 			ob_clean();
@@ -895,7 +879,7 @@ class IndexController extends Controller {
 			exit;	
 		}
 		if($P[0]['islink']!=1){
-			Tmoney($Temp[0],$U[0]['openid']);
+			Tmoney($Temp[0]);
 			$json['status']['err']=1;
 			$json['status']['msg']="设备未连线#1！";
 			ob_clean();
@@ -905,7 +889,7 @@ class IndexController extends Controller {
 		//验证站点是否正常
 		$S=M('sitelist')->where('id = '.$P[0]['parentid'].' and isenable=1 and isdelete=0')->select();
 		if(count($S)!=1){
-			Tmoney($Temp[0],$U[0]['openid']);
+			Tmoney($Temp[0]);
 			$json['status']['err']=1;
 			$json['status']['msg']="站点信息有误！";
 			ob_clean();
@@ -913,10 +897,11 @@ class IndexController extends Controller {
 			exit;	
 		}
 		
-		//关闭订单
-		$dstat['status']=1;
+		//关闭临时订单
+		$dstat['status']=2;
 		//写入充电临时表
 		$data['No']=$Temp[0]['orderid'];
+		$data['wxno']=$Temp[0]['wxno'];
 		$data['mid']=$Temp[0]['id'];
 		$data['mname']=$Temp[0]['tit'];
 		$data['bid']=$B[0]['id'];
@@ -968,7 +953,7 @@ class IndexController extends Controller {
 				$this->ajaxReturn($json, 'json');
 				exit;
 			}else{
-				Tmoneyq($Temp1,$U[0]['openid']);
+				Tmoneyq($Temp1);
 				$json['status']['err']=1;
 				$json['status']['msg']="启动充电超时！";
 				$json['uu']=$i;
@@ -978,7 +963,7 @@ class IndexController extends Controller {
 			}
 		}else{
 			M()->rollback();
-			Tmoney($Temp[0],$U[0]['openid']);
+			Tmoney($Temp[0]);
 			$json['status']['err']=1;
 			$json['status']['msg']="写入数据失败#1！";
 			ob_clean();
@@ -1179,55 +1164,68 @@ function GetRandStr($len){
     }  
     return $output;  
 }
-//启动充电前订单未生成全额退款
-function Tmoney($t,$u){
-	if($t['status']==0){
-		$dstat['status']=1;
-		M('tempmoney')->where('id='.$t['id'])->save($dstat);
-		$pay_config = array();
-		$pay_config['appid'] = C('APPID');
-		$pay_config['mchid'] = C('MCHID');
-		$pay_config['key'] = C('MKEY');
-		$pay_config['paytype'] = 'JSAPI';
-    	$pay_config['openid'] = $u['openid'];
-		$pay_config['cert']=$_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Admin/2017-11-04/59fdd235d7d0b.pem';
-		$pay_config['keyt']=$_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Admin/2017-11-04/59fdd235dbb8c.pem';
-
+//启动充电前订单未生成，验证失败全额退款
+function Tmoney($t){
+	if($t['status']==1){
 		$order_info = array();
-    	$order_info['order_info'] = '启动充电失败退款';
 		$order_info['out_trade_no'] = $t['orderid'];
 		$order_info['refund_trade_no'] =$t['orderid'];
     	$order_info['total_fee'] = $t['money'];
     	$order_info['refund_fee'] =  $t['money'];		
 		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
-		$pay = new \Pay($order_info,$pay_config);
-    	$pay->refund();
+		$pay = new \Pay($order_info);
+    	$res=$pay->refund();
+		if($res){
+			//微信返回字符串入库
+			$tit=$t['tit']."-订单生成失败退款";
+			$wx['tit']=$t['orderid']."（退款#2）";
+			$wx['code']=json_encode($res);
+			$wx['type']=2;
+			$wx['uid']=$t['uid'];
+			$wx['outid']=$t['id'];
+			$wx['addtime']=date('Y-m-d H:i:s');
+			M('wxcode')->add($wx);
+			//返回结果检测
+			if($res['return_code']=='SUCCESS'){
+				$dstat['status']=3;
+				$dstat['tit']=$tit;
+				M('tempmoney')->where('id='.$t['id'])->save($dstat);
+			}	
+		}
 	}
 }
 
 //启动充电前订单已经生成全额退款
-function Tmoneyq($t,$u){
-	$data['tmoney']=$t['smoney'];
-	$data['money']=0;
-	$data['isclose']=1;
-	$data['endcode']=50;
-	$data['lasttime']=date('Y-m-d H:i:s');
-	M('temp')->where('id='.$t['id'])->save($data);
-	$pay_config = array();
-	$pay_config['appid'] = C('APPID');
-	$pay_config['mchid'] = C('MCHID');
-	$pay_config['key'] = C('MKEY');
-	$pay_config['paytype'] = 'JSAPI';
-   	$pay_config['openid'] = $u['openid'];
-	$pay_config['cert']=$_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Admin/2017-11-04/59fdd235d7d0b.pem';
-	$pay_config['keyt']=$_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Admin/2017-11-04/59fdd235dbb8c.pem';
-	$order_info = array();
-   	$order_info['order_info'] = '启动充电失败退款';
-	$order_info['out_trade_no'] = $t['No'];
-	$order_info['refund_trade_no'] =$t['No'];
-   	$order_info['total_fee'] = $t['smoney'];
-   	$order_info['refund_fee'] =  $t['smoney'];	
-	require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
-	$pay = new \Pay($order_info,$pay_config);
-   	$pay->refund();
+function Tmoneyq($t){
+	//确定充电未执行，订单未被修改
+	if($t['isclose']==0&&$t['isenable']==0){
+		//退款
+		$order_info = array();
+		$order_info['out_trade_no'] = $t['No'];
+		$order_info['refund_trade_no'] =$t['No'];
+    	$order_info['total_fee'] =$t['smoney'];
+    	$order_info['refund_fee'] = $t['smoney'];
+		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
+		$pay = new \Pay($order_info);
+   		$res=$pay->refund();
+		if($res){
+			//微信记录入库
+			$tit=$t['No']."-充电启动失败退款";
+			$wx['tit']=$t['No']."（退款#3）";
+			$wx['code']=json_encode($res);
+			$wx['type']=3;
+			$wx['uid']=$t['uid'];
+			$wx['outid']=$t['id'];
+			$wx['addtime']=date('Y-m-d H:i:s');
+			M('wxcode')->add($wx);	
+			//还原数据
+			$data['tmoney']=$t['smoney'];
+			$data['money']=0;
+			$data['isclose']=1;
+			$data['endcode']=50;
+			$data['endtxt']="启动充电失败";
+			$data['lasttime']=date('Y-m-d H:i:s');
+			M('temp')->where('id='.$t['id'])->save($data);
+		}
+	}
 }

@@ -1,0 +1,44 @@
+<view class="container">
+  <map id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="11" controls="{{controls}}" show-location bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" show-location style="width: 100%; height:100vh">
+
+    <cover-view class="mask" data-statu="close" style='display:{{display}}'>
+
+      <cover-image class="maskimg" bindtap="clkmask" src="/resources/maskbg.png" />
+      <cover-view class="maskpop">
+        <cover-view class="maskpopleft">
+          <cover-view class="maskpoptit">
+             {{markers[csiteid].sitename}}
+          </cover-view>
+          <cover-view class="maskpopnum" decode>
+            总数：{{markers[csiteid].Cpower}}\t\t可用：{{markers[csiteid].Kpower}}\t\t空闲车位：{{markers[csiteid].Kcar}}
+          </cover-view>
+          <cover-view class="maskpopnum" decode>
+            单价：{{markers[csiteid].uint}} 元/度\t\t距离：{{distan}} Km
+          </cover-view>
+          <cover-view class="maskpopadd">
+            地址：{{markers[csiteid].siteadd}}
+          </cover-view>
+        </cover-view>
+        <cover-image class="maskline1" src="/resources/line.png" />
+        <cover-view class="maskpopright">
+
+          <cover-view class='maskbtn_nav' bindtap="clk_car">
+            <cover-image class="masknavimg" src="/resources/btn_car.png" />
+          </cover-view>
+          <cover-image class="maskline2" src="/resources/line.png" />
+          <cover-view class='maskbtn_info' bindtap="clk_info">
+            <cover-image class="maskinfoimg" src="/resources/btn_info.png" />
+          </cover-view>
+
+        </cover-view>
+
+
+      </cover-view>
+
+    </cover-view>
+
+  </map>
+
+
+
+</view>

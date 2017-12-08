@@ -14,7 +14,7 @@
 <body>
 
 <!--内容设置-->
-<div class="imginfo" id="imginfo" style="width:<?php echo ($attr[0]); ?>px; height:<?php echo ($attr[1]); ?>px; background:url(<?php echo ($url); ?>) top left no-repeat; position:relative"><img src="/Web/System/Public/images/che.png" id="moveche" style=" position:absolute; left:<?php echo ($x); ?>px;top:<?php echo ($y); ?>px; opacity:0.8" /></div>
+<div class="imginfo" id="imginfo" style="width:<?php echo ($attr[0]); ?>px; height:<?php echo ($attr[1]); ?>px; background:url(<?php echo ($url); ?>) top left no-repeat; position:relative"><img src="/Web/System/Public/images/park/pche1.png" id="moveche" style=" position:absolute; left:<?php echo ($x); ?>px;top:<?php echo ($y); ?>px; opacity:0.8" /></div>
 <!--内容设置-->
 
 <script>

@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.6.6",
 	"appid": "wx72c67eaac97644d8",
-	"projectname": "%e5%87%9d%e6%99%ba%e6%b5%8b%e8%af%95",
+	"projectname": "XMTest",
 	"condition": {
 		"search": {
 			"current": -1,

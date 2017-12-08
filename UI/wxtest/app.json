@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/list/list",
+    "pages/info/info",
+    "pages/select/select",
+    "pages/userlist/userlist",
+    "pages/map/map",
+    "pages/power/power"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#333744",
+    "navigationBarTitleText": "共享充电宝",
+    "navigationBarTextStyle": "white"
+  }
+}

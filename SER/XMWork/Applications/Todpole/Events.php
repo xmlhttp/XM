@@ -477,11 +477,44 @@ function EndOrder($id){
 	if($reto[0]['isclose']==1){
 		echo "订单已经结算\n";
 		return;
-		
 	}
+	$money=intval(ceil($reto[0]['uint']*(float)$reto[0]['cpower']/10));
+	//退款
+	if($money<$reto[0]['smoney']){
+		//退款
+		$order_info = array();
+		$order_info['out_trade_no'] = $reto[0]['No'];
+		$order_info['refund_trade_no'] =$reto[0]['No'];
+    	$order_info['total_fee'] =$reto[0]['smoney'];
+    	$order_info['refund_fee'] = ($reto[0]['smoney']-$money);
+		require_once dirname(__FILE__).'/../../../XMWeb/API/wxpay/pay.php';
+		$pay = new \Pay($order_info);
+   		$res=$pay->refund();
+		if($res){
+			//写退款数据
+			$sql="insert into db_wxcode(uid,tit,code,type,outid,addtime)values(".$reto[0]['uid'].",'".$reto[0]['No']."（结算）','".json_encode($res)."',4,".$reto[0]['id'].",'".date('Y-m-d H:i:s',time())."')";
+			Db::instance('db1')->query($sql);
+			setInitOrder($reto);
+		}else{
+			$sql="insert into db_err(tit,desc,type,addtime)values('".$reto[0]['No']."-退款失败','结算时执行退款操作失败',1,'".date('Y-m-d H:i:s',time())."')";
+			Db::instance('db1')->query($sql);
+		}		
+	}else if($money==$reto[0]['smoney']){
+		setInitOrder($reto);
+	}else if($money>$reto[0]['smoney']){
+		$sql="insert into db_err(tit,desc,type,addtime)values('".$reto[0]['No']."-金额验证有异常','结算时充电金额大于充值金额',2,'".date('Y-m-d H:i:s',time())."')";
+		Db::instance('db1')->query($sql);
+		setInitOrder($reto);
+	}
+}
+
+//设置结算数据
+function setInitOrder($reto){
+	$id=$reto[0]['id'];
 	$ele=$reto[0]['cpower'];
 	$time=strtotime($reto[0]['lasttime'])-strtotime($reto[0]['addtime']);
 	$money=intval(ceil($reto[0]['uint']*(float)$reto[0]['cpower']/10));
+	$money=($money>$reto[0]['smoney'])?$reto[0]['smoney']:$money;
 	//echo $ele.",".$time.",".$money.",".$id.",".(strtotime($reto[0]['lasttime'])-strtotime($reto[0]['addtime'])).",".$reto[0]['addtime'].",".$reto[0]['lasttime']."\n";
 	//桩
 	$retp = Db::instance('db1')->select('*')->from('db_pile')->where("id=".$reto[0]['pid'])->query();
@@ -512,28 +545,4 @@ function EndOrder($id){
 	//增加电桩和用户日志
 	$sql="insert into db_pulog(tid,bid,bname,pid,pname,sid,sname,uid,uname,cuint,cmoney,ctime,cele,addtime,psmoney,pstime,psnum,psele,usmoney,ustime,usnum,usele) values(".$id.",".$reto[0]['bid'].",'".$reto[0]['bname']."',".$reto[0]['pid'].",'".$reto[0]['pname']."',".$reto[0]['sid'].",'".$reto[0]['sname']."',".$reto[0]['uid'].",'".$reto[0]['uname']."',".$reto[0]['uint'].",".$money.",".$time.",".$ele.",'".date('Y-m-d H:i:s',time())."',".($retp[0]['smoney']+$money).",".($retp[0]['stime']+$time).",".($retp[0]['snum']+1).",".($retp[0]['sele']+$ele).",".($retu[0]['smoney']+$money).",".($retu[0]['stime']+$time).",".($retu[0]['snum']+1).",".($retu[0]['sele']+$ele).")";
 	Db::instance('db1')->query($sql);
-	//退款
-	if($money>=$reto[0]['smoney']){
-		echo "微信退款方法\n";
-		/*$pay_config = array();
-		$pay_config['appid'] = C('APPID');
-		$pay_config['mchid'] = C('MCHID');
-		$pay_config['key'] = C('MKEY');
-		$pay_config['paytype'] = 'JSAPI';
-    	$pay_config['openid'] = $u['openid'];
-		$pay_config['cert']=$_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Admin/2017-11-04/59fdd235d7d0b.pem';
-		$pay_config['keyt']=$_SERVER["DOCUMENT_ROOT"].'/Web/UploadFile/Admin/2017-11-04/59fdd235dbb8c.pem';
-
-		$order_info = array();
-    	$order_info['order_info'] = '启动充电失败退款';
-		$order_info['out_trade_no'] = $t['orderid'];
-		$order_info['refund_trade_no'] =$t['orderid'];
-    	$order_info['total_fee'] = $t['money'];
-    	$order_info['refund_fee'] =  $t['money'];		
-		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
-		$pay = new \Pay($order_info,$pay_config);
-    	$pay->refund();*/
-		
-	}
-
 }

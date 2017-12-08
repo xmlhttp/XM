@@ -44,7 +44,7 @@ class PayNotifyCallBack extends WxPayNotify
 		
 		$arr = require_once(dirname(__file__)."/../../Web/Common/Conf/config.php");
         $mysqli = new mysqli($arr['DB_HOST'],$arr['DB_USER'],$arr['DB_PWD'],$arr['DB_NAME'],$arr['DB_PORT']);
-		$sql = "select * from db_tempmoney where status=0 and orderid='".$data['out_trade_no']."'";
+		$sql = "select * from db_tempmoney where status=0 and id=".$data['attach'];
 		$result = $mysqli->query($sql);
         if(!$result){
             $msg ='订单不存在!';
@@ -56,17 +56,17 @@ class PayNotifyCallBack extends WxPayNotify
             $msg ='数据为空!';
 			return false;
         }
-		if($data['total_fee']!=$check['cuint']*100){
+		if($data['total_fee']!=$check['money']){
 			$msg ='金额异常!';
 			return false;
 		}
-		$sql="update db_tempmoney set status=1 where id=".$check["id"];
+		$sql="update db_tempmoney set status=1,wxno='".$data['transaction_id']."',endtime='".date('Y-m-d H:i:s',strtotime($data['time_end']))."' where id=".$data['attach'];
 		$result1 = $mysqli->query($sql);
         if(!$result1){
             $msg ='修改状态失败!';
 			return false;
-		}	
-        return true;  
+		}
+        return true; 
     }  
 }  
 $notify = new PayNotifyCallBack();  

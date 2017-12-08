@@ -16,7 +16,7 @@ class Pay{
         $input = new WxPayUnifiedOrder();
 
         $input->SetBody($this->order_info['order_info']);//商品或支付单简要描述
-        $input->SetAttach("weixin");//附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
+        $input->SetAttach($this->order_info['mid']);//附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
         $input->SetOut_trade_no($this->order_info['out_trade_no']);//商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
         $input->SetTotal_fee(floatval($this->order_info['total_fee']));//订单总金额，只能为整数，详见支付金额
         $input->SetTime_start(date("YmdHis",strtotime($this->order_info['add_time'])));//订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
@@ -35,10 +35,9 @@ class Pay{
     public function refund(){
         $input = new WxPayRefund();
         $input->SetOut_trade_no($this->order_info['out_trade_no']);//设置商户系统内部的订单号
-        $input->SetTotal_fee(floatval($this->order_info['total_fee']*100));//设置订单总金额，单位为分，只能为整数
-        $input->SetRefund_fee(floatval($this->order_info['refund_fee']*100));//设置退款总金额，订单总金额，单位为分，只能为整数
+        $input->SetTotal_fee(floatval($this->order_info['total_fee']));//设置订单总金额，单位为分，只能为整数
+        $input->SetRefund_fee(floatval($this->order_info['refund_fee']));//设置退款总金额，订单总金额，单位为分，只能为整数
         $input->SetOut_refund_no($this->order_info['refund_trade_no']);//设置商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔
-        $input->SetTransaction_id('');//微信订单号
         $input->SetOp_user_id(WxPayConfig::MCHID);//设置操作员帐号, 默认为商户号
 	    $result =WxPayApi::refund($input);
         return $result;

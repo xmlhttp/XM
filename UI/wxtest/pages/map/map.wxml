@@ -1,0 +1,6 @@
+<view wx:if="{{!ismap}}" class="mapinfo" style="text-align:center">
+  <image src='/resources/none.png' class='noneimg'></image>
+</view>
+<view wx:if="{{ismap}}" class='mapinfo' >
+  <image src='{{mapimg}}' class='mapimg' ></image>
+</view>

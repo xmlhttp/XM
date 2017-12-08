@@ -176,17 +176,18 @@ Page({
       success: function (res) {
         console.log(res.data)
         if (res.data.status.err == 0) {
+          wx.hideLoading()
+          $this.payinfo(res.data.data)
           //客户端充值，模拟数据跳过
-          //$this.payinfo(res.data.data)
-          $this.startPower(res.data.data)
+          //$this.startPower(res.data.data)
         } else {
           wx.hideLoading()
-          app.errToast(res.data.status.msg)
+          app.errAlert(res.data.status.msg)
         }
       },
       fail: function () {
         wx.hideLoading()
-        app.errToast('网络请求有误')
+        app.errAlert('网络请求有误')
       }
     })
   },
@@ -195,6 +196,7 @@ Page({
    */
   payinfo: function (pdata) {
     var $this = this;
+    console.log(pdata)
     wx.requestPayment({
       'timeStamp': pdata.timestamp,
       'nonceStr': pdata.noncestr,
@@ -202,23 +204,34 @@ Page({
       'signType': 'MD5',
       'paySign': pdata.paySign,
       'success': function (d) {
-        $this.startPower(pdata)
+        $this.startPower(pdata.id)
+      },
+      'fail':function(res){
+        app.errAlert(res.errMsg)
       }
     })
   },
   /**
     * 启动充电
     */
-  startPower: function (pdata) {
+  startPower: function (_id) {
     if (userkey == null) {
       userkey = wx.getStorageSync("userkey")
     }
-    
-    pdata['uid'] = userkey.uid;
-    pdata['sessionid'] = userkey.sessionid;
-
+    var pdata={
+      id:_id,
+      uid: userkey.uid,
+      sessionid: userkey.sessionid
+    }
+   
     console.log(pdata)
     var $this = this;
+    wx.showLoading({
+      title: '启动中...',
+      mask: true
+    })
+
+
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/startCharge",
       data: pdata,
@@ -234,13 +247,13 @@ Page({
           })
         } else {
           wx.hideLoading()
-          app.errToast(res.data.status.msg)
+          app.errAlert(res.data.status.msg)
         }
 
       },
       fail: function (res) {
         wx.hideLoading()
-        app.errToast('网络请求有误')
+        app.errAlert('网络请求有误')
       }
     })
   }
