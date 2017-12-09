@@ -4,16 +4,6 @@ use Think\Controller;
 
 class IndexController extends Controller {    
 
-public function getCode(){
-	$time=time()-date('Z');
-	$time1=time();
-		$result1=file_get_contents("https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=".$time);
-		var_dump($result1."----".$time1."-----".$time);
-		//$result=json_decode($result1, true);
-}
-
-
-
     /*
      * 主页
      * 
@@ -374,15 +364,14 @@ public function getCode(){
 			}
 		}
 		
-		$img = $bgimg->getImageBlob();
+		$endimg = $bgimg->getImageBlob();
 		foreach($img as $t=>$v){
 			$v->clear();   
 			$v->destroy();
 		}
 		$bgimg->clear();   
 		$bgimg->destroy();
-		$json['mime']= $image_info['mime'];
-		$json['img'] = 'data:'.$image_info['mime'].';base64,'.str_replace("\\r\\n","",base64_encode($img));
+		$json['img'] = 'data:'.$image_info['mime'].';base64,'.str_replace("\\r\\n","",base64_encode($endimg));
 		$json['sitename']=$T1['sitename'];
 		$json['status']['err']=0;
 		$json['status']['msg']="执行成功！";

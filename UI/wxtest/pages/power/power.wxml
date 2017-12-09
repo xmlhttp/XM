@@ -12,7 +12,7 @@
 <view class='pitemtxt'>充电时间</view><text  class='pitemval' style='color:#0c0'>{{ctime}}</text>
 </view>
 <view class='pitem'>
-<view class='pitemtxt'>充电电度</view><text  class='pitemval'>{{cele}} Kw</text>
+<view class='pitemtxt'>充电电度</view><text  class='pitemval'>{{cele}} Kw*h</text>
 </view>
 <view class='pitem'>
 <view class='pitemtxt'>充电状态</view><text  class='pitemval' style='color:{{color}}'>{{statu}}</text>
