@@ -6,6 +6,7 @@ class PileListAllController extends Controller {
     public function index(){
 		loadcheck(9);
 		$this->assign('option',sitelist_menu(0));
+		ob_clean();
     	$this->display('Index:plielistall');
     }
 	
@@ -350,6 +351,7 @@ class PileListAllController extends Controller {
 	 public function AddRead(){
 		loadcheck(9); 
 		$this->assign('option',sitelist_menu(0));
+		ob_clean();
     	$this->display('Index:plielistAdd');
     }
 
@@ -436,24 +438,28 @@ class PileListAllController extends Controller {
 	public function EditRead(){
 		loadcheck(9);
 		if(I("get.id",0)==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
 		}
 		$Te=M('pile')->where('id='.I("get.id",0))->select();
 		if(count($Te)!=1){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
 		}
 		$site=M('sitelist')->where('id='.$Te[0]["parentid"])->select();
 		if(count($site)!=1){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
 		}
 		if(session("adminclass")==0){ 
 			if($site[0]["bid"]!=session("uid")){
+				ob_clean();
 				header("Content-Type:text/html;charset=utf-8");
 				echo "你无权访问本页!";
 				exit;
@@ -463,6 +469,7 @@ class PileListAllController extends Controller {
 		
 		$this->assign('option',sitelist_menu($Te[0]["parentid"]));
 		$this->assign('T',$Te[0]);	
+		ob_clean();
 		$this->display('Index:plielistUpdata');
 	}
 	
@@ -538,18 +545,21 @@ class PileListAllController extends Controller {
 	 public function Park(){
 		loadcheck(9); 
 		if(I("get.sid",0)==0||I('get.x', '')==""||I('get.y', '')==""||I('get.r', '')==""){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "<script>alert('请求有误#1！');</script>";
 			exit;
 		}
 		$sitelist=M('sitelist')->where('id='.I("get.sid",0).' and isdelete=0')->find();
 		if(!$sitelist){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "<script>alert('请求有误#2！');</script>";	
 			exit;
 		}
 		if(session("adminclass")==0){
 			if($sitelist["bid"]!=session("uid")){
+				ob_clean();
 				header("Content-Type:text/html;charset=utf-8");
 				echo "<script>alert('请求有误#3！');</script>";
 				exit;
@@ -570,6 +580,7 @@ class PileListAllController extends Controller {
 	public function Mode(){
 		loadcheck(9);
 		if(I("get.id",0)==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!#1";
 			exit;
@@ -578,17 +589,20 @@ class PileListAllController extends Controller {
 		if(session("adminclass")==0){
 			$T=M('pile')->where('id='.I("get.id",0).' and isdelete=0')->find();
 			if(!$T){
+				ob_clean();
 				header("Content-Type:text/html;charset=utf-8");
 				echo "你无权访问本页!#2";
 				exit;	
 			}
 			$sitelist=M('sitelist')->where('id='.$T["parentid"].' and isdelete=0')->find();
 			if(!$sitelist){
+				ob_clean();
 				header("Content-Type:text/html;charset=utf-8");
 				echo "你无权访问本页!#3";
 				exit;
 			}
 			if($sitelist["bid"]!=session("uid")){
+				ob_clean();
 				header("Content-Type:text/html;charset=utf-8");
 				echo "你无权访问本页!#4";
 				exit;
@@ -601,6 +615,7 @@ class PileListAllController extends Controller {
 		$this->assign('pid',I("get.id",0));
 		$this->assign('uid',session("uid"));
 		$this->assign('sessionid',session("sessionid"));
+		ob_clean();
 		$this->display('Index:plieMode');
 	}
 	//模拟器数据

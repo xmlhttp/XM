@@ -28,6 +28,7 @@
 ..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_flash.h
 ..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h
 ..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_iwdg.h
 ..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_pwr.h
 ..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h
 ..\OBJ\dns.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rtc.h

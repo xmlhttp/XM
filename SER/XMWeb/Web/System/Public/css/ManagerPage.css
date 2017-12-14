@@ -20,8 +20,7 @@ body{ min-width:1000px}
 .left_nav a{ display:block; height:40px; background:#42485b; padding-left:10px; line-height:40px; text-align:left; color:#fff; font-size:14px; letter-spacing:1px;transition: all 0.2s ease-in-out 0s}
 .left_nav a:hover{ background:#00c1de}
 .left_nav a .left_tico{ float:left; width:13px; height:13px; background:url(../images/ManagerPage/nav/leftnav_ico.png) center center no-repeat; margin-right:6px; margin-top:13px;transition: all 0.2s ease-in-out 0s}
-.left_nav a.cura .left_tico{transform:rotate(90deg);}
-
+.left_nav a.cura .left_tico{transform:rotate(90deg);_background:url(../images/ManagerPage/nav/leftnav_ico1.png) center center no-repeat;*background:url(../images/ManagerPage/nav/leftnav_ico1.png) center center no-repeat;background:url(../images/ManagerPage/nav/leftnav_ico1.png) center center no-repeat\0;}
 
 .left_nav .left_sub{ overflow-y:auto; }
 .left_nav .left_sub .left_sub1{padding-top:2px; padding-bottom:2px;}

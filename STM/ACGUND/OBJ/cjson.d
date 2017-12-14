@@ -21,6 +21,7 @@
 ..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_flash.h
 ..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h
 ..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_iwdg.h
 ..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_pwr.h
 ..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h
 ..\OBJ\cjson.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rtc.h

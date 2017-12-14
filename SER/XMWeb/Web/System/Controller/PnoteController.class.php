@@ -5,6 +5,7 @@ class PnoteController extends Controller {
 
     public function index(){
 		loadcheck(18); 
+		ob_clean();
    		$this->display('Index:Pnote');
     }
 

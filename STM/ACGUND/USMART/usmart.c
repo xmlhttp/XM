@@ -201,7 +201,7 @@ void getip(){
 	printf("IP地址........................%d.%d.%d.%d\r\n",lwipdev.ip[0],lwipdev.ip[1],lwipdev.ip[2],lwipdev.ip[3]);
 	printf("子网掩码......................%d.%d.%d.%d\r\n",lwipdev.netmask[0],lwipdev.netmask[1],lwipdev.netmask[2],lwipdev.netmask[3]);
 	printf("网关..........................%d.%d.%d.%d\r\n",lwipdev.gateway[0],lwipdev.gateway[1],lwipdev.gateway[2],lwipdev.gateway[3]);
-	
+	printf("编号..........................%d-%d-%d\r\n",*(u32*)(0x1ffff7e8),*(u32*)(0x1ffff7ec),*(u32*)(0x1ffff7f0));	
 }
 //获取基本信息
 void getinfo(){

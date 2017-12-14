@@ -6,10 +6,12 @@ class AdminAllController extends Controller {
     public function index(){
 		
 		if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();
 		}else{
+			ob_clean();
 			loadcheck(7); 
     		$this->display('Index:adminall');
 		}
@@ -287,11 +289,13 @@ class AdminAllController extends Controller {
 	//添加管理员-显示
 	 public function AddRead(){
 		 if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();
 		}else{
-			loadcheck(7); 
+			loadcheck(7);
+			ob_clean();
     		$this->display('Index:adminAdd');
 		}
     }
@@ -299,11 +303,13 @@ class AdminAllController extends Controller {
 	//显示权限列表
 	public function adminMenu0(){
 		if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();
 		}else{
 			loadcheck(7);
+			ob_clean();
 			header("Content-type:text/xml");
 			echo "<?xml version='1.0' encoding='utf-8'?><tree id='0'>" .show_xml(0)."</tree>";
 		}
@@ -314,6 +320,7 @@ class AdminAllController extends Controller {
 			exit();
 		}
 		loadcheck(7);
+		ob_clean();
 		header("Content-type:text/xml");
 		echo "<?xml version='1.0' encoding='utf-8'?><tree id='0'>" .show_xml1(0,",".I("get.ids").",")."</tree>";
 	}
@@ -412,6 +419,7 @@ class AdminAllController extends Controller {
 	//修改管理员信息-读取
 	public function EditRead(){
 		if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();
@@ -431,7 +439,7 @@ class AdminAllController extends Controller {
 		
 		$this->assign('sysadmin',$sysadmin);
 		
-		
+		ob_clean();
 		$this->display('Index:adminUpdata');
 	}
 	
@@ -459,7 +467,6 @@ class AdminAllController extends Controller {
 			$json['status']['msg']="信息提交有误！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;	
 		}
 		

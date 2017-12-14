@@ -4,7 +4,8 @@ use Think\Controller;
 class InComeController extends Controller {
 
     public function index(){
-		loadcheck(25); 
+		loadcheck(25);
+		ob_clean();
    		$this->display('Index:income');
     }
 

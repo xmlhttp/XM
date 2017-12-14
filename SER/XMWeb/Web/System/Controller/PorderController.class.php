@@ -5,6 +5,7 @@ class PorderController extends Controller {
 
     public function index(){
 		loadcheck(28); 
+		ob_clean();
    		$this->display('Index:porder');
     }
 

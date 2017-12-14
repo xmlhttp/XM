@@ -10,6 +10,8 @@
 #if SYSTEM_SUPPORT_OS
 #include "includes.h"					//ucos 使用	  
 #endif
+//u32 tempdata=0;
+
 
 int BUFLENGTH=0; //当前字符串长度
 u8 read_buf[19] = {'\0'};
@@ -173,54 +175,89 @@ void USART2_IRQHandler(void){
 		}
   	}
 	if(BUFLENGTH==19&&CHK_CRC16(read_buf,19)==1){
-		
-	//	printf("电能:%.2fKW*H，电压：%.2fV，电流：%.3fA\r\n",(float)((0xff & read_buf[6])<<24|(0xff & read_buf[5])<<16|(0xff & read_buf[3])<<8|(0xff & read_buf[4]))/10,(float)((0xff & read_buf[7])<<8|(0xff & read_buf[8]))/100,(float)((0xff & read_buf[11])<<8|(0xff & read_buf[12])|(0xff & read_buf[9])<<8|(0xff & read_buf[10]))/1000);
 		u32 cpower;
+		/*if(my_data.Ispower==1){
+			tempdata++;
+			read_buf[3]=(u8)(tempdata>>8);
+			read_buf[4]=(u8)(tempdata);
+			read_buf[5]=(u8)(tempdata>>16);
+			read_buf[6]=(u8)(tempdata>>24);
+		}else{	
+			tempdata= (0xff & read_buf[6])<<24|(0xff & read_buf[5])<<16|(0xff & read_buf[3])<<8|(0xff & read_buf[4]);
+		} */
+		printf("电能:%.1fKW*H，电压：%.2fV，电流：%.3fA\r\n",(float)((0xff & read_buf[6])<<24|(0xff & read_buf[5])<<16|(0xff & read_buf[3])<<8|(0xff & read_buf[4]))/10,(float)((0xff & read_buf[7])<<8|(0xff & read_buf[8]))/100,(float)((0xff & read_buf[11])<<24|(0xff & read_buf[12])<<16|(0xff & read_buf[9])<<8|(0xff & read_buf[10]))/1000);
 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update  );  //清除TIMx更新中断标志 
 		TIM_Cmd(TIM7, DISABLE);
 		TIM_SetCounter(TIM7, 0);
 		Is485=1;
 		coun485=0;
 		cpower=(u32)((0xff & read_buf[6])<<24|(0xff & read_buf[5])<<16|(0xff & read_buf[3])<<8|(0xff & read_buf[4]));
-		//充电有订单未结算 ,电表异常
-		if(cpower<my_data.Endp&&my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==1){
+		//充电有订单未结算 ,电表异常充电
+		printf("cpower:%d,my_data.Endp:%d\r\n",cpower,my_data.Endp);
+		if(cpower<my_data.Endp&&my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==0){
 			u8 t;
+			printf("异常#1\r\n");
 			my_data.Cpower=my_data.Cpower+1;
 			my_data.Endp=cpower;
 			my_data.Cvol=(u16)((0xff & read_buf[7])<<8|(0xff & read_buf[8]));
-			my_data.Cele=(u32)((0xff & read_buf[11])<<8|(0xff & read_buf[12])|(0xff & read_buf[9])<<8|(0xff & read_buf[10]));
+			my_data.Cele=(u32)((0xff & read_buf[11])<<24|(0xff & read_buf[12])<<16|(0xff & read_buf[9])<<8|(0xff & read_buf[10]));
 			t=StopChage();
-			if(t==0){
+			if(t){
 				SendStop(23,0);
 			}else{
 				SendStop(23,13);
 			}
-
-		}else if(cpower>my_data.Endp){
+		//异常未充电
+		}else if(cpower<my_data.Endp&&my_data.Ispower==0&&my_data.Orderid==0&&my_data.Isend==1){
+			printf("异常#2\r\n");
 			my_data.Endp=cpower;
 			my_data.Cvol=(u16)((0xff & read_buf[7])<<8|(0xff & read_buf[8]));
-			my_data.Cele=(u32)((0xff & read_buf[11])<<8|(0xff & read_buf[12])|(0xff & read_buf[9])<<8|(0xff & read_buf[10]));
-			if(my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==1){
-				my_data.Cpower=	my_data.Endp-my_data.Starp;
-			}
+			my_data.Cele=(u32)((0xff & read_buf[11])<<24|(0xff & read_buf[12])<<16|(0xff & read_buf[9])<<8|(0xff & read_buf[10]));
 
-			if(islink==0&&my_data.Money<=(float)(my_data.Cpower*my_data.Uint)/10&&my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==1){
-				u8 t=StopChage();
-				if(t==0){
+			//发送
+			if(islink==0){
+				while(IsSend==0){
+			 		delay_ms(1);
+				}
+				IsSend=0;
+				memset(tcp_client_sendbuf,'\0',256); 
+				//发送普通提交请求
+				sprintf(tcp_client_sendbuf,"{\"type\":\"postdata\",\"w\":%d,\"v\":%d,\"a\":%d,\"Ispower\":%d,\"Orderid\":%d,\"isend\":%d,\"Cpower\":%d}\r\n",my_data.Endp,my_data.Cvol,my_data.Cele,my_data.Ispower,my_data.Orderid,my_data.Isend,my_data.Cpower);
+				tcp_client_flag |= LWIP_SEND_DATA;	
+			}
+		//正常
+		}else if(cpower>my_data.Endp){
+			printf("正常#1\r\n");
+			my_data.Endp=cpower;
+			my_data.Cvol=(u16)((0xff & read_buf[7])<<8|(0xff & read_buf[8]));
+			my_data.Cele=(u32)((0xff & read_buf[11])<<24|(0xff & read_buf[12])<<16|(0xff & read_buf[9])<<8|(0xff & read_buf[10]));
+			my_data.Cpower=	my_data.Endp-my_data.Starp;
+			//连线充电金额不足
+			if(islink==0&&my_data.Money*10<(my_data.Endp-my_data.Starp+1)*my_data.Uint&&my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==0){
+				u8 t;
+				printf("网络正常余额不足\r\n");
+				my_data.Cpower=	my_data.Endp-my_data.Starp;
+				t=StopChage();
+				if(t){
 					SendStop(24,0);
 				}else{
 					 SendStop(24,14);
 				}
-			}else if(islink==1&&my_data.Money<=(float)(my_data.Cpower*my_data.Uint)/10&&my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==1){
-				my_data.Ispower=0;
+			//断线充电金额不足
+			}else if(islink==1&&my_data.Money*10<(my_data.Endp-my_data.Starp+1)*my_data.Uint&&my_data.Ispower==1&&my_data.Orderid!=0&&my_data.Isend==0){
+				printf("网络异常余额不足\r\n");
+				my_data.Cpower=	my_data.Endp-my_data.Starp;
+				StopChage();
 				//存储
 				FLASH_Unlock();
 				FLASH_ClearFlag(FLASH_FLAG_BSY|FLASH_FLAG_EOP|FLASH_FLAG_PGERR|FLASH_FLAG_WRPRTERR);
 				FLASH_ErasePage(FLASH_ADDR);
 				STMFLASH_Write(FLASH_ADDR,(u16 *)&my_data,sizeof(my_data));
 				FLASH_Lock();
-
+			//其他情况上传数据
 			}else{
+				printf("其他情况，islink:%d\r\n",islink);
+				//my_data.Cpower=	my_data.Endp-my_data.Starp;
 				//存储
 				FLASH_Unlock();
 				FLASH_ClearFlag(FLASH_FLAG_BSY|FLASH_FLAG_EOP|FLASH_FLAG_PGERR|FLASH_FLAG_WRPRTERR);
@@ -239,8 +276,12 @@ void USART2_IRQHandler(void){
 					tcp_client_flag |= LWIP_SEND_DATA;	
 				}
 			}
+		
 
 		} 
+		if(cpower!=my_data.Endp){
+			my_data.Endp=cpower;
+		}
 		BUFLENGTH=0;		
   	}
 	OSIntExit(); 	   

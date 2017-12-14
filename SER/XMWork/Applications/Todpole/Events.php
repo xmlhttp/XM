@@ -122,25 +122,21 @@ class Events{
 				
 				if($message_data["Orderid"]!=0){
 					$reto = Db::instance('db1')->select('*')->from('db_temp')->where("id=".$message_data["Orderid"]."")->query();	
-				}
-				//两边订单不同步
-				if($message_data["Orderid"]!=0&&$message_data["Ispower"]==1&&$reto[0]['isclose']==1){
-					Gateway::sendToClient($client_id, '{"type":"StopChage","code":30}');
-				}
-				//有订单未结算
-				if($message_data["Orderid"]!=0&&$message_data["Ispower"]==0&&$message_data["Isend"]==0&&$reto[0]['isclose']==0&&$reto[0]['isenable']==1){
-					$sql="update db_temp set eleend =".$message_data["w"].",cpower=".$message_data["Cpower"].",lasttime='".date('Y-m-d H:i:s',time())."',endcode=25,endtxt='".stoptxt(25)."' where id=".$reto[0]["id"];
-					Db::instance('db1')->query($sql);
-					EndOrder($reto[0]["id"]);
-
-					echo "触发结算\n";
+					//有订单未结算
+					if($message_data["Ispower"]==0&&$message_data["Isend"]==0&&$reto[0]['isclose']==0&&$reto[0]['isenable']==1){
+						$sql="update db_temp set eleend =".$message_data["w"].",cpower=".$message_data["Cpower"].",lasttime='".date('Y-m-d H:i:s',time())."',endcode=25,endtxt='".stoptxt(25)."' where id=".$reto[0]["id"];
 					
+						Db::instance('db1')->query($sql);
+						EndOrder($reto[0]["id"]);
+						echo "触发结算\n";
+					}
+					//两边订单不同步
+					if($message_data["Ispower"]==1&&$reto[0]['isclose']==1){
+						Gateway::sendToClient($client_id, '{"type":"StopChage","code":30}');
+						$message_data["Ispower"]=0;
+					}
 				}
-				//订单关闭将设备置空闲
-				if($message_data["Orderid"]!=0&&$message_data["Ispower"]==1&&$reto[0]['isclose']==1){
-					$message_data["Ispower"]=0;
-				}
-				
+
 				//更新桩的连接状态，设置session
 				$sql="update db_pile set islink =1,ptype=".$message_data["Ispower"].",client_id='".$client_id."' where id=".$ret1[0]["id"];
 				Db::instance('db1')->query($sql);
@@ -465,6 +461,9 @@ function stopfa($code){
 		case 0:
 			return "正常关闭";
 			break;
+		case 14:
+			return "充电接触器反馈超时";
+			break;
 		default:
 			return "未知原因";
 	}
@@ -496,13 +495,13 @@ function EndOrder($id){
 			Db::instance('db1')->query($sql);
 			setInitOrder($reto);
 		}else{
-			$sql="insert into db_err(tit,desc,type,addtime)values('".$reto[0]['No']."-退款失败','结算时执行退款操作失败',1,'".date('Y-m-d H:i:s',time())."')";
+			$sql="insert into db_err(tit,tdesc,type,addtime)values('".$reto[0]['No']."-退款失败','结算时执行退款操作失败',1,'".date('Y-m-d H:i:s',time())."')";
 			Db::instance('db1')->query($sql);
 		}		
 	}else if($money==$reto[0]['smoney']){
 		setInitOrder($reto);
 	}else if($money>$reto[0]['smoney']){
-		$sql="insert into db_err(tit,desc,type,addtime)values('".$reto[0]['No']."-金额验证有异常','结算时充电金额大于充值金额',2,'".date('Y-m-d H:i:s',time())."')";
+		$sql="insert into db_err(tit,tdesc,type,addtime)values('".$reto[0]['No']."-金额验证有异常','结算时充电金额大于充值金额',2,'".date('Y-m-d H:i:s',time())."')";
 		Db::instance('db1')->query($sql);
 		setInitOrder($reto);
 	}

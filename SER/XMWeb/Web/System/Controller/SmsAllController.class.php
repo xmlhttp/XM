@@ -5,6 +5,7 @@ class SmsAllController extends Controller {
 
     public function index(){
 		loadcheck(12); 
+		ob_clean();
    		$this->display('Index:Smsall');
     }
 	
@@ -14,6 +15,7 @@ class SmsAllController extends Controller {
 		if(!ajaxcheck(12)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -32,6 +34,7 @@ class SmsAllController extends Controller {
 		$json['data']['rows']=showitem($T);
 		$json['status']['err']=0;
 		$json['status']['msg']="请求成功！";
+		ob_clean();
 		$this->ajaxReturn($json, 'json');
 	}
 	
@@ -44,6 +47,7 @@ class SmsAllController extends Controller {
 		if(!ajaxcheck(12)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -56,6 +60,7 @@ class SmsAllController extends Controller {
 		$json['data']['rows']=showitem($T);
 		$json['status']['err']=0;
 		$json['status']['msg']="请求成功！";
+		ob_clean();
 		$this->ajaxReturn($json, 'json');
 	}
 	
@@ -65,12 +70,14 @@ class SmsAllController extends Controller {
 		if(session("adminclass")==0){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
 		if(!ajaxcheck(12)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -91,12 +98,14 @@ class SmsAllController extends Controller {
 			$T->where('id='.I("post.rId",0))->save($data);  	
 			login_info("【更新】 信息ID为[".I("post.rId",0). "] 更新成功", "sys_admin");
 			$json['status']['err']=0;
-			$json['status']['msg']="<span class='msgright'>ID为<font style='padding-left:2px; padding-right:2px; font-size:13px'>".I("post.rId",0)."</font>的第<font  style='padding-left:2px; padding-right:2px; font-size:13px'>".(I("post.cInd",0)+1)."</font>列的数据已经更新为:".I("post.nValue","")."</span>";		
+			$json['status']['msg']="<span class='msgright'>ID为<font style='padding-left:2px; padding-right:2px; font-size:13px'>".I("post.rId",0)."</font>的第<font  style='padding-left:2px; padding-right:2px; font-size:13px'>".(I("post.cInd",0)+1)."</font>列的数据已经更新为:".I("post.nValue","")."</span>";	
+			ob_clean();	
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}else{
 			$json['status']['err']=2;
 			$json['status']['msg']="数据连接错误！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;		
 		}
@@ -109,6 +118,7 @@ class SmsAllController extends Controller {
 		if(!ajaxcheck(12)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -125,6 +135,7 @@ class SmsAllController extends Controller {
 				$json['data']['rows']=showitem($T);;
 				$json['status']['err']=0;
 				$json['status']['msg']="请求成功";
+				ob_clean();
 				$this->ajaxReturn($json, 'json');
 				exit;
 			}else{ //查询结果为空自动返回上一页
@@ -134,6 +145,7 @@ class SmsAllController extends Controller {
 					$json['data']['rows']=array();
 					$json['status']['err']=0;
 					$json['status']['msg']="请求成功，数据已被清空";
+					ob_clean();
 					$this->ajaxReturn($json, 'json');
 					exit;	
 				}else{
@@ -145,6 +157,7 @@ class SmsAllController extends Controller {
 					$json['data']['rows']=showitem($T);;
 					$json['status']['err']=0;
 					$json['status']['msg']="请求成功，当前页面没有数据系统自动向上翻页";
+					ob_clean();
 					$this->ajaxReturn($json, 'json');
 					exit;
 				}
@@ -152,6 +165,7 @@ class SmsAllController extends Controller {
 		}else{
 			$json['status']['err']=2;
 			$json['status']['msg']="命令执行错误！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
@@ -164,6 +178,7 @@ class SmsAllController extends Controller {
 		if(!ajaxcheck(8)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}		
@@ -181,6 +196,7 @@ class SmsAllController extends Controller {
 				$json['data']['rows']=showitem($T);;
 				$json['status']['err']=0;
 				$json['status']['msg']="请求成功";
+				ob_clean();
 				$this->ajaxReturn($json, 'json');
 				exit;
 			}else{ //查询结果为空自动返回上一页
@@ -190,6 +206,7 @@ class SmsAllController extends Controller {
 					$json['data']['rows']=array();
 					$json['status']['err']=0;
 					$json['status']['msg']="请求成功，数据已被清空";
+					ob_clean();
 					$this->ajaxReturn($json, 'json');
 					exit;	
 				}else{
@@ -202,6 +219,7 @@ class SmsAllController extends Controller {
 					$json['data']['rows']=showitem($T);
 					$json['status']['err']=0;
 					$json['status']['msg']="请求成功，当前页面没有数据系统自动向上翻页";
+					ob_clean();
 					$this->ajaxReturn($json, 'json');
 					exit;
 				}
@@ -209,6 +227,7 @@ class SmsAllController extends Controller {
 		}else{
 			$json['status']['err']=2;
 			$json['status']['msg']="命令执行错误！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
@@ -217,11 +236,13 @@ class SmsAllController extends Controller {
 	//添加-显示
 	 public function AddRead(){
 		if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();
 		}
 		loadcheck(12); 	
+		ob_clean();
     	$this->display('Index:SmsAdd');
     }
 	
@@ -232,12 +253,14 @@ class SmsAllController extends Controller {
 			//filedel($_SERVER["DOCUMENT_ROOT"]."/Web/UploadFile/Site/".I('post.siteimg', ''));
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
 		if(I('post.Newtitle', '')=="" || I('post.Newdesc', '')==""|| I('post.Newcontent', '')==""){
 			$json['status']['err']=2;
 			$json['status']['msg']="信息提交有误！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -255,17 +278,20 @@ class SmsAllController extends Controller {
 				$json['status']['err']=0;
 				$json['status']['msg']="添加成功！";
 				$json['status']['ttt']=$data['Newcontent'];
+				ob_clean();
 				$this->ajaxReturn($json, 'json');
 				exit;	
 			}else{
 				$json['status']['err']=2;
 				$json['status']['msg']="写入数1据库失败！";
+				ob_clean();
 				$this->ajaxReturn($json, 'json');
 				exit;	
 			}					
 		}else{
 			$json['status']['err']=2;
 			$json['status']['msg']="写入数据库1失败！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -276,6 +302,7 @@ class SmsAllController extends Controller {
 	//修改消息信息-读取
 	public function EditRead(){
 		if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();
@@ -283,6 +310,7 @@ class SmsAllController extends Controller {
 		loadcheck(12);
 		$sms=M('sms')->where('id='.I("get.id"),0)->find();
 		$this->assign('sms',$sms);	
+		ob_clean();
 		$this->display('Index:SmsUpdata');
 	}
 	
@@ -292,12 +320,14 @@ class SmsAllController extends Controller {
 		if(session("adminclass")==0){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
 		if(!ajaxcheck(12)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -307,11 +337,13 @@ class SmsAllController extends Controller {
 		if(M('sms')->where('id='.I('get.id',0))->save($data)){
 			$json['status']['err']=0;
 			$json['status']['msg']="修改成功！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}else{
 			$json['status']['err']=2;
 			$json['status']['msg']="修改数据失败！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}

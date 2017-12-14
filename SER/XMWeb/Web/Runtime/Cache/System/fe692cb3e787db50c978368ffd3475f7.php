@@ -13,7 +13,7 @@
      body{ overflow-y:hidden}
 </style>
 </head>
-<body>
+<body scroll="no">
 <!--顶部导航开始-->
 <div class="topnav">
 <a  href="/System.php?s=/System/ManagerPage/BaseInfo.html" class="home">首页</a>><a href="/System.php?s=/System/ManagerPage/sitesetup.html">系统信息</a>><a href="/System.php?s=/System/Down">版本列表</a>

@@ -5,6 +5,7 @@ class LogController extends Controller {
 
     public function index(){
 		loadcheck(16);
+		ob_clean();
    		$this->display('ManagerPage:Log');
     }
 	

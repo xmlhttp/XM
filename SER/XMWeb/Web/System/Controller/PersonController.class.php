@@ -7,6 +7,7 @@ class PersonController extends Controller {
 		loadcheck(21);
 		$T=M('sys_admin')->where('id='.session('uid').' and isact=1')->find();
 		if(!$T){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '请求信息有误！';
 		}
@@ -17,11 +18,13 @@ class PersonController extends Controller {
 		$T['tmoney']=sprintf("%1.2f",(float)$T['tmoney']/100);
 		$T['money']=sprintf("%1.2f",(float)$T['money']/100);
 		$this->assign('person',$T);
+		ob_clean();
     	$this->display('Index:person');		
     }
 	//申请列表
 	public function GetMoneyAll(){
 		loadcheck(24);
+		ob_clean();
     	$this->display('Index:getmoneylist');
 	}
 	//查询
@@ -122,10 +125,12 @@ class PersonController extends Controller {
 		loadcheck(23);
 		$T=M('sys_admin')->where('id="'.session('uid').'" and working=1 and isact=1')->find();
 		if(!$T){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '请求信息有误！';
 		}
 		$this->assign('money',sprintf("%1.2f",(float)$T['money']/100));
+		ob_clean();
     	$this->display('Index:getmoneyAdd');
 	}
 	//保存申请列表
@@ -199,23 +204,27 @@ class PersonController extends Controller {
 	public function EditRead(){
 		loadcheck(24);
 		if(I("get.id",0)==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页！";
 			exit;
 		}
 		if(session('adminclass')!=1&&session('adminclass')!=99){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页！";
 			exit;
 		}
 		$Te=M('sys_money')->where('id='.I("get.id"),0)->select();
 		if(count($Te)!=1){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页！";
 			exit;
 		}
 		$T=M('sys_admin')->where('id="'.$Te[0]["bid"].'" and working=1 and isact=1')->find();
 		if(!$T){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '请求信息有误！';
 			exit;
@@ -224,6 +233,7 @@ class PersonController extends Controller {
 		$Te[0]['money']=sprintf("%1.2f",(float)$Te[0]['money']/100);
 		$this->assign('Te',$Te[0]);	
 		$this->assign('T',$T);
+		ob_clean();
 		$this->display('Index:getmoneyUpdata');
 	}
 	//修改申请-保存

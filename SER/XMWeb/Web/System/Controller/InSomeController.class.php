@@ -5,11 +5,13 @@ class InSomeController extends Controller {
 
     public function index(){
 		if(session("adminclass")!=1&&session("adminclass")!=99){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '您的权限不够.';	
 			exit();	
 		}
 		loadcheck(30); 
+		ob_clean();
    		$this->display('Index:insome');
     }
 

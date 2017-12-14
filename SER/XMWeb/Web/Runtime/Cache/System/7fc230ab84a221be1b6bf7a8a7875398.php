@@ -13,7 +13,7 @@
      body{ overflow-y:hidden}
 </style>
 </head>
-<body>
+<body scroll="no">
 <!--顶部导航开始-->
 <div class="topnav">
 <a  href="/System.php?s=/System/ManagerPage/BaseInfo.html" class="home">首页</a>><a href="/System.php?s=/System/PileListAll">运营信息</a>><a href="javascript:void(0)">设备列表</a>

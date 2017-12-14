@@ -28,6 +28,7 @@
 ..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_flash.h
 ..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h
 ..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_iwdg.h
 ..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_pwr.h
 ..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h
 ..\OBJ\inet.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rtc.h

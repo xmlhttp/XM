@@ -3,6 +3,7 @@
 <head>
 	<title>RICHCOMM 凝智科技</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
 	<link href="/Web/System/Public/images/XM_favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<link href="/Web/System/Public/css/ManagerPage.css" rel="stylesheet" type="text/css" />
 	<script  src="/Public/jquery.js"></script>   

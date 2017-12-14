@@ -5,6 +5,7 @@ class ResourcesAllController extends Controller {
 
     public function index(){
 		loadcheck(5); 
+		ob_clean();
    		$this->display('Index:ResourcesAll');
     }
 	
@@ -32,6 +33,7 @@ class ResourcesAllController extends Controller {
 		$json['data']['rows']=showitem($T);
 		$json['status']['err']=0;
 		$json['status']['msg']="请求成功！";
+		ob_clean();
 		$this->ajaxReturn($json, 'json');
 	}
 	
@@ -44,6 +46,7 @@ class ResourcesAllController extends Controller {
 		if(!ajaxcheck(34)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -56,6 +59,7 @@ class ResourcesAllController extends Controller {
 		$json['data']['rows']=showitem($T);
 		$json['status']['err']=0;
 		$json['status']['msg']="请求成功！";
+		ob_clean();
 		$this->ajaxReturn($json, 'json');
 	}
 	

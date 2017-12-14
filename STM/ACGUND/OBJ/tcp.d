@@ -28,6 +28,7 @@
 ..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_flash.h
 ..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h
 ..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_iwdg.h
 ..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_pwr.h
 ..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h
 ..\OBJ\tcp.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rtc.h

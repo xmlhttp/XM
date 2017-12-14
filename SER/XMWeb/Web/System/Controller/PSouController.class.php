@@ -5,6 +5,7 @@ class PSouController extends Controller {
 
     public function index(){
 			loadcheck(3); 
+			ob_clean();
    			$this->display('Index:PSou');
     }
 	
@@ -15,6 +16,7 @@ class PSouController extends Controller {
 		if(!ajaxcheck(3)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -27,6 +29,7 @@ class PSouController extends Controller {
 		$json['data']['rows']=showitem($T);
 		$json['status']['err']=0;
 		$json['status']['msg']="请求成功！";
+		ob_clean();
 		$this->ajaxReturn($json, 'json');
 	}
 	
@@ -38,6 +41,7 @@ class PSouController extends Controller {
 		if(!ajaxcheck(3)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
+			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;
 		}
@@ -51,6 +55,7 @@ class PSouController extends Controller {
 		$json['data']['rows']=showitem($T);
 		$json['status']['err']=0;
 		$json['status']['msg']="请求成功！";
+		ob_clean();
 		$this->ajaxReturn($json, 'json');
 	}
 	

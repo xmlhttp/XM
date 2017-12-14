@@ -13,6 +13,7 @@
 ..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_flash.h
 ..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h
 ..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_iwdg.h
 ..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_pwr.h
 ..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h
 ..\OBJ\main.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rtc.h
@@ -57,3 +58,4 @@
 ..\OBJ\main.o: ..\HARDWARE\GPIOS\gpios.h
 ..\OBJ\main.o: ..\LWIP\lwip_app\tcp_client_demo\tcp_client_demo.h
 ..\OBJ\main.o: ..\HARDWARE\STMFLASH\stmflash.h
+..\OBJ\main.o: ..\HARDWARE\LWDG\LWDG.h

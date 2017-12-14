@@ -5,6 +5,7 @@ class UserAllController extends Controller {
 
     public function index(){
 		loadcheck(11); 
+		ob_clean();
    		$this->display('Index:userall');
     }
 	
@@ -112,6 +113,7 @@ class UserAllController extends Controller {
 		$userinfo['sele']=sprintf("%1.1f",(float)$userinfo['sele']/10);
 		
 		$this->assign('userinfo',$userinfo);	
+		ob_clean();
 		$this->display('Index:userUpdata');
 	}
 }

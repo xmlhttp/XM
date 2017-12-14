@@ -5,6 +5,7 @@ class USouController extends Controller {
 
     public function index(){
 		loadcheck(4); 
+		ob_clean();
    		$this->display('Index:USou');
     }
 

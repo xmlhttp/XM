@@ -1079,12 +1079,55 @@ class IndexController extends Controller {
 		}
 		
 	}
-	public function test(){
-		//$reto = Db::instance('db1')->select('*')->from('db_temp')->where("id=25")->query();
-		$reto=M('temp')->where('id = 25')->select();
-		//echo strtotime('2017-11-18 21:06:48')-strtotime('2017-11-18 21:06:27');
-		echo strtotime($reto[0]['lasttime'])-strtotime($reto[0]['addtime']);
+	
+	/**
+	*退款
+	**/
+	public function tuikuan(){
+		$id=I('get.id',0,'intval');
+		$reto=M('temp')->where('id = '.$id)->find();
+		$order_info = array();
+		$order_info['out_trade_no'] = $reto['No'];
+		$order_info['refund_trade_no'] ='RIC-'.GetRandStr(10);
+    	$order_info['total_fee'] = $reto['smoney'];
+    	$order_info['refund_fee'] =  $reto['money'];		
+		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
+		$pay = new \Pay($order_info);
+    	$res=$pay->refund();
+		var_dump($res);
 	}
+	/**
+	*下载版本
+	*/
+	public function NewBin(){
+		$T1=M('down')->where("isdelete=0 and putout=1 and treeid=1")-> order('orderid desc')->find();
+		if(!$T1){
+			ob_clean();
+			header("Content-type: text/html; charset=utf-8");
+            echo "File not found2!";
+			exit;
+		}else{
+			if (!file_exists($_SERVER["DOCUMENT_ROOT"].$T1["upfile"])){
+				ob_clean();
+            	header("Content-type: text/html; charset=utf-8");
+           		echo "File not found3!";
+           		exit; 
+       		} else {
+				ob_clean();
+				$name_tmp = explode(".",$T1["upfile"]);
+				$type=$name_tmp[count($name_tmp)-1];
+				$file_Size=filesize($_SERVER["DOCUMENT_ROOT"].$T1["upfile"]);
+            	Header("Content-type: application/octet-stream;charset=utf-8");
+            	Header("Accept-Ranges: bytes");
+           		Header("ACCEPT-LENGTH: ".$file_Size);
+            	Header("Content-Disposition: attachment; filename=".$T1["newtitle"].".".$type);
+				$file = fopen($_SERVER["DOCUMENT_ROOT"].$T1["upfile"],"r"); 
+				echo fread($file, filesize($_SERVER["DOCUMENT_ROOT"].$T1["upfile"]));		
+           		fclose($file);
+			}
+		}
+	}
+		
 	/********************************************************************
 	*********************************************************************
 	*********************************************************************

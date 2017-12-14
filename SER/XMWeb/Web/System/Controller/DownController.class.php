@@ -4,6 +4,7 @@ use Think\Controller;
 class DownController extends Controller {
     public function index(){
 		loadcheck(19);
+		ob_clean();
     	$this->display('Index:downall');
     }
 	
@@ -538,6 +539,7 @@ class DownController extends Controller {
 	//下载-显示
 	 public function AddRead(){
 		loadcheck(19);
+		ob_clean();
     	$this->display('Index:downAdd');
     }
 
@@ -550,7 +552,6 @@ class DownController extends Controller {
 			$json['status']['msg']="您已经退出或权限不够！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;
 		}
 		if(I('post.newtitle', '') == ""){
@@ -558,7 +559,6 @@ class DownController extends Controller {
 			$json['status']['msg']="标题不能为空！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;	
 		}
 		$data["newtitle"]=I('post.newtitle', '');
@@ -574,14 +574,12 @@ class DownController extends Controller {
 				$json['status']['msg']="添加成功！";
 				ob_clean();
 				$this->ajaxReturn($json, 'json');
-				//echo json_encode($json);
 				exit;
 			}else{
 				$json['status']['err']=2;
 				$json['status']['msg']="写入数据库失败！";
 				ob_clean();
 				$this->ajaxReturn($json, 'json');
-				//echo json_encode($json);
 				exit;	
 			}
 		}else{
@@ -589,7 +587,6 @@ class DownController extends Controller {
 			$json['status']['msg']="写入数据库失败！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;	
 		}
 	}
@@ -599,6 +596,7 @@ class DownController extends Controller {
 		loadcheck(19);
 		$info=M('Down')->where('id='.I("get.id",0).' and isdelete=0')->find();
 		if(!$info){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "信息不存在!";
 			exit;	
@@ -626,20 +624,19 @@ class DownController extends Controller {
 		}
 
 		$this->assign('option',$option);
-		$this->assign('info',$info);	
+		$this->assign('info',$info);
+		ob_clean();
 		$this->display('Index:downUpdata');
 	}
 	
 	//站点-修改
 	public function EditSave(){
-		header('Content-Type:text/html;charset=utf-8 ');
 		$json = array();
 		if(!ajaxcheck(19)){
 			$json['status']['err']=1;
 			$json['status']['msg']="您已经退出或权限不够！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;
 		}
 		if(I('get.id',0)==0){
@@ -647,7 +644,6 @@ class DownController extends Controller {
 			$json['status']['msg']="信息提交有误！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;	
 		}
 		if(I('post.newtitle', '')==""){
@@ -655,7 +651,6 @@ class DownController extends Controller {
 			$json['status']['msg']="广告标题不能为空！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;	
 		}
 		$ret=M('Down')->where('id='.I('get.id',0).' and isdelete=0')->find();
@@ -664,7 +659,6 @@ class DownController extends Controller {
 			$json['status']['msg']="信息提交有误！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;	
 		}
 
@@ -714,14 +708,12 @@ class DownController extends Controller {
 			$json['status']['msg']="修改成功！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;
 		}else{
 			$json['status']['err']=2;
 			$json['status']['msg']="修改数据失败！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
-			//echo json_encode($json);
 			exit;
 		}
 	}

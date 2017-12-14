@@ -152,9 +152,9 @@ function show($parent){
 			$tmp = show_kid($menu[$i]["id"]);
 			if($tmp!=""){
 				if($i==0){
-					 $tree .= "<a href='javascript:void(0)' class='cura'>".$menu[$i]['menu_name']."<i class='left_tico'></i></a><div class='left_sub'><div class='left_sub1'>".$tmp."</div></div>";
+					 $tree .= "<a href='javascript:void(0)' class='cura'><i class='left_tico'></i>".$menu[$i]['menu_name']."</a><div class='left_sub'><div class='left_sub1'>".$tmp."</div></div>";
 				}else{
-					 $tree .= "<a href='javascript:void(0)'>".$menu[$i]['menu_name']."<i class='left_tico'></i></a><div class='left_sub' style='display:none'><div class='left_sub1'>".$tmp."</div></div>";
+					 $tree .= "<a href='javascript:void(0)'><i class='left_tico'></i>".$menu[$i]['menu_name']."</a><div class='left_sub' style='display:none'><div class='left_sub1'>".$tmp."</div></div>";
 				}
 			}
 		}

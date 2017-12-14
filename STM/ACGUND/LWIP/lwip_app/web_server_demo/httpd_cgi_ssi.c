@@ -441,7 +441,7 @@ const char* CPOWER_CGI_Handler(int iIndex,int iNumParams,char *pcParam[],char *p
 					//OSTaskSuspend(9);  //停止检测
 					u8 st=StopChage();	   //运行停止方法 
 					printf("网页停止充电！\r\n");
-					OSTimeDlyHMSM(0,0,0,10);
+					delay_ms(10);
 					if(st){
 						printf("网页停止充电成功！\r\n"); 
 						SendStop(1,0);

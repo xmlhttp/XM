@@ -19,6 +19,7 @@
 #include "gpios.h"
 #include "tcp_client_demo.h"
 #include "stmflash.h"
+#include "LWDG.h"
 /************************************************
  技术支持：http://www.vmuui.com
  广州市劲驰互联网科技有限公司 
@@ -85,7 +86,8 @@ OS_STK BEEP_TASK_STK[BEEP_STK_SIZE];
 void beep_task(void *pdata); 
 
 int main(void){
-//	SCB->VTOR=FLASH_BASE|0x07800;						//地址偏移量，地址前面是IAP程序
+	//0x8007800   0x78800
+	SCB->VTOR=FLASH_BASE|0x07800;						//地址偏移量，地址前面是IAP程序
 	delay_init();	    								//延时函数初始化
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);		//设置NVIC中断分组2:2位抢占优先级，2位响应优先级	  
 	uart_init(115200);	 								//串口1初始化为115200
@@ -111,7 +113,7 @@ int main(void){
 		delay_ms(1000);
 		STMFLASH_Read(FLASH_ADDR,(u16 *)&my_data,sizeof(my_data));
 	}
-	printf("板卡初始化成功1111\r\n");
+	printf("板卡初始化成功\r\n");
 											//UCOS初始化
 	while(lwip_comm_init()) 							//lwip初始化
 	{
@@ -126,6 +128,8 @@ int main(void){
 		GPIO_ResetBits(GPIOC,GPIO_Pin_10);
 		delay_ms(1000);
 	}
+
+	iwdg_init();										//调起看门狗
 	OSTaskCreate(start_task,(void*)0,(OS_STK*)&START_TASK_STK[START_STK_SIZE-1],START_TASK_PRIO);
 	OSStart(); 											//开启UCOS
 	
@@ -146,16 +150,16 @@ void start_task(void *pdata)
 
 //异常检查任务
 void POW_task(void *pdata){
-//	u8 t=0;
+	u8 t=0;
 	u32 adcnum;
 	u8 st;	
 	while(1){
-	/*	t++;
+		t++;
 		if(t==10){
 			t=0;
 			printf("检测任务执行中\r\n");
 		}
-	*/
+	
 		if(!IsTran){
 			adcnum= getAD();
 		}
@@ -390,8 +394,8 @@ void POW_task(void *pdata){
 		 	GPIO_SetBits(GPIOC,GPIO_Pin_10);
 		 	delay_ms(2); 
 		}
-
-		OSTimeDlyHMSM(0,0,0,100);  //延时100ms	
+		IWDG_ReloadCounter();
+		delay_ms(100);   //延时100ms	
 	}
 }
 
@@ -431,7 +435,7 @@ void beep_task(void *pdata){															//蜂鸣器任务
 	while(1){
 		printf("播放声音\r\n");
 		BEEP=0;	  																		//开蜂鸣器
-		OSTimeDlyHMSM(0,0,1,0);															//延时1s，控制蜂鸣器响1s
+		delay_ms(1000);														//延时1s，控制蜂鸣器响1s
 		BEEP=1;	
 		printf("播放声音完成\r\n");																		//关蜂鸣器
 		if(IsDown==0){																	//如果系统启动成功，设置为可更新系统

@@ -5,6 +5,7 @@ class WxDataListController extends Controller {
 
     public function index(){
 		loadcheck(31); 
+		ob_clean();
    		$this->display('Index:wxdatalist');
     }
 

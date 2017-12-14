@@ -14,7 +14,7 @@
 	 .tab_tit span{ float:right; margin-right:10px; letter-spacing:1px; font-size:12px; color:#f33}
 </style>
 </head>
-<body>
+<body scroll="no">
 <!--顶部导航开始-->
 <div class="topnav">
 <a  href="/System.php?s=/System/ManagerPage/BaseInfo.html" class="home">首页</a>><a href="/System.php?s=/System/ManagerPage/Count">平台信息</a>><a href="javascript:void(0)">错误信息</a>

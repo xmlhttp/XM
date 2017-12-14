@@ -5,6 +5,7 @@ class ErrListController extends Controller {
 
     public function index(){
 		loadcheck(32); 
+		ob_clean();
    		$this->display('Index:errlist');
     }
 
@@ -82,7 +83,7 @@ function showitem($T){
 		$data[$t]["id"]=$v['id'];
 		$data[$t]["data"][]=$v['id'];
 		$data[$t]["data"][]=$v['tit'];
-		$data[$t]["data"][]=$v['desc'];
+		$data[$t]["data"][]=$v['tdesc'];
 		$data[$t]["data"][]=$v['addtime'];
 		}
 	return $data;

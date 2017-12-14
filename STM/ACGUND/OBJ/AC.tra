@@ -20,6 +20,7 @@
 ### List of Objects: adding '"..\obj\stmflash.o"'
 ### List of Objects: adding '"..\obj\cjson.o"'
 ### List of Objects: adding '"..\obj\gpios.o"'
+### List of Objects: adding '"..\obj\lwdg.o"'
 ### List of Objects: adding '"..\obj\misc.o"'
 ### List of Objects: adding '"..\obj\stm32f10x_fsmc.o"'
 ### List of Objects: adding '"..\obj\stm32f10x_gpio.o"'
@@ -32,6 +33,7 @@
 ### List of Objects: adding '"..\obj\stm32f10x_rtc.o"'
 ### List of Objects: adding '"..\obj\stm32f10x_pwr.o"'
 ### List of Objects: adding '"..\obj\stm32f10x_flash.o"'
+### List of Objects: adding '"..\obj\stm32f10x_iwdg.o"'
 ### List of Objects: adding '"..\obj\malloc.o"'
 ### List of Objects: adding '"..\obj\usmart.o"'
 ### List of Objects: adding '"..\obj\usmart_config.o"'
@@ -89,14 +91,14 @@
 ### List of Objects: adding '"..\obj\os_cpu_c.o"'
 ### List of Objects: adding '"..\obj\os_cpu_a.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M3 "..\obj\main.o" "..\obj\stm32f10x_it.o" "..\obj\system_stm32f10x.o" "..\obj\core_cm3.o" "..\obj\startup_stm32f10x_hd.o" "..\obj\delay.o" "..\obj\sys.o" "..\obj\usart.o" "..\obj\dm9000.o" "..\obj\adc.o" "..\obj\pwm.o" "..\obj\beep.o" "..\obj\mod.o" "..\obj\usart2.o" "..\obj\usart3.o" "..\obj\exti.o" "..\obj\stmflash.o" "..\obj\cjson.o" "..\obj\gpios.o" "..\obj\misc.o" "..\obj\stm32f10x_fsmc.o" "..\obj\stm32f10x_gpio.o" "..\obj\stm32f10x_rcc.o" "..\obj\stm32f10x_tim.o" "..\obj\stm32f10x_usart.o" "..\obj\stm32f10x_exti.o" "..\obj\stm32f10x_adc.o" "..\obj\stm32f10x_bkp.o" "..\obj\stm32f10x_rtc.o" "..\obj\stm32f10x_pwr.o" "..\obj\stm32f10x_flash.o" "..\obj\malloc.o" "..\obj\usmart.o" "..\obj\usmart_config.o" "..\obj\usmart_str.o" "..\obj\lwip_comm.o" "..\obj\fs.o" "..\obj\httpd.o" "..\obj\httpd_cgi_ssi.o" "..\obj\tcp_client_demo.o" "..\obj\http.o" "..\obj\etharp.o" "..\obj\ethernetif.o" "..\obj\autoip.o" "..\obj\icmp.o" "..\obj\igmp.o" "..\obj\inet.o" "..\obj\inet_chksum.o" "..\obj\ip.o" "..\obj\ip_addr.o" "..\obj\ip_frag.o" "..\obj\def.o" "..\obj\dhcp.o" "..\obj\dns.o" "..\obj\init.o" "..\obj\mem.o" "..\obj\memp.o" "..\obj\netif.o" "..\obj\pbuf.o" "..\obj\raw.o" "..\obj\stats.o" "..\obj\tcp.o" "..\obj\tcp_in.o" "..\obj\tcp_out.o" "..\obj\timers.o" "..\obj\udp.o" "..\obj\sys_arch.o" "..\obj\api_lib.o" "..\obj\api_msg.o" "..\obj\err.o" "..\obj\netbuf.o" "..\obj\netdb.o" "..\obj\netifapi.o" "..\obj\sockets.o" "..\obj\tcpip.o" "..\obj\os_core.o" "..\obj\os_flag.o" "..\obj\os_mbox.o" "..\obj\os_mem.o" "..\obj\os_mutex.o" "..\obj\os_q.o" "..\obj\os_sem.o" "..\obj\os_task.o" "..\obj\os_time.o" "..\obj\os_tmr.o" "..\obj\os_cpu_c.o" "..\obj\os_cpu_a.o" --strict --scatter "..\OBJ\AC.sct" 
+--cpu Cortex-M3 "..\obj\main.o" "..\obj\stm32f10x_it.o" "..\obj\system_stm32f10x.o" "..\obj\core_cm3.o" "..\obj\startup_stm32f10x_hd.o" "..\obj\delay.o" "..\obj\sys.o" "..\obj\usart.o" "..\obj\dm9000.o" "..\obj\adc.o" "..\obj\pwm.o" "..\obj\beep.o" "..\obj\mod.o" "..\obj\usart2.o" "..\obj\usart3.o" "..\obj\exti.o" "..\obj\stmflash.o" "..\obj\cjson.o" "..\obj\gpios.o" "..\obj\lwdg.o" "..\obj\misc.o" "..\obj\stm32f10x_fsmc.o" "..\obj\stm32f10x_gpio.o" "..\obj\stm32f10x_rcc.o" "..\obj\stm32f10x_tim.o" "..\obj\stm32f10x_usart.o" "..\obj\stm32f10x_exti.o" "..\obj\stm32f10x_adc.o" "..\obj\stm32f10x_bkp.o" "..\obj\stm32f10x_rtc.o" "..\obj\stm32f10x_pwr.o" "..\obj\stm32f10x_flash.o" "..\obj\stm32f10x_iwdg.o" "..\obj\malloc.o" "..\obj\usmart.o" "..\obj\usmart_config.o" "..\obj\usmart_str.o" "..\obj\lwip_comm.o" "..\obj\fs.o" "..\obj\httpd.o" "..\obj\httpd_cgi_ssi.o" "..\obj\tcp_client_demo.o" "..\obj\http.o" "..\obj\etharp.o" "..\obj\ethernetif.o" "..\obj\autoip.o" "..\obj\icmp.o" "..\obj\igmp.o" "..\obj\inet.o" "..\obj\inet_chksum.o" "..\obj\ip.o" "..\obj\ip_addr.o" "..\obj\ip_frag.o" "..\obj\def.o" "..\obj\dhcp.o" "..\obj\dns.o" "..\obj\init.o" "..\obj\mem.o" "..\obj\memp.o" "..\obj\netif.o" "..\obj\pbuf.o" "..\obj\raw.o" "..\obj\stats.o" "..\obj\tcp.o" "..\obj\tcp_in.o" "..\obj\tcp_out.o" "..\obj\timers.o" "..\obj\udp.o" "..\obj\sys_arch.o" "..\obj\api_lib.o" "..\obj\api_msg.o" "..\obj\err.o" "..\obj\netbuf.o" "..\obj\netdb.o" "..\obj\netifapi.o" "..\obj\sockets.o" "..\obj\tcpip.o" "..\obj\os_core.o" "..\obj\os_flag.o" "..\obj\os_mbox.o" "..\obj\os_mem.o" "..\obj\os_mutex.o" "..\obj\os_q.o" "..\obj\os_sem.o" "..\obj\os_task.o" "..\obj\os_time.o" "..\obj\os_tmr.o" "..\obj\os_cpu_c.o" "..\obj\os_cpu_a.o" --strict --scatter "..\OBJ\AC.sct" 
 --autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
  --list "..\OBJ\AC.map" -o "..\OBJ\AC.axf"### Preparing Environment (PrepEnvAds)
 ### ADS-LD Output File: '..\OBJ\AC.axf'
 ### ADS-LD Command File: '..\OBJ\AC.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile '..\OBJ\AC.lnp', Handle=0x000001E8
+### Creating CmdFile '..\OBJ\AC.lnp', Handle=0x0000051C
 ### Writing '.lnp' file
 ### ADS-LD Command file '..\OBJ\AC.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

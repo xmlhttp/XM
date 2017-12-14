@@ -293,8 +293,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
-                <Size>0x80000</Size>
+                <StartAddress>0x8007800</StartAddress>
+                <Size>0x78800</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -346,7 +346,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\MALLOC;..\USMART;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\DM9000;..\UCOSII\CONFIG;..\UCOSII\PORT;..\UCOSII\CORE;..\LWIP;..\LWIP\arch;..\LWIP\lwip-1.4.1\src\include;..\LWIP\lwip-1.4.1\src\include\ipv4;..\LWIP\lwip-1.4.1\src\include\netif;..\LWIP\lwip_app\lwip_comm;..\LWIP\lwip_app\web_server_demo;..\HARDWARE\ITEMP;..\FWLIB\STM32F10x_FWLib\inc;..\LWIP\lwip_app\tcp_client_demo;..\HARDWARE\ADC;..\HARDWARE\pwm;..\HARDWARE\BEEP;..\HARDWARE\usart2;..\HARDWARE\modbus;..\HARDWARE\usart3;..\HARDWARE\exti;..\HARDWARE\STMFLASH;..\HARDWARE\tools;..\LWIP\lwip_app\http_client;..\HARDWARE\GPIOS</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\MALLOC;..\USMART;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\DM9000;..\UCOSII\CONFIG;..\UCOSII\PORT;..\UCOSII\CORE;..\LWIP;..\LWIP\arch;..\LWIP\lwip-1.4.1\src\include;..\LWIP\lwip-1.4.1\src\include\ipv4;..\LWIP\lwip-1.4.1\src\include\netif;..\LWIP\lwip_app\lwip_comm;..\LWIP\lwip_app\web_server_demo;..\HARDWARE\ITEMP;..\FWLIB\STM32F10x_FWLib\inc;..\LWIP\lwip_app\tcp_client_demo;..\HARDWARE\ADC;..\HARDWARE\pwm;..\HARDWARE\BEEP;..\HARDWARE\usart2;..\HARDWARE\modbus;..\HARDWARE\usart3;..\HARDWARE\exti;..\HARDWARE\STMFLASH;..\HARDWARE\tools;..\LWIP\lwip_app\http_client;..\HARDWARE\GPIOS;..\HARDWARE\LWDG</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -531,6 +531,11 @@
               <FileType>5</FileType>
               <FilePath>..\HARDWARE\STMFLASH\stmflash.h</FilePath>
             </File>
+            <File>
+              <FileName>LWDG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\LWDG\LWDG.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -595,6 +600,11 @@
               <FileName>stm32f10x_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FWLIB\STM32F10x_FWLib\src\stm32f10x_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWLIB\STM32F10x_FWLib\src\stm32f10x_iwdg.c</FilePath>
             </File>
           </Files>
         </Group>

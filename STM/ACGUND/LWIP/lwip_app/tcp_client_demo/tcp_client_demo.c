@@ -62,9 +62,11 @@ static void tcp_client_thread(void *arg)
 	{
 		tcp_clientconn = netconn_new(NETCONN_TCP);  //创建一个TCP链接
 		err = netconn_connect(tcp_clientconn,&server_ipaddr,server_port);//连接服务器
+		//等待连接建立完成
+		delay_ms(1000);
 		if(err != ERR_OK){//返回值不等于ERR_OK,删除tcp_clientconn连接  
-			netconn_close(tcp_clientconn);
-			netconn_delete(tcp_clientconn); 
+			netconn_delete(tcp_clientconn);
+			delay_ms(1000);
 		}else if (err == ERR_OK){    //处理新连接的数据
 			struct netbuf *recvbuf;
 			//不重置网卡、重置定时开启定时器计数
@@ -93,7 +95,6 @@ static void tcp_client_thread(void *arg)
 				my_data.Money=0;
 				my_data.Uint=0;
 				my_data.Cpower=0;
-				my_data.Cpower=0;
 				//存储数据
 				FLASH_Unlock();
 				FLASH_ClearFlag(FLASH_FLAG_BSY|FLASH_FLAG_EOP|FLASH_FLAG_PGERR|FLASH_FLAG_WRPRTERR);
@@ -101,19 +102,18 @@ static void tcp_client_thread(void *arg)
 				STMFLASH_Write(FLASH_ADDR,(u16 *)&my_data,sizeof(my_data));
 				FLASH_Lock();
 			}
-			
+			delay_ms(10);
 			
 			tcp_client_flag |= LWIP_SEND_DATA;
 			//连上后提交车位状态
 			DISTYPE=3;
-				 
 			while(1){
 				if((tcp_client_flag & LWIP_SEND_DATA) == LWIP_SEND_DATA) //有数据要发送
 				{
 					err = netconn_write(tcp_clientconn ,tcp_client_sendbuf,strlen((char*)tcp_client_sendbuf),NETCONN_COPY); //发送tcp_server_sentbuf中的数据
 					if(err != ERR_OK)
 					{
-						printf("发送失败\r\n");
+						printf("发送失败：%s\r\n",tcp_client_sendbuf);
 					}else{
 					//	printf("中断清零#2\r\n"); 
 						printf("发送数据：%s",tcp_client_sendbuf); 
@@ -146,18 +146,17 @@ static void tcp_client_thread(void *arg)
 					any(tcp_client_recvbuf);
 					netbuf_delete(recvbuf);
 				}else if(recv_err == ERR_CLSD){  //关闭连接
-					netconn_close(tcp_clientconn);
 					netconn_delete(tcp_clientconn);
-					printf("服务器%d.%d.%d.%d断开连接#1\r\n",lwipdev.remoteip[0],lwipdev.remoteip[1], lwipdev.remoteip[2],lwipdev.remoteip[3]);
-					OSTimeDlyHMSM(0,0,1,0);  //延时2s 重连
+					islink=1;
+					printf("服务器%d.%d.%d.%d断开连接#111\r\n",lwipdev.remoteip[0],lwipdev.remoteip[1], lwipdev.remoteip[2],lwipdev.remoteip[3]);
+					delay_ms(500);
 					break;
 				}
 				//超时后重连
 				if(islink==1){
-					netconn_close(tcp_clientconn);
 					netconn_delete(tcp_clientconn);
 					printf("服务器%d.%d.%d.%d断开连接#2\r\n",lwipdev.remoteip[0],lwipdev.remoteip[1], lwipdev.remoteip[2],lwipdev.remoteip[3]);
-					OSTimeDlyHMSM(0,0,1,0);  //延时2s 重连
+					delay_ms(500);
 					break;	
 				}
 			}
@@ -243,7 +242,7 @@ int StartChage(){
 	}
 	
 	TIM_SetCompare2(TIM3,(*(u16*)(FLASH_ADDR+198))*0.999);									//发送PWM信号
-	OSTimeDlyHMSM(0,0,0,5);	
+	delay_ms(5);
 	adcnum= getAD(); 
 	while((!(adcnum>2483&&adcnum<3202))){													//发送PWM信号后要求10秒内降压到6V
 		t++;
@@ -254,7 +253,7 @@ int StartChage(){
 			//printf("采集第：%d 次----",t);
 			adcnum= getAD();
 			//printf("采集第完成:%d\r\n",adcnum);
-			OSTimeDlyHMSM(0,0,0,20);		
+			delay_ms(20);		
 		} 
 
 	}
@@ -277,7 +276,7 @@ int StartChage(){
 			if(t>100){
 				break;
 			}else{
-				OSTimeDlyHMSM(0,0,0,10);	
+				delay_ms(10);	
 			}
 		}
 		if(t>100){
@@ -322,7 +321,7 @@ u8 StopChage(){
 		if(i>100){
 			break;
 		}else{
-			OSTimeDlyHMSM(0,0,0,10);	
+			delay_ms(10);	
 		}
 	}
 	if(i>100){																			 	//停止失败
@@ -348,7 +347,7 @@ u8 StopChage(){
 void SendStop(u8 c,u8 z){
 	if(islink==0){
 		while(IsSend==0){
-			OSTimeDlyHMSM(0,0,0,1);
+			delay_ms(1);
 		}
 		IsSend=0;
 		memset(tcp_client_sendbuf,'\0',256);
@@ -408,7 +407,7 @@ void any(u8*d){
 			printf("启动充电完成#1\r\n");
 			if(islink==0){
 				while(IsSend==0){
-					OSTimeDlyHMSM(0,0,0,1);
+					delay_ms(1);
 				}
 				IsSend=0;
 				memset(tcp_client_sendbuf,'\0',256);
@@ -421,6 +420,7 @@ void any(u8*d){
 				my_data.Money=smoney->valueint;
 				my_data.Orderid=oid->valueint;
 				my_data.Isend=0;
+				my_data.Starp=my_data.Endp;
 				//存储数据
 				FLASH_Unlock();
 				FLASH_ClearFlag(FLASH_FLAG_BSY|FLASH_FLAG_EOP|FLASH_FLAG_PGERR|FLASH_FLAG_WRPRTERR);
@@ -432,7 +432,7 @@ void any(u8*d){
 			if(islink==0){
 					
 				while(IsSend==0){
-					OSTimeDlyHMSM(0,0,0,1);
+					delay_ms(1);
 				}
 				IsSend=0;
 		  		memset(tcp_client_sendbuf,'\0',256);
@@ -482,11 +482,11 @@ void any(u8*d){
 		printf("检测到系统版本有更新，核对是否需要下载...\r\n");
 		if(my_data.Isdown==1){
 			//char str[] = "http://192.168.1.66:215/index.php?s=/Home/Index/Down/id/1.html";
-			char str[] = "http://139.199.221.53:9000/index.php?s=/Home/Index/NewBin/type/0.html";	
+			char str[] = "http://139.199.221.53:9002/index.php?s=/Home/Index/NewBin";	
 			printf("更新文件需要系统初始化完成后才下载，等待中...\r\n");
 			OSTaskSuspend(7);
 			while(!IsDown){	 //前期初始工作完成后下载
-			 	OSTimeDlyHMSM(0,0,0,500);
+				delay_ms(500);
 			}
 
 			http_test((char *)str);
@@ -510,7 +510,7 @@ void any(u8*d){
 	if(strcmp(type->valuestring, "ping")==0){	 //心跳响应
 		if(islink==0){
 			while(IsSend==0){
-				OSTimeDlyHMSM(0,0,0,1);
+				delay_ms(1);
 			}
 			IsSend=0;
 			memset(tcp_client_sendbuf,'\0',256); 

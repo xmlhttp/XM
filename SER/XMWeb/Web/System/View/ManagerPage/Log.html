@@ -13,7 +13,7 @@
 <style>
      body{ overflow-y:hidden}
 </style>
-<body>
+<body scroll="no">
  
 <!--顶部导航开始-->
 <div class="topnav">

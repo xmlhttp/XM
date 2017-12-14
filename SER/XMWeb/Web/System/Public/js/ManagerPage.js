@@ -91,7 +91,7 @@
 				map.centerAndZoom(point, a["z"]);  
 				map.enableScrollWheelZoom();  
 				icon = new BMap.Icon(icosrc, new BMap.Size(22, 30), {    
-   					anchor: new BMap.Size(12, 30),          
+   					anchor: new BMap.Size(12, 30)       
  				}); 
 				marker = new BMap.Marker(point, {icon: icon,enableDragging:true});    
  				map.addOverlay(marker); 

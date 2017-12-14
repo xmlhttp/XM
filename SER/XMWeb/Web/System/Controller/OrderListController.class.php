@@ -4,7 +4,8 @@ use Think\Controller;
 class OrderListController extends Controller {
 
     public function index(){
-		loadcheck(27); 
+		loadcheck(27);
+		ob_clean();
    		$this->display('Index:orderlist');
     }
 
@@ -73,11 +74,13 @@ class OrderListController extends Controller {
 	public function orderinfo(){
 		loadcheck(27); 
 		if(I("get.id",0)==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
 		}
 		if(session("adminclass")!=1&&session("adminclass")!=99){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
@@ -92,10 +95,9 @@ class OrderListController extends Controller {
 		$order['cpower']=sprintf("%1.1f",(float)$order['cpower']/10);
 		$order['isstatus']=$order['isstatus']==0?'正常':'过压保护';
 		$order['isenable']=$order['isenable']==0?'未修改':'已修改';
-		$order['isclose']=$order['isclose']==0?'充电中':'已结束';
-		
-		
+		$order['isclose']=$order['isclose']==0?'充电中':'已结束';		
 		$this->assign('order',$order);
+		ob_clean();
     	$this->display('Index:orderinfo');
 	}
 	

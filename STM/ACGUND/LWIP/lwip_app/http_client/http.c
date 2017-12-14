@@ -9,7 +9,7 @@
 #include "stmflash.h"
 #define HTTP_RCV_TIMEO	6000 /* 6 second */
 #define bak_add 0x08043800 //备份地址从第135块开始 0-14,15-134,135-254,255-255
-#define FLASH_ADDR 0x0807F800
+extern struct InitData  my_data;
 u8 iapbuf[2049];
 char sizechar[10];
 void inttohex(int aa); 
@@ -367,7 +367,7 @@ void http_test(char* url)
 	u32 fwaddr=bak_add;
 	u8 *dfu;
 	u8 k=0,k1=0;
-	u16 FLASH_DATA[99];//共98位，站点id和端口号占两位
+//	u16 FLASH_DATA[99];//共98位，站点id和端口号占两位
 	session = http_session_open(url);
 	if (session == US_NULL)
 	{
@@ -439,14 +439,26 @@ void http_test(char* url)
 	}
 	http_session_close(session);
 	printf("文件接收完成.\r\n");
+	/*
 	memset(FLASH_DATA,'\0',sizeof(FLASH_DATA));
 	for(i=0;i<sizeof(FLASH_DATA);i++){
 		FLASH_DATA[i]=(*(u16*)(FLASH_ADDR+2*i));
 	}
+
 	FLASH_DATA[96]=sizenum/65536;
 	FLASH_DATA[97]=sizenum%65536;
 	FLASH_DATA[98]=1;
 	STMFLASH_Write(FLASH_ADDR,FLASH_DATA,i);
+	  */
+	my_data.Vsize=sizenum;
+	my_data.Isup=1;
+	//存储数据
+	FLASH_Unlock();
+	FLASH_ClearFlag(FLASH_FLAG_BSY|FLASH_FLAG_EOP|FLASH_FLAG_PGERR|FLASH_FLAG_WRPRTERR);
+	FLASH_ErasePage(FLASH_ADDR);
+	STMFLASH_Write(FLASH_ADDR,(u16 *)&my_data,sizeof(my_data));
+	FLASH_Lock();
+
 	printf("等待重启...\r\n");
 	delay_ms(100);	
 	__disable_fault_irq();   

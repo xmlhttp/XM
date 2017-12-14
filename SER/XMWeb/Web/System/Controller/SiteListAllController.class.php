@@ -4,6 +4,7 @@ use Think\Controller;
 class SiteListAllController extends Controller {
     public function index(){
 		loadcheck(8);
+		ob_clean();
     	$this->display('Index:sitelistall');
     }
 	
@@ -533,10 +534,12 @@ class SiteListAllController extends Controller {
 	 public function AddRead(){
 		loadcheck(8);
 		if(session("adminclass")==1||session("adminclass")==99){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
 		}
+		ob_clean();
     	$this->display('Index:sitelistAdd');
     }
 
@@ -666,6 +669,7 @@ class SiteListAllController extends Controller {
 		loadcheck(8);
 		$sitelist=M('sitelist')->where('id='.I("get.id",0).' and isdelete=0')->find();
 		if(session("adminclass")==0&&$sitelist["bid"]!=session("uid")){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
@@ -679,6 +683,7 @@ class SiteListAllController extends Controller {
 		$this->assign('count',$ctepm);
 		$sitelist['uint']=sprintf("%1.2f",(float)$sitelist['uint']/100);
 		$this->assign('sitelist',$sitelist);	
+		ob_clean();
 		$this->display('Index:sitelistUpdata');
 	}
 	

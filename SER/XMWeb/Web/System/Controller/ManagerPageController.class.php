@@ -14,6 +14,7 @@ class ManagerPageController extends Controller {
 		$this->assign('web',$T["siteWeb"]);
 		$this->assign('tree',show(0));
 		$this->assign('adminclass',session("adminclass"));
+		ob_clean();
     	$this->display('Index:ManagerPage');
     }
 	//退出
@@ -48,12 +49,14 @@ class ManagerPageController extends Controller {
 		$ctime=ini_get('max_execution_time').'秒';
 		$this->assign('ctime',$ctime);
 		$this->assign('os',getOS());
+		ob_clean();
 		$this->display('ManagerPage:BaseInfo');
 	}
 	
 	
 	//用户协议
 	public function UserAg(){
+		ob_clean();
 		$this->display('ManagerPage:UserAg');
 	}
 	
@@ -61,13 +64,15 @@ class ManagerPageController extends Controller {
 	//网站设置
 	public function sitesetup(){
 		if(session("adminclass")==0){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;		
 		}
 		loadcheck(14); 
 		$Site=M('sys_site')->where('ver="'.session("ver").'"')->find();
-		$this->assign('Site',$Site);	
+		$this->assign('Site',$Site);
+		ob_clean();	
 		$this->display('ManagerPage:sitesetup');
 	}
 	
@@ -122,7 +127,8 @@ class ManagerPageController extends Controller {
 	public function MailSet(){
 		loadcheck(26); 
 		$Site=M('sys_site')->where('ver="'.session("ver").'"')->find();
-		$this->assign('Site',$Site);	
+		$this->assign('Site',$Site);
+		ob_clean();
 		$this->display('ManagerPage:MailSet');
 	}
 	//更新邮箱设置
@@ -219,6 +225,7 @@ class ManagerPageController extends Controller {
 	//修改密码
 	public function ChangePwd(){
 		loadcheck(17); 
+		ob_clean();
 		$this->display('ManagerPage:ChangePwd');
 	}
 	
@@ -281,6 +288,7 @@ class ManagerPageController extends Controller {
 		loadcheck(29);
 		$T=M('sys_site')->where('ver=0')->find();
 		if(!$T){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo '请求信息有误！';
 		}
@@ -291,6 +299,7 @@ class ManagerPageController extends Controller {
 		$T['tmoney']=sprintf("%1.2f",(float)$T['tmoney']/100);
 		$T['money']=sprintf("%1.2f",(float)$T['money']/100);
 		$this->assign('site',$T);
+		ob_clean();
     	$this->display('ManagerPage:Count');		
     }
 	
