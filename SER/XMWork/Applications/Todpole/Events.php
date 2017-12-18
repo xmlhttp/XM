@@ -122,7 +122,7 @@ class Events{
 				
 				if($message_data["Orderid"]!=0){
 					$reto = Db::instance('db1')->select('*')->from('db_temp')->where("id=".$message_data["Orderid"]."")->query();	
-					//有订单未结算
+					//桩结算，服务端有订单未结算
 					if($message_data["Ispower"]==0&&$message_data["Isend"]==0&&$reto[0]['isclose']==0&&$reto[0]['isenable']==1){
 						$sql="update db_temp set eleend =".$message_data["w"].",cpower=".$message_data["Cpower"].",lasttime='".date('Y-m-d H:i:s',time())."',endcode=25,endtxt='".stoptxt(25)."' where id=".$reto[0]["id"];
 					
@@ -134,6 +134,11 @@ class Events{
 					if($message_data["Ispower"]==1&&$reto[0]['isclose']==1){
 						Gateway::sendToClient($client_id, '{"type":"StopChage","code":30}');
 						$message_data["Ispower"]=0;
+					}
+					//都在充电更新订单
+					if($message_data["Ispower"]==1&&$message_data["Isend"]==0&&$reto[0]['isclose']==0&&$reto[0]['isenable']==1){
+						$sql="update db_temp set eleend =".$message_data["w"].",cpower=".$message_data["Cpower"].",lasttime='".date('Y-m-d H:i:s',time())."' where id=".$reto[0]["id"];
+						Db::instance('db1')->query($sql);
 					}
 				}
 

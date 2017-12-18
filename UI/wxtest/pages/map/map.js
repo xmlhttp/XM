@@ -9,7 +9,6 @@ Page({
   data: {
     ismap: false,
     mapimg: ''
-   
   },
 
   /**
@@ -35,6 +34,7 @@ Page({
         console.log(res.data)
         if (res.data.status.err == 0) {
           $this.setData({ mapimg: res.data.img, ismap:true })
+
             wx.setNavigationBarTitle({
               title: res.data.sitename + "-车位图"
             })
@@ -105,6 +105,6 @@ Page({
    */
   onShareAppMessage: function () {
 
-  } //事件处理函数
-  
+  }
+  //事件处理函数
 })

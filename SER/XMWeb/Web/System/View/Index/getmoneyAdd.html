@@ -69,6 +69,11 @@ $("#addsave").click(function(){
 		return false;
 		
 	}
+	if(parseFloat($("#money").val())<=0){
+		$("#money_tip").css({"color":"#f00"}).text("取款金额必须大于0")
+		alert("取款金额必须大于0")
+		return false;
+	}
 	if(parseFloat($("#money").val())>{$money}){
 		$("#money_tip").css({"color":"#f00"}).text("取款金额超出上限")
 		alert("取款金额超出上限")
