@@ -22,7 +22,7 @@ class PileListAllController extends Controller {
 		}
 		$page=I("post.page",0);
 		$size=I("post.size",5);
-		if(session("adminclass")==0){ //商家
+		if(session("adminclass")!=99 && session("adminclass")!=1){ //商家
 			$sitetab=M('sitelist')->where("isdelete=0 and bid=".session("uid"))->select();
 			if(count($sitetab)>0){
 				$str="";
@@ -728,8 +728,59 @@ class PileListAllController extends Controller {
         //第二个参数false的意思是不生成图片文件，如果你写上‘picture.png’则会在根目录下生成一个png格式的图片文件  
         $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2);		
 	}
-	
-	
+	//导出Excel
+	public function Export(){
+		if(!ajaxcheck(9)){
+			ob_clean();
+			header("Content-Type:text/html;charset=utf-8");
+			echo '您已经退出或权限不够！';
+			exit;
+		}
+		if(session("adminclass")!=99 && session("adminclass")!=1){ //商家
+			$sitetab=M('sitelist')->where("isdelete=0 and bid=".session("uid"))->select();
+			if(count($sitetab)>0){
+				$str="";
+				for($i=0;$i<count($sitetab);$i++){
+					if($i==count($sitetab)-1){
+						$str.=$sitetab[$i]["id"];
+					}else{
+						$str.=$sitetab[$i]["id"].",";	
+					}	
+				}
+				$T=M('pile')->Field('id,pilenum,isenable,islink,isnone,smoney,stime,snum,sele')->where("isdelete=0 and parentid in(".$str.")")-> order('orderid desc')->select();
+			}else{
+				ob_clean();
+				header("Content-Type:text/html;charset=utf-8");
+				echo '设备为空！';
+				exit;
+			}
+		}else{ //管理
+			$T=M('pile')->Field('id,pilenum,isenable,islink,isnone,smoney,stime,snum,sele')->where("isdelete=0")-> order('orderid desc')->select();
+		}
+
+		$xlsCell = array(
+			array('id','ID'),
+			array('pilenum','设备名称'),
+			array('isenable','是否启用'),
+			array('islink','是否连线'),
+			array('isnone','车位状态'),
+			array('smoney','累计收入金额'),
+			array('stime','累计充电时间'),
+			array('snum','累计充电次数'),
+			array('sele','累计充电电度')
+        );
+		foreach ($T as $k => $v){
+			$t=ItoTime($T[$k]['stime']);
+            $T[$k]['isenable']=$v['isenable']==1?'启用':'禁用';
+			$T[$k]['islink']=$v['islink']==1?'连线':'断线';
+			$T[$k]['smoney']=sprintf("%1.2f",(float)$v['smoney']/100)."元";
+			$T[$k]['sele']=sprintf("%1.1f",(float)$v['sele']/10)."度";
+			$T[$k]['isnone']=carTotxt($T[$k]['isnone']);
+			$T[$k]['stime']=$t['h']."时".$t['m']."分".$t['s']."秒";
+        }
+		ob_clean();
+		exportExcel('设备列表',$xlsCell,$T);
+	}
 }
 
 //下拉菜单
@@ -790,7 +841,23 @@ function carstate($n){
 	}	
 	
 }
-
+//车位状态对应文字
+function carTotxt($n){
+	switch ($n){	
+		case 0:
+			return "空闲";
+			break;
+		case 1:
+			return "占用";
+			break;
+		case 2:
+			return "遮挡";
+			break;
+		case 3:
+			return "未知";
+			break;	
+	}
+}
 
 //输出列表
 function showitem($T){

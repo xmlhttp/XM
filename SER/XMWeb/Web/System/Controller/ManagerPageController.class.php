@@ -304,13 +304,6 @@ class ManagerPageController extends Controller {
     }
 	
 }
-//时间转换
-function ItoTime($t){
-	$d=array();
-	$d['h']=intval($t/3600);
-	$d['m']=intval(($t%3600)/60);
-	$d['s']=intval(($t%3600)%60);
-	return $d;
-}
+
 
 

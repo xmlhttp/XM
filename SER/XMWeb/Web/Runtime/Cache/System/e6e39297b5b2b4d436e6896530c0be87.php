@@ -22,7 +22,7 @@
 <div class="cont_info">
 
 <div class="tab_txt">
-<div class="tab_tit"><a class="export" href="javascript:alert('功能未开放！')">导出Excel</a>站点列表</div>
+<div class="tab_tit"><a class="export" href="/System.php?s=/System/SiteListAll/Export">导出Excel</a>站点列表</div>
 
 <div class="meun_tab">
 

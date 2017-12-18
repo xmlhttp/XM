@@ -22,7 +22,7 @@
 <div class="cont_info">
 
 <div class="tab_txt">
-<div class="tab_tit"><a class="export" href="javascript:alert('该功能暂未开放')">导出Excel</a>设备列表
+<div class="tab_tit"><a class="export" href="/System.php?s=/System/PileListAll/Export">导出Excel</a>设备列表
 
 
 

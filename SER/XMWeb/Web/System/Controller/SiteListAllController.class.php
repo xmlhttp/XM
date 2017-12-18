@@ -828,7 +828,7 @@ class SiteListAllController extends Controller {
             }
         }
 	}
-	//删除
+	//批量删除
 	public function SwfDel(){
 		if(!ajaxcheck(8)){
 			$json['status']['err']=1;
@@ -855,7 +855,35 @@ class SiteListAllController extends Controller {
 			exit;	
 		}
 	}
-	
+	//导出Excel
+	public function Export(){
+		if(!ajaxcheck(8)){
+			ob_clean();
+			header("Content-Type:text/html;charset=utf-8");
+			echo '您已经退出或权限不够！';
+			exit;
+		}
+		if(session("adminclass")==0){
+			$str=" and bid=".session("uid");
+		}
+		$T=M('sitelist')->Field('id,sitename,siteadd,sitetel,uint,mark,addtime,isenable')->where("isdelete=0".$str)-> order('orderid desc')->select();
+		$xlsCell = array(
+			array('id','ID'),
+			array('sitename','站点名称'),
+			array('siteadd','站点地址'),
+			array('sitetel','客服电话'),
+			array('uint','充电电价'),
+			array('mark','备注信息'),
+			array('addtime','添加时间'),
+			array('isenable','是否启用')
+        );
+		foreach ($T as $k => $v){
+			$T[$k]['uint']=sprintf("%1.2f",(float)$v['uint']/100)."元/度";
+            $T[$k]['isenable']=$v['isenable']==1?'启用':'禁用';
+        }
+		ob_clean();
+		exportExcel('站点列表',$xlsCell,$T);
+	}
 }
 
 //输出列表
