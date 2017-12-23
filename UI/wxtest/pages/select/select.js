@@ -19,7 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var pid = options.pid || app.GetUrlParam(unescape(options.q), "id");
+    var pid = options.pid || app.GetUrlParam(unescape(options.q), "pid");
     console.log(pid)
     var $this = this;
     if (pid == 0 || pid == undefined || pid == null) {
@@ -30,6 +30,7 @@ Page({
         confirmText: '返回',
         success: function () {
           wx.navigateBack()
+          return;
         }
       })
       return;

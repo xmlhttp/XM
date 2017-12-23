@@ -1,7 +1,7 @@
 <?php
 
 //验证验证码
-function check_code($code){  
+function check_code($code){
 	$verify = new \Think\Verify();  
 	return $verify->check($code);  
 }
@@ -38,6 +38,7 @@ function check_ip(){
 	$lock_ip=M('sys_site')->where('ver=0')->find();
 	$allip=explode(",", $lock_ip['lock_ip']);
 	if(in_array($ip,$allip)){
+		ob_clean();
 		header("Content-Type:text/html;charset=utf-8");
 		echo '对不起,您的IP已被锁定.若有疑问请联系管理员.';
 		session(null);
@@ -165,6 +166,7 @@ function show($parent){
 //核对权限
 function loadcheck($ids){
 	If(!session("?admin")||!session("?ver")){
+		ob_clean();
 		header("Content-Type:text/html;charset=utf-8");
 		echo "<script>alert('登陆超时,请重新登陆!');window.parent.location='/System.php';</script>";
 		exit;
@@ -172,12 +174,14 @@ function loadcheck($ids){
 	
 	if(session("adminclass")==0){
 		if(strpos(session("parts"),',' . $ids. ',')===false){
+			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;		
 		}
 	}else if(session("adminclass")==99||session("adminclass")==1){
 	}else{
+		ob_clean();
 		header("Content-Type:text/html;charset=utf-8");
 		echo "你无权访问本页!";
 		exit;		

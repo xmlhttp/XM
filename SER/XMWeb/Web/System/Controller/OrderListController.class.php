@@ -79,13 +79,14 @@ class OrderListController extends Controller {
 			echo "你无权访问本页!";
 			exit;
 		}
-		if(session("adminclass")!=1&&session("adminclass")!=99){
+
+		$order=M('temp')->where('id='.I("get.id",0).' and bid='.session("uid"))->find();
+		if(!$order){
 			ob_clean();
 			header("Content-Type:text/html;charset=utf-8");
 			echo "你无权访问本页!";
 			exit;
 		}
-		$order=M('temp')->where('id='.I("get.id",0))->find();
 		$order['uint']=sprintf("%1.2f",(float)$order['uint']/100);
 		$order['smoney']=sprintf("%1.2f",(float)$order['smoney']/100);
 		$order['tmoney']=sprintf("%1.2f",(float)$order['tmoney']/100);

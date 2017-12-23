@@ -22,7 +22,7 @@
 <div class="cont_info">
 
 <div class="tab_txt">
-<div class="tab_tit"><a class="export" href="javascript:alert('该功能暂未开放')">导出Excel</a>提现列表</div>
+<div class="tab_tit">提现列表</div>
 
 <div class="meun_tab">
 

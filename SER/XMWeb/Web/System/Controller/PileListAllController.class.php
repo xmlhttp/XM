@@ -466,7 +466,10 @@ class PileListAllController extends Controller {
 			}
 		}
 		
-		
+		$t=ItoTime($Te[0]['stime']);
+		$Te[0]['smoney']=sprintf("%1.2f",(float)$Te[0]['smoney']/100);
+		$Te[0]['sele']=sprintf("%1.1f",(float)$Te[0]['sele']/10);
+		$Te[0]['stime']='<b>'.$t['h'].'</b>时<b>'.$t['m'].'</b>分<b>'.$t['s'].'</b>秒';
 		$this->assign('option',sitelist_menu($Te[0]["parentid"]));
 		$this->assign('T',$Te[0]);	
 		ob_clean();
@@ -717,7 +720,7 @@ class PileListAllController extends Controller {
 	//生成二维码
 	public function Qrcode(){
 		Vendor('phpqrcode.phpqrcode');  
-		$url = "https://budian.richcomm.com.cn/budian?id=".I("get.id",0,'intval'); 
+		$url = "https://v.ev-pc.cn/power?pid=".I("get.id",0,'intval'); 
         //容错级别  
         $errorCorrectionLevel = 'L';  
         //生成图片大小  

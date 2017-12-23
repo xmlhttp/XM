@@ -675,10 +675,12 @@ class SiteListAllController extends Controller {
 			exit;
 		}
 		$user=M('sys_admin')->where('id='.$sitelist["bid"])->find();
-		$sql="select ifnull(SUM(money),0) as money,ifnull(SUM(sele),0) as sele from db_pile where parentid=".$sitelist["id"];
+		$sql="select ifnull(SUM(smoney),0) as smoney,ifnull(SUM(sele),0) as sele,ifnull(SUM(stime),0) as stime from db_pile where parentid=".$sitelist["id"];
 		$count=M()-> query($sql);
-		$ctepm['money']=sprintf("%1.2f",(float)$count[0]['money']/100);
+		$t=ItoTime($count[0]['stime']);
+		$ctepm['smoney']=sprintf("%1.2f",(float)$count[0]['smoney']/100);
 		$ctepm['sele']=sprintf("%1.1f",(float)$count[0]['sele']/10);
+		$ctepm['stime']='<b>'.$t['h'].'</b>时<b>'.$t['m'].'</b>分<b>'.$t['s'].'</b>秒';
 		$this->assign('user',$user);
 		$this->assign('count',$ctepm);
 		$sitelist['uint']=sprintf("%1.2f",(float)$sitelist['uint']/100);

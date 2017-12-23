@@ -416,7 +416,7 @@ function showitem($T){
 	foreach($T as $t=>$v){
 		$data[$t]["id"]=$v['id'];
 		$data[$t]["data"][]=$v['id'];
-		$data[$t]["data"][]=$v['money'];
+		$data[$t]["data"][]=sprintf("%1.2f",(float)$v['money']/100);
 		$data[$t]["data"][]=$v['Account'];
 		$data[$t]["data"][]=$v['desctxt'];
 		$data[$t]["data"][]=$v['addtime'];

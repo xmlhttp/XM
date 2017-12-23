@@ -69,8 +69,8 @@ App({
     })
   },
   globalData: {
-    //URL: "https://budian.richcomm.com.cn",
-    URL: "http://139.199.221.53:9002",
+    URL: "https://v.ev-pc.cn",
+    //URL: "http://139.199.221.53:9002",
     header: {"Content-Type":"application/x-www-form-urlencoded"},
     siteArr: null,
     loacal: {
