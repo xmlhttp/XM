@@ -1,7 +1,7 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head >
-    <title>RICHCOMM 管理中心 - 起始页</title>
+    <title>管理中心 - 起始页</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="/Web/System/Public/css/main.css" type=text/css rel=stylesheet>
     <script  src="/Public/jquery.js"></script> 
@@ -23,18 +23,18 @@
         版权信息</td>
     <td width="65%" align=""left><span class="STYLE2">
         您好,<?=session("admin")?>
-        .&nbsp; 欢迎使用 凝智科技.PHP 1.0 &nbsp;共享充电宝管理平台</span></td>
+        .&nbsp; 欢迎使用 XX互联网科技.PHP 1.0 &nbsp;共享充电管理平台</span></td>
   </tr>
    
   <tr>
     <td></td>
     <td>
-        产品开发  广州市凝智科技有限公司 © 版权所有</td>
+        产品开发  广州市XX互联网科技有限公司 © 版权所有</td>
   </tr>
   <tr>
     <td></td>
     <td>
-        技术支持 http://www.richcomm.com.cn</td>
+        技术支持 http://www.vmuui.com</td>
   </tr>
     <tr>
         <td >

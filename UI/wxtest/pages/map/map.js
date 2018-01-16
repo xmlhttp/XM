@@ -1,6 +1,5 @@
 // pages/map/map.js
 const app = getApp()
-var userkey = null;
 Page({
 
   /**
@@ -17,16 +16,17 @@ Page({
   onLoad: function (options) {
     var sid = options.sid;
     var $this = this
-    if (userkey == null) {
-      userkey = wx.getStorageSync("userkey")
+    if (app.globalData.userkey == null) {
+      app.errAlert("身份认证有误！");
+      return;
     }
     console.log(sid)
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/Site_None",
       data: {
         sid: sid,
-        uid: userkey.uid,
-        sessionid:userkey.sessionid
+        uid: app.globalData.userkey.uid,
+        sessionid: app.globalData.userkey.sessionid
       },
       method: "POST",
       header: app.globalData.header,

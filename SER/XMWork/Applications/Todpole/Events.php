@@ -331,7 +331,7 @@ class Events{
 			break;
 		//ping信息	
 		case 'ping':
-			echo "ping >>".date('Y-m-d H:i:s',time())."\n";
+			//echo "ping >>".date('Y-m-d H:i:s',time())."\n";
 			break;
 		case 'disdata':	//距离数据
 			echo "disdata >>".date('Y-m-d H:i:s',time())."*****************************\n".$message."\n";

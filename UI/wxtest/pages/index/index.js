@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var userkey = null;
 Page({
 
   /**
@@ -124,16 +123,12 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-      userkey = wx.getStorageSync("userkey")
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (userkey == null) {
-      userkey = wx.getStorageSync("userkey")
-    }
   },
 
   /**
@@ -254,14 +249,17 @@ Page({
       title: '加载中',
       mask: true
     })
-    userkey = wx.getStorageSync("userkey")
-    console.log(userkey)
+    if (app.globalData.userkey==null){
+      app.errAlert("正在确认您的身份，请稍后"); 
+      return;
+    }
+
     //发送后台判断用户是否有信息
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/getPowerNum",
       data: {
-        uid: userkey.uid,
-        sessionid: userkey.sessionid
+        uid: app.globalData.userkey.uid,
+        sessionid: app.globalData.userkey.sessionid
       },
       method: "POST",
       header: app.globalData.header,

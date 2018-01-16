@@ -1,6 +1,5 @@
 // pages/select/select.js
 const app = getApp()
-var userkey = null
 Page({
 
   /**
@@ -40,17 +39,12 @@ Page({
       title: '加载中',
     })
     this.setData({ pid: pid})
-    userkey = wx.getStorageSync("userkey")
-
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    if (userkey == null) { 
-      userkey = wx.getStorageSync("userkey")
-    }
     var $this=this;
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/getUint",
@@ -157,13 +151,14 @@ Page({
       title: '启动中...',
       mask: true
     })
-    if (userkey == null) {
-      userkey = wx.getStorageSync("userkey")
+    if (app.globalData.userkey == null) {
+      app.errAlert("身份认证有误，请稍后！");
+      return;
     }
 
     var postdata = {
-      uid: userkey.uid,
-      sessionid: userkey.sessionid,
+      uid: app.globalData.userkey.uid,
+      sessionid: app.globalData.userkey.sessionid,
       pid: $this.data.pid,
       puint:parseFloat($this.data.cuint)*100,
       pmoney: parseFloat($this.data.money)*100
@@ -216,13 +211,16 @@ Page({
     * 启动充电
     */
   startPower: function (_id) {
-    if (userkey == null) {
-      userkey = wx.getStorageSync("userkey")
+    if (app.globalData.userkey == null) {
+      app.errAlert("身份认证有误，请稍后！");
+      return;
     }
+
+    
     var pdata={
       id:_id,
-      uid: userkey.uid,
-      sessionid: userkey.sessionid
+      uid: app.globalData.userkey.uid,
+      sessionid: app.globalData.userkey.sessionid
     }
    
     console.log(pdata)

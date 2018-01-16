@@ -1,6 +1,5 @@
 // pages/userlist/userlist.js
 const app = getApp()
-var userkey = null
 Page({
 
   /**
@@ -25,9 +24,8 @@ Page({
    */
   onLoad: function (options) {
     var $this = this;
-    var user = wx.getStorageSync("user")
-    userkey = wx.getStorageSync("userkey")
-    this.setData({ user: user,uid:userkey.uid })
+    var user = app.globalData.user;
+    this.setData({ user: app.globalData.user, uid: app.globalData.userkey.uid })
     //用户信息授权
     wx.getSetting({
       success: res => {
@@ -124,8 +122,8 @@ Page({
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/getOrder",
       data: {
-        uid: userkey.uid,
-        sessionid: userkey.sessionid,
+        uid: app.globalData.userkey.uid,
+        sessionid: app.globalData.userkey.sessionid,
         maxid: maxid
       },
       method: "POST",
@@ -169,8 +167,8 @@ Page({
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/chageNick",
       data: {
-        uid: userkey.uid,
-        sessionid: userkey.sessionid,
+        uid: app.globalData.userkey.uid,
+        sessionid: app.globalData.userkey.sessionid,
         nickname: userInfo.nickName,
         headimg: userInfo.avatarUrl
       },

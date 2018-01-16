@@ -746,7 +746,10 @@ class IndexController extends Controller {
 		$order_info['add_time'] =$addtime;
 		$order_info['mid'] =$lastMoneyId;
 		$order_info['openid']= $U[0]['openid'];  
-		$order_info['notify_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/API/wxpay/paynotice.php';
+		$order_info['notify_url'] = 'https://'.$_SERVER['HTTP_HOST'].'/API/wxpay/paynotice.php';
+		
+		
+		
 		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
 		$pay = new \Pay($order_info);
         $res = $pay->pay();
@@ -1085,12 +1088,12 @@ class IndexController extends Controller {
 	**/
 	public function tuikuan(){
 		$id=I('get.id',0,'intval');
-		$reto=M('temp')->where('id = '.$id)->find();
+		$reto=M('tempmoney')->where('id = '.$id)->find();
 		$order_info = array();
-		$order_info['out_trade_no'] = $reto['No'];
+		$order_info['out_trade_no'] = $reto['orderid'];
 		$order_info['refund_trade_no'] ='RIC-'.GetRandStr(10);
-    	$order_info['total_fee'] = $reto['smoney'];
-    	$order_info['refund_fee'] =  $reto['money'];		
+    	$order_info['total_fee'] = $reto['money'];
+    	$order_info['refund_fee'] =  $reto['money'];
 		require_once dirname(__FILE__).'/../../../API/wxpay/pay.php';
 		$pay = new \Pay($order_info);
     	$res=$pay->refund();

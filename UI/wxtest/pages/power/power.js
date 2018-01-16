@@ -3,7 +3,6 @@ const app = getApp()
 var cstime = 0;
 var st = null;
 var oid = 0;
-var userkey = null
 Page({
 
   /**
@@ -40,13 +39,16 @@ Page({
       })
       return;
     }
-    userkey = wx.getStorageSync("userkey")
+    if (app.globalData.userkey == null) {
+      app.errAlert("身份认证有误，请退出程序在重试！");
+      return;
+    }
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/getPower",
       data: {
         oid: oid,
-        uid: userkey.uid,
-        sessionid: userkey.sessionid
+        uid: app.globalData.userkey.uid,
+        sessionid: app.globalData.userkey.sessionid
       },
       method: "POST",
       header: app.globalData.header,
@@ -200,6 +202,21 @@ Page({
       })
       return;
     }
+
+    if (app.globalData.userkey == null) {
+      wx.showModal({
+        title: '消息提示',
+        content: '身份认证有误，请退出程序重进！',
+        confirmText: '返回',
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateBack()
+          }
+        }
+      })
+      return;
+    }
+
     wx.showLoading({
       title: '停止中',
       mask:true
@@ -208,8 +225,8 @@ Page({
       url: app.globalData.URL + "/index.php?s=/Home/Index/stopCharge",
       data: {
         id: oid,
-        uid: userkey.uid,
-        sessionid: userkey.sessionid
+        uid: app.globalData.userkey.uid,
+        sessionid: app.globalData.userkey.sessionid
       },
       method: "POST",
       header: app.globalData.header,

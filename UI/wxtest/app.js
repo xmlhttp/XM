@@ -36,9 +36,9 @@ App({
                   headimg: res.data.headimg,
                   nickname: res.data.nickname
                 }
-                wx.setStorageSync('userkey', userkey)
-                wx.setStorageSync('user', user)
-
+                $this.globalData.userkey = userkey;
+                $this.globalData.user = user;
+                
               } else {
                 wx.showModal({
                   title: '消息提示',
@@ -50,6 +50,18 @@ App({
                   }
                 })
               }
+            },
+            fail:function(){
+              wx.showModal({
+                title: '消息提示',
+                content: '网络有错！',
+                showCancel: false,
+                confirmText: '返回',
+                success: function (res) {
+                  wx.navigateBack()
+                }
+              })
+
             }
           })
         } else {
@@ -70,13 +82,14 @@ App({
   },
   globalData: {
     URL: "https://v.ev-pc.cn",
-    //URL: "http://139.199.221.53:9002",
     header: {"Content-Type":"application/x-www-form-urlencoded"},
     siteArr: null,
     loacal: {
       longitude: 113.43611208062396,
       latitude: 23.168447548770743
-    }
+    },
+    userkey:null,
+    user:null
   },
   /**
    * 全局弹框提示

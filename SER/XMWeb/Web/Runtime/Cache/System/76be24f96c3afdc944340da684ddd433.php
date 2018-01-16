@@ -1,7 +1,7 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-      <title>RICHCOMM 凝智科技管理中心</title>
+      <title>用户登录 - 管理中心</title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	  <link href="/Web/System/Public/images/XM_favicon.ico" rel="shortcut icon" type="image/x-icon" />
       <link href="/Web/System/Public/css/index.css" rel="stylesheet" type="text/css" />
@@ -9,7 +9,7 @@
       <script  src="/Web/System/Public/js/Index.js"></script>
   </head>
   <body scroll="no">
-      <div class="log_head"><a class="product">产品简介</a><a class="product">联系我们</a><a class="product">官方网站</a><a href="#"><img src="/Web/System/Public/images/ManagerPage/logo.png" /></a></div>
+      <div class="log_head"><a class="product">产品简介</a><a class="product">联系我们</a><a class="product" href="javascript:alert('测试平台')">官方网站</a><a href="#"><img src="/Web/System/Public/images/ManagerPage/logo.png" /></a></div>
 	  
 	  <div class="logmid" id="logmid">
       <div class="login_div">
@@ -44,6 +44,6 @@
           </div>
 		  
 		  </div>
-      <div class="footer2">版权所有<span>&copy;</span>广州市凝智科技有限公司</div>
+      <div class="footer2">版权所有<span>&copy;</span>广州市XX互联网科技有限公司</div>
   </body>
 </html>
