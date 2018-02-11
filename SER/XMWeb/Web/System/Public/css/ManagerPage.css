@@ -36,8 +36,8 @@ body{ min-width:1000px}
 .mapclose{ position:absolute; width:40px; height:40px; font-size:30px; line-height:35px; color:#fff; right:-2px; top:-2px; z-index:1; background:#6a82a9;}
 .mapcenter{ width:41px; height:41px; position:absolute; z-index:1; top:50%; left:50%; margin-left:-21px; margin-top:-21px; background:url(../images/ManagerPage/mapcenter.png) center center no-repeat;}
 .btn1{ width:120px; height:40px; border:0; background:#6a82a9; position:absolute; top:-2px; right:40px; font-size:14px; color:#fff; line-height:38px}
-.popewm{ position:absolute; z-index:100; background:#fff; left:50%; top:50%; width:231px; height:231px; margin-left:-116px; margin-top:-130px; border:#CCC solid 1px}
-.popewm1{width:231px; height:231px;}
+.popewm{ position:absolute; z-index:100; background:#fff; left:50%; top:50%; width:203px; height:203px; margin-left:-116px; margin-top:-103px; border:#CCC solid 1px}
+.popewm1{width:203px; height:203px;}
 .popclose{ position:absolute; right:3px; top:0px; font-size:18px; color:#000}
 
 /*地图弹框*/
