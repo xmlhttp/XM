@@ -9,7 +9,7 @@
       <script  src="/Web/System/Public/js/Index.js"></script>
   </head>
   <body scroll="no">
-      <div class="log_head"><a class="product">产品简介</a><a class="product">联系我们</a><a class="product" href="javascript:alert('测试平台')">官方网站</a><a href="#"><img src="/Web/System/Public/images/ManagerPage/logo.png" /></a></div>
+      <div class="log_head"><a class="product" href="javascript:void(0)">产品简介</a><a class="product" href="javascript:void(0)">联系我们</a><a class="product" href="javascript:void(0)">官方网站</a><a href="javascript:void(0)"><img src="/Web/System/Public/images/ManagerPage/logo.png" /></a></div>
 	  
 	  <div class="logmid" id="logmid">
       <div class="login_div">
@@ -44,6 +44,6 @@
           </div>
 		  
 		  </div>
-      <div class="footer2">版权所有<span>&copy;</span>广州市XX互联网科技有限公司</div>
+      <div class="footer2">版权所有<span>&copy;</span>广州市凝智科技有限公司</div>
   </body>
 </html>
