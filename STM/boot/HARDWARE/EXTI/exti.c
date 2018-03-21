@@ -47,7 +47,7 @@ void EXTI2_IRQHandler(void){
 		if(GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_2)==Bit_RESET&&num>=250){
 			struct InitData  init_data={
 				170,			  			//状态位AA为初始化过
-				{192,168,1,1},		  		//IP地址
+				{192,168,1,88},		  		//IP地址
 				{255,255,255,0},			//子网掩码
 				{192,168,1,1},				//网关
 				{192,168,1,66},			   	//云平台地址

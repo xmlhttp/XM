@@ -7,27 +7,3 @@ E:\git\XM\STM\boot\USER\boot.uvproj
 Project File Date:  11/15/2017
 
 <h2>Output:</h2>
-Build target 'LED'
-linking...
-Program Size: Code=5896 RO-data=496 RW-data=56 ZI-data=5936  
-FromELF: creating hex file...
-User command #1: E:\work\soft\stm32\ARM\BIN40\fromelf.exe  --bin -o  ..\OBJ\boot.bin ..\OBJ\boot.axf
-"..\OBJ\boot.axf" - 0 Error(s), 0 Warning(s).
-Build target 'LED'
-linking...
-Program Size: Code=5896 RO-data=496 RW-data=56 ZI-data=5936  
-FromELF: creating hex file...
-User command #1: E:\work\soft\stm32\ARM\BIN40\fromelf.exe  --bin -o  ..\OBJ\boot.bin ..\OBJ\boot.axf
-"..\OBJ\boot.axf" - 0 Error(s), 0 Warning(s).
-Build target 'LED'
-linking...
-Program Size: Code=5896 RO-data=496 RW-data=56 ZI-data=5936  
-FromELF: creating hex file...
-User command #1: E:\work\soft\stm32\ARM\BIN40\fromelf.exe  --bin -o  ..\OBJ\boot.bin ..\OBJ\boot.axf
-"..\OBJ\boot.axf" - 0 Error(s), 0 Warning(s).
-Build target 'LED'
-linking...
-Program Size: Code=5896 RO-data=496 RW-data=56 ZI-data=5936  
-FromELF: creating hex file...
-User command #1: E:\work\soft\stm32\ARM\BIN40\fromelf.exe  --bin -o  ..\OBJ\boot.bin ..\OBJ\boot.axf
-"..\OBJ\boot.axf" - 0 Error(s), 0 Warning(s).

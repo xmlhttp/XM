@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\AC.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\AC.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 791]: Last Updated: Tue Dec 12 15:20:20 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 791]: Last Updated: Tue Mar 20 17:31:46 2018
 <BR><P>
 <H3>Maximum Stack Usage =        936 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -853,7 +853,6 @@ Global Symbols
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DM9000_PHY_WriteReg
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DM9000_Get_SpeedAndDuplex
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DM9000_PHY_ReadReg
-<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StopChage
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartChage
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendStop
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1796,7 +1795,6 @@ Global Symbols
 
 <P><STRONG><a name="[d0]"></a>GPIO_ReadInputDataBit</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI2_IRQHandler
-<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StopChage
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartChage
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;POW_task
 <LI><a href="#[228]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;any
@@ -3220,15 +3218,13 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CPOWER_CGI_Handler
 </UL>
 
-<P><STRONG><a name="[d1]"></a>StopChage</STRONG> (Thumb, 170 bytes, Stack size 8 bytes, tcp_client_demo.o(.text))
+<P><STRONG><a name="[d1]"></a>StopChage</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, tcp_client_demo.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152 + Unknown Stack Size
 <LI>Call Chain = StopChage &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare2
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskSuspend
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadInputDataBit
 <LI><a href="#[226]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskResume
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
@@ -3238,7 +3234,7 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CPOWER_CGI_Handler
 </UL>
 
-<P><STRONG><a name="[da]"></a>StartChage</STRONG> (Thumb, 1110 bytes, Stack size 32 bytes, tcp_client_demo.o(.text))
+<P><STRONG><a name="[da]"></a>StartChage</STRONG> (Thumb, 644 bytes, Stack size 32 bytes, tcp_client_demo.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = StartChage &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3260,7 +3256,7 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CPOWER_CGI_Handler
 </UL>
 
-<P><STRONG><a name="[228]"></a>any</STRONG> (Thumb, 856 bytes, Stack size 96 bytes, tcp_client_demo.o(.text))
+<P><STRONG><a name="[228]"></a>any</STRONG> (Thumb, 1254 bytes, Stack size 96 bytes, tcp_client_demo.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 896 + Unknown Stack Size
 <LI>Call Chain = any &rArr; http_test &rArr; http_session_open &rArr; http_connect &rArr; http_read_line &rArr; lwip_recv &rArr; lwip_recvfrom &rArr; netconn_recv &rArr; netconn_recv_data &rArr; sys_arch_mbox_fetch &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -9047,7 +9043,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> httpd_cgi_ssi.o(.text)
 </UL>
-<P><STRONG><a name="[5c]"></a>tcp_client_thread</STRONG> (Thumb, 1264 bytes, Stack size 40 bytes, tcp_client_demo.o(.text))
+<P><STRONG><a name="[5c]"></a>tcp_client_thread</STRONG> (Thumb, 1206 bytes, Stack size 40 bytes, tcp_client_demo.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 936 + Unknown Stack Size
 <LI>Call Chain = tcp_client_thread &rArr; any &rArr; http_test &rArr; http_session_open &rArr; http_connect &rArr; http_read_line &rArr; lwip_recv &rArr; lwip_recvfrom &rArr; netconn_recv &rArr; netconn_recv_data &rArr; sys_arch_mbox_fetch &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>

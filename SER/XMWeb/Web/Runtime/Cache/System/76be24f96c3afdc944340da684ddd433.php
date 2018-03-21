@@ -44,6 +44,6 @@
           </div>
 		  
 		  </div>
-      <div class="footer2">版权所有<span>&copy;</span>广州市凝智科技有限公司</div>
+      <div class="footer2">版权所有<span>&copy;</span>广州市充电平台管理系统</div>
   </body>
 </html>

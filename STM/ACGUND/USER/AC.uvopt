@@ -167,10 +167,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>21</ColumnNumber>
+      <ColumnNumber>18</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>111</TopLine>
-      <CurrentLine>118</CurrentLine>
+      <TopLine>400</TopLine>
+      <CurrentLine>404</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -305,7 +305,7 @@
 
   <Group>
     <GroupName>HARDWARE</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <File>
@@ -328,10 +328,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>31</ColumnNumber>
+      <ColumnNumber>34</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>4</TopLine>
-      <CurrentLine>11</CurrentLine>
+      <TopLine>163</TopLine>
+      <CurrentLine>163</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\DM9000\dm9000.c</PathWithFileName>
       <FilenameWithoutPath>dm9000.c</FilenameWithoutPath>
@@ -484,8 +484,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>60</TopLine>
+      <CurrentLine>60</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\exti\exti.c</PathWithFileName>
       <FilenameWithoutPath>exti.c</FilenameWithoutPath>
@@ -496,10 +496,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>8</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>7</CurrentLine>
+      <TopLine>9</TopLine>
+      <CurrentLine>9</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\STMFLASH\stmflash.c</PathWithFileName>
       <FilenameWithoutPath>stmflash.c</FilenameWithoutPath>
@@ -783,10 +783,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>99</ColumnNumber>
+      <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>198</TopLine>
-      <CurrentLine>205</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\USMART\usmart.c</PathWithFileName>
       <FilenameWithoutPath>usmart.c</FilenameWithoutPath>
@@ -799,8 +799,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>19</TopLine>
+      <CurrentLine>19</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\USMART\usmart_config.c</PathWithFileName>
       <FilenameWithoutPath>usmart_config.c</FilenameWithoutPath>
@@ -813,8 +813,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\USMART\usmart_str.c</PathWithFileName>
       <FilenameWithoutPath>usmart_str.c</FilenameWithoutPath>
@@ -823,7 +823,7 @@
 
   <Group>
     <GroupName>LWIP_APP</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <File>
@@ -832,10 +832,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>5</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>100</TopLine>
-      <CurrentLine>100</CurrentLine>
+      <TopLine>137</TopLine>
+      <CurrentLine>137</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\LWIP\lwip_app\lwip_comm\lwip_comm.c</PathWithFileName>
       <FilenameWithoutPath>lwip_comm.c</FilenameWithoutPath>
@@ -902,10 +902,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>19</ColumnNumber>
+      <ColumnNumber>31</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>154</TopLine>
-      <CurrentLine>161</CurrentLine>
+      <TopLine>19</TopLine>
+      <CurrentLine>19</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\LWIP\lwip_app\tcp_client_demo\tcp_client_demo.c</PathWithFileName>
       <FilenameWithoutPath>tcp_client_demo.c</FilenameWithoutPath>
@@ -1676,9 +1676,35 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>E:\git\XM\STM\ACGUND\LWIP\lwip_app\lwip_comm\lwip_comm.h</PathWithFilename>
-    <TopLine>15</TopLine>
-    <CurrentLine>22</CurrentLine>
+    <PathWithFilename>E:\git\XM\STM\ACGUND\USMART\usmart_str.h</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>1</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
+    <PathWithFilename>E:\git\XM\STM\ACGUND\USMART\usmart.h</PathWithFilename>
+    <TopLine>73</TopLine>
+    <CurrentLine>73</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1709,46 +1735,82 @@
       <ActiveTab>0</ActiveTab>
       <Documents>
         <Doc>
-          <Name>..\USMART\usmart.c</Name>
-          <ColumnNumber>99</ColumnNumber>
-          <TopLine>198</TopLine>
-          <CurrentLine>205</CurrentLine>
+          <Name>.\main.c</Name>
+          <ColumnNumber>18</ColumnNumber>
+          <TopLine>400</TopLine>
+          <CurrentLine>404</CurrentLine>
         </Doc>
         <Doc>
-          <Name>.\main.c</Name>
-          <ColumnNumber>21</ColumnNumber>
-          <TopLine>111</TopLine>
-          <CurrentLine>118</CurrentLine>
+          <Name>..\HARDWARE\exti\exti.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>60</TopLine>
+          <CurrentLine>60</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\LWIP\lwip_app\tcp_client_demo\tcp_client_demo.c</Name>
-          <ColumnNumber>19</ColumnNumber>
-          <TopLine>154</TopLine>
-          <CurrentLine>161</CurrentLine>
+          <ColumnNumber>31</ColumnNumber>
+          <TopLine>19</TopLine>
+          <CurrentLine>19</CurrentLine>
         </Doc>
         <Doc>
-          <Name>..\HARDWARE\usart2\usart2.c</Name>
-          <ColumnNumber>36</ColumnNumber>
-          <TopLine>259</TopLine>
-          <CurrentLine>266</CurrentLine>
+          <Name>..\LWIP\lwip_app\tcp_client_demo\tcp_client_demo.h</Name>
+          <ColumnNumber>58</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>18</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\USMART\usmart_config.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>19</TopLine>
+          <CurrentLine>19</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\HARDWARE\STMFLASH\stmflash.h</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>30</TopLine>
+          <CurrentLine>30</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\HARDWARE\STMFLASH\stmflash.c</Name>
+          <ColumnNumber>25</ColumnNumber>
+          <TopLine>9</TopLine>
+          <CurrentLine>9</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\USMART\usmart.c</Name>
+          <ColumnNumber>16</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>1</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>E:\git\XM\STM\ACGUND\USMART\usmart.h</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>73</TopLine>
+          <CurrentLine>73</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>E:\git\XM\STM\ACGUND\USMART\usmart_str.h</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>1</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\LWIP\lwip_app\lwip_comm\lwip_comm.c</Name>
-          <ColumnNumber>5</ColumnNumber>
-          <TopLine>100</TopLine>
-          <CurrentLine>100</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>E:\git\XM\STM\ACGUND\LWIP\lwip_app\lwip_comm\lwip_comm.h</Name>
           <ColumnNumber>25</ColumnNumber>
-          <TopLine>15</TopLine>
-          <CurrentLine>22</CurrentLine>
+          <TopLine>137</TopLine>
+          <CurrentLine>137</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\HARDWARE\DM9000\dm9000.c</Name>
-          <ColumnNumber>31</ColumnNumber>
-          <TopLine>4</TopLine>
-          <CurrentLine>11</CurrentLine>
+          <ColumnNumber>34</ColumnNumber>
+          <TopLine>163</TopLine>
+          <CurrentLine>163</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\USMART\usmart_str.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>1</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

@@ -21,7 +21,7 @@
     <table width="100%" border="0" cellpadding="2" cellspacing="0" class="info_tab">
     <tr>
       <td width="30%" align="right">所属站点：</td>
-      <td align="left"><select id="list1" name="list1"  style="width:240px; height:30px; line-height:30px"><?php echo ($option); ?></select>
+      <td align="left"><select id="list1" name="list1"  style="width:250px; height:30px; line-height:30px"><?php echo ($option); ?></select>
         </td>
     </tr>
     
@@ -35,10 +35,18 @@
     </tr>
     
     <tr>
-      <td align="right">充电桩编号：</td>
-      <td align="left"><input type="text" id="pilenum" name="pilenum" class="input1" onFocus="this.className='input1-bor'" onBlur="this.className='input1'"  style="width:240px"  /><span style=" margin-left:5px; color:#F00; display:none" id="pilenum_tip">×充电桩编号不能为空</span>
+      <td align="right">板卡名称：</td>
+      <td align="left"><input type="text" id="pilenum" name="pilenum" class="input1" onFocus="this.className='input1-bor'" onBlur="this.className='input1'"  style="width:240px"  /><span style=" margin-left:5px; color:#F00; display:none" id="pilenum_tip">×板卡名称不能为空</span>
         </td>
-    </tr>    
+    </tr>  
+	
+	<tr>
+      <td align="right">桩体编号：</td>
+      <td align="left"><input type="text" id="pileNo" name="pileNo" class="input1" onFocus="this.className='input1-bor'" onBlur="this.className='input1'"  style="width:240px"  /><span style=" margin-left:5px; color:#F00; display:none" id="pileNo_tip">×桩体编号不能为空</span>
+        </td>
+    </tr> 
+	
+	  
     <tr>
       <td align="right">车位选定：</td>
       <td  align="left" style="height:30px">
@@ -92,7 +100,10 @@ function setland(x,y,r){
 			$("#pilenum_tip").show();
 			return false;	
 		}
-		
+		if($("#pileNo").val().replace(/(^\s*)|(\s*$)/g, "").length==0){
+			$("#pileNo_tip").show();
+			return false;	
+		}
 		
 		var postdata=$("#form1").serialize();
 		var url=$("#form1").attr("action");

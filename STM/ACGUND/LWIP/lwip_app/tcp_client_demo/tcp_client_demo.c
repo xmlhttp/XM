@@ -212,12 +212,12 @@ int StartChage(){
 		OSTaskResume(7);
 		return 21;
 	} 
-	if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_RESET){									//桩的输入信号为底
-		printf("桩正在充电（输入检测）#2\r\n");
-		IsTran=0;
-		OSTaskResume(7);
-		return 22;
-	}
+	//if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_RESET){									//桩的输入信号为底 继电器反馈
+	//	printf("桩正在充电（输入检测）#2\r\n");
+	//	IsTran=0;
+	//	OSTaskResume(7);
+	//	return 22;
+	//}
 	if(GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)==Bit_RESET){									//急停开关被按下
 		printf("急停被按下\r\n");
 		IsTran=0;
@@ -268,17 +268,19 @@ int StartChage(){
 	adcnum= getAD();																		//再次采集后判断
 	printf("最后采集电压：%d V\r\n",adcnum);
 	//最后将所有条件都判断一次,PC0充电位为低，PC1充电反馈器为高，PC2 CC线为低，PE4急停为高，AD采集为6V区间
-	if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_0)==Bit_RESET&&GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_SET&&GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_2)==Bit_RESET&&GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)==Bit_SET&&(adcnum>2483&&adcnum<3202)){
+	//if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_0)==Bit_RESET&&GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_SET&&GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_2)==Bit_RESET&&GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)==Bit_SET&&(adcnum>2483&&adcnum<3202)){
+	if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_0)==Bit_RESET&&GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_2)==Bit_RESET&&GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)==Bit_SET&&(adcnum>2483&&adcnum<3202)){
+
 		GPIO_SetBits(GPIOC,GPIO_Pin_0); 													//充电
 		t=0;
-		while(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_SET){							//循环检测充电接触器反馈的电平
-			t++;
-			if(t>100){
-				break;
-			}else{
-				delay_ms(10);	
-			}
-		}
+	//	while(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_SET){							//循环检测充电接触器反馈的电平
+	//		t++;
+	//		if(t>100){
+	//			break;
+	//		}else{
+	//			delay_ms(10);	
+	//		}
+	//	}
 		if(t>100){
 			printf("充电接触器反馈超时-充电\r\n");												 //10秒还没有检测到低电平，开启充电超时
 			GPIO_ResetBits(GPIOC,GPIO_Pin_0); 												 //还原充电位
@@ -316,14 +318,14 @@ u8 StopChage(){
 	GPIO_ResetBits(GPIOC,GPIO_Pin_0);
 	OSTaskSuspend(7);														//充电标志位置低
 	//printf("执行停充方法\r\n");
-	while(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_RESET){								//循环检测充电接触器反馈的电平
-		i++;
-		if(i>100){
-			break;
-		}else{
-			delay_ms(10);	
-		}
-	}
+//	while(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1)==Bit_RESET){								//循环检测充电接触器反馈的电平
+//		i++;
+//		if(i>100){
+//			break;
+//		}else{
+//			delay_ms(10);	
+//		}
+//	}
 	if(i>100){																			 	//停止失败
 		printf("充电接触器反馈超时-停止\r\n");
 		IsTran=0;

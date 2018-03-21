@@ -26,7 +26,7 @@
     <td width="30%"  style="text-align:center">
         平台统计信息</td>
     <td width="65%" align=""left>
-        您好,<span><?=session("admin")?></span>!&nbsp;凝智科技充电桩系统平台统计信息如下：</td>
+        您好,<span><?=session("admin")?></span>!&nbsp;充电平台管理系统平台统计信息如下：</td>
 	</tr>
 	<tr>
     <td></td>

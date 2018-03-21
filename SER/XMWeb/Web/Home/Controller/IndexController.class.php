@@ -506,14 +506,16 @@ class IndexController extends Controller {
 	*/
 	public function getUint(){
 		$pid = I('post.pid',0,'intval');
-		if($pid==0){
+		$pNo = I('post.pNo','','strip_tags');
+		
+		if($pid==0||$pNo==''){
 			$json['status']['err']=1;
 			$json['status']['msg']="提交参数有误！";
 			ob_clean();
 			$this->ajaxReturn($json, 'json');
 			exit;		
 		}
-		$sql="select db_pile.pilenum,db_pile.islink,db_pile.ptype,db_sitelist.sitename,db_sitelist.uint,db_sitelist.siteimg from db_pile left join db_sitelist on db_pile.parentid=db_sitelist.id where db_pile.isenable=1 and db_pile.isdelete=0 and  db_sitelist.isenable=1 and db_sitelist.isdelete=0 and db_pile.id=".$pid;
+		$sql="select db_pile.id as pid,db_pile.pilenum,db_pile.islink,db_pile.ptype,db_sitelist.sitename,db_sitelist.uint,db_sitelist.siteimg from db_pile left join db_sitelist on db_pile.parentid=db_sitelist.id where db_pile.isenable=1 and db_pile.isdelete=0 and  db_sitelist.isenable=1 and db_sitelist.isdelete=0 and db_pile.parentid=".$pid." and db_pile.pileNo='".$pNo."'";
 		$T=M()-> query($sql);
 		if(count($T)!=1){
 			$json['status']['err']=1;
@@ -536,7 +538,7 @@ class IndexController extends Controller {
 			$this->ajaxReturn($json, 'json');
 			exit;	
 		}
-		
+		$json['pid']=$T[0]['pid'];
 		$json['sitename']=$T[0]['sitename'];
 		$json['pname']=$T[0]['pilenum'];
 		$json['uint']=$T[0]['uint']==null?'0.00':sprintf("%1.2f",(float)$T[0]['uint']/100);

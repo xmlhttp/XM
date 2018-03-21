@@ -388,6 +388,7 @@ class PileListAllController extends Controller {
 			if(count($T)==0){
 				$data['parentid']=I('post.list1', '');
 				$data['pilenum']=I('post.pilenum', '');
+				$data['pileNo']=I('post.pileNo', '');
 				$data['isenable']=I('post.isenable',0);
 				$data['addtime']=date('Y-m-d H:i:s');
 				if(I('post.landx', '')!=""&&I('post.landy', '')!=""&&I('post.landr', '')!=""){
@@ -509,6 +510,7 @@ class PileListAllController extends Controller {
 			$T=M('pile')->where('id='.I("get.id",0).' and isdelete=0')->find();
 			$data['parentid']=I('post.list1', '');
 			$data['pilenum']=I('post.pilenum', '');
+			$data['pileNo']=I('post.pileNo', '');
 			$data['isenable']=I('post.isenable',0);
 			if(I('post.landx', '')!=""&&I('post.landy', '')!=""&&I('post.landr', '')!=""){
 				$data['cx']=I('post.landx', '');
@@ -719,8 +721,11 @@ class PileListAllController extends Controller {
 	}
 	//生成二维码
 	public function Qrcode(){
+		$T=M('pile')->where("id=".I("get.id",0,'intval'))->find();
+		
+		
 		Vendor('phpqrcode.phpqrcode');  
-		$url = "https://v.ev-pc.cn/power?pid=".I("get.id",0,'intval'); 
+		$url = "https://v.vmuui.com/power?pid=".$T["parentid"]."&pNo=".$T["pileNo"]; 
         //容错级别  
         $errorCorrectionLevel = 'L';  
         //生成图片大小  

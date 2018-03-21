@@ -10,6 +10,8 @@ Page({
     cuint: '0.00',
     money: 10,
     pname: '--',
+    ptid:0,
+    pNo: '',
     siteimg: ''
 
   },
@@ -18,10 +20,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var pid = options.pid || app.GetUrlParam(unescape(options.q), "pid");
-    console.log(pid)
+    var ptid = options.pid || app.GetUrlParam(unescape(options.q), "pid");
+    var pNo = options.pNo || app.GetUrlParam(unescape(options.q), "pNo");
+
+    console.log(ptid + "," + pNo)
     var $this = this;
-    if (pid == 0 || pid == undefined || pid == null) {
+    if (ptid == 0 || ptid == undefined || ptid == null || pNo == '' || pNo == undefined || pNo == null) {
       wx.showModal({
         title: '消息提示',
         content: '设备不存在',
@@ -38,7 +42,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    this.setData({ pid: pid})
+    this.setData({ ptid: ptid,pNo:pNo})
   },
 
   /**
@@ -48,7 +52,7 @@ Page({
     var $this=this;
     wx.request({
       url: app.globalData.URL + "/index.php?s=/Home/Index/getUint",
-      data: { pid: $this.data.pid},
+      data: { pid: $this.data.ptid, pNo: $this.data.pNo},
       method: "POST",
       header: app.globalData.header,
       success: function (res) {
@@ -59,7 +63,7 @@ Page({
             title: res.data.sitename
           })
           $this.setData({
-            pid: $this.data.pid,
+            pid: res.data.pid,
             cuint: res.data.uint,
             pname: res.data.pname,
             siteimg: app.globalData.URL + res.data.siteimg
