@@ -308,7 +308,7 @@ Page({
       onlyFromCamera: true,
       success: (res) => {
         console.log(res)
-        if (res.result.indexOf('https://v.ev-pc.cn/power?pid=') == 0) {
+        if (res.result.indexOf('https://v.vmuui.com/power?pid=') == 0) {
           wx.navigateTo({
             url: "/pages/select/select?pid=" + app.GetUrlParam(res.result, "pid") + "&pNo=" + app.GetUrlParam(res.result, "pNo")
           })
